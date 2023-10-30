@@ -13,7 +13,7 @@ function App() {
           Log in
         </button>
       </div>
-      <div class='h-56 grid grid-cols-2 gap-40 content-around w-screen flex justify-center items-center px-12'>
+      <div class='grid grid-cols-3 gap-4 content-around w-screen flex justify-center items-center'>
         <div class='bg-gray-800 text-white font-bold py-2 px-4 border'>
           <ChessClass />
         </div>

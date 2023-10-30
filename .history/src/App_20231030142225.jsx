@@ -1,9 +1,9 @@
 import { useState } from "react";
+import viteLogo from "/vite.svg";
 import "./App.css";
-import ChessClass from "./components/ChessClass";
 
 function App() {
-  // const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
   return (
     <>
@@ -13,13 +13,13 @@ function App() {
           Log in
         </button>
       </div>
-      <div class='h-56 grid grid-cols-2 gap-40 content-around w-screen flex justify-center items-center px-12'>
-        <div class='bg-gray-800 text-white font-bold py-2 px-4 border'>
-          <ChessClass />
-        </div>
-        <div class='bg-gray-800 text-white font-bold py-2 px-4 border'>
-          <ChessClass />
-        </div>
+      <div>
+        {/* <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button> */}
+        <p>Will list a couple of classes...</p>
+        <ChessClass />
+        <ChessClass />
       </div>
     </>
   );
