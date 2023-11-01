@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import Register from "./Register";
+// Add a register button to open a similar component to register a new instructor
 
-export default function Login({ setLogin, showRegister, openRegister }) {
+import React, { useState } from "react";
+
+export default function Login({ setLogin }) {
   const handleLogin = () => {
     // will set more logic/error handling later
     setLogin();
@@ -12,13 +13,13 @@ export default function Login({ setLogin, showRegister, openRegister }) {
       <h1 className='text-lg font-semibold mb-4'>Please Log in</h1>
       <form>
         <div className='mb-4'>
-          <label htmlFor='email address'>Email Address</label>
+          <label htmlFor='username'>Username</label>
           <input
             className='border border-gray-300 rounded p-2'
             type='text'
-            id='email address'
-            name='email address'
-            placeholder='Insert email address'
+            id='username'
+            name='username'
+            placeholder='Insert username'
           />
         </div>
         <div className='mb-4'>
@@ -33,15 +34,15 @@ export default function Login({ setLogin, showRegister, openRegister }) {
         </div>
         <button
           onClick={handleLogin}
-          className='bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700 mr-1 mb-4'
+          className='bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700'
           type='submit'
         >
           Log In
         </button>
-        <p className='mb-4'> If you're a new instructor, please register</p>
         <button
-          onClick={openRegister}
-          className='bg-gray-900 text-white py-2 px-10 rounded hover:bg-blue-700'
+          onClick={handleLogin}
+          className='bg-gray-900 text-white py-2 px-10 rounded hover:bg-blue-700 space-x-3'
+          type='submit'
         >
           Register
         </button>
