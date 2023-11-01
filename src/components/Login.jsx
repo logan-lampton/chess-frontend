@@ -1,11 +1,8 @@
 import React, { useState } from "react";
+import {Link} from 'react-router-dom'
 import Register from "./Register";
 
-export default function Login({ setLogin, showRegister, openRegister }) {
-  const handleLogin = () => {
-    // will set more logic/error handling later
-    setLogin();
-  };
+export default function Login({ setLogin, showRegister, openRegister, handleLogin }) {
 
   return (
     <div className='border-2 border-gray-900 p-4 flex flex-col w-64 mt-16 p-4'>
@@ -31,20 +28,24 @@ export default function Login({ setLogin, showRegister, openRegister }) {
             placeholder='Insert password'
           />
         </div>
-        <button
-          onClick={handleLogin}
-          className='bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700 mr-1 mb-4'
-          type='submit'
-        >
-          Log In
-        </button>
+        <Link to="/home">
+          <button
+            onClick={handleLogin}
+            className='bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700 mr-1 mb-4'
+            type='submit'
+          >
+            Log In
+          </button>
+        </Link>
         <p className='mb-4'> If you're a new instructor, please register</p>
-        <button
-          onClick={openRegister}
-          className='bg-gray-900 text-white py-2 px-10 rounded hover:bg-blue-700'
-        >
-          Register
-        </button>
+        <Link to="/register">
+          <button
+            onClick={openRegister}
+            className='bg-gray-900 text-white py-2 px-10 rounded hover:bg-blue-700'
+          >
+            Register
+          </button>
+        </Link>
       </form>
     </div>
   );

@@ -3,6 +3,7 @@
 // notify users that they have registered successfully
 
 import React, {useState} from "react";
+import {Link} from 'react-router-dom'
 
 export default function Register({setLogin, handleLogin}) {
     return (
@@ -39,13 +40,15 @@ export default function Register({setLogin, handleLogin}) {
                         placeholder='Insert password'
                     />
                 </div>
-                <button
-                    onClick={handleLogin}
-                    className='bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700 mr-1 mb-4'
-                    type='submit'
-                    >
-                        Register
-                </button>
+                <Link to="/home">
+                    <button
+                        onClick={handleLogin}
+                        className='bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700 mr-1 mb-4'
+                        type='submit'
+                        >
+                            Register
+                    </button>
+                </Link>
             </form>
         </div>
     )
