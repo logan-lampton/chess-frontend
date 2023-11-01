@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import Header from "./components/Header";
+import Header from "./components/Header"
 import ChessClub from "./components/ChessClub";
 import Login from "./components/Login";
 
@@ -22,8 +22,8 @@ function App() {
 
   return (
     <>
-      <div className='flex flex-col items-center h-screen'>
-        <Header openLogin={openLogin} />
+      
+
         {isLoggedIn ? (
           <>
             <div className='h-64 grid grid-cols-2 gap-40 content-around w-screen flex justify-center items-center px-12'>

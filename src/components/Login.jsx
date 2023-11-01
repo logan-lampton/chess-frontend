@@ -1,3 +1,5 @@
+// Add a register button to open a similar component to register a new instructor
+
 import React, { useState } from 'react';
 
 export default function Login({ closeLogin, setLogin }) {

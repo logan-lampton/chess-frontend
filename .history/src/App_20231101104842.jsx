@@ -23,7 +23,7 @@ function App() {
   return (
     <>
       <div className='flex flex-col items-center h-screen'>
-        <Header openLogin={openLogin} />
+        <Header />
         {isLoggedIn ? (
           <>
             <div className='h-64 grid grid-cols-2 gap-40 content-around w-screen flex justify-center items-center px-12'>
