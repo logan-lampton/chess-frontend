@@ -11,6 +11,8 @@ import AddStudent from "./components/AddStudent";
 import StudentPairings from "./components/StudentPairings";
 import ViewClubGames from "./components/ViewClubGames";
 import Student from "./components/Student";
+import ViewLessons from "./components/ViewLessons";
+import ViewGameHistory from "./components/ViewGameHistory"
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -46,6 +48,8 @@ function App() {
           <Route path="/studentpairings" element={<StudentPairings />} />
           <Route path="/viewclubgames" element={<ViewClubGames />} />
           <Route path="/student" element={<Student />} />
+          <Route path="/viewlessons" element={<ViewLessons />} />
+          <Route path="viewgamehistory" element={<ViewGameHistory />} />
         </Routes>
       </div>
     </Router>
