@@ -5,7 +5,12 @@ import Header from "./components/Header";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
-import ChessClub from "./components/ChessClub"
+import ChessClub from "./components/ChessClub";
+import AddClub from "./components/AddClub";
+import AddStudent from "./components/AddStudent";
+import StudentPairings from "./components/StudentPairings";
+import ViewClubGames from "./components/ViewClubGames";
+import Student from "./components/Student";
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -36,6 +41,11 @@ function App() {
           <Route path="/register" element={<Register handleLogin={handleLogin} isLoggedIn={isLoggedIn} />} />
           <Route path="/home" element={<Home />} />
           <Route path="/chessclub" element={<ChessClub />} />
+          <Route path="/addclub" element={<AddClub />} />
+          <Route path="/addstudent" element={<AddStudent />} />
+          <Route path="/studentpairings" element={<StudentPairings />} />
+          <Route path="/viewclubgames" element={<ViewClubGames />} />
+          <Route path="/student" element={<Student />} />
         </Routes>
       </div>
     </Router>
