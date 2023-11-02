@@ -18,8 +18,6 @@ import ViewClubGames from "./components/ViewClubGames";
 import Student from "./components/Student";
 import ViewLessons from "./components/ViewLessons";
 import ViewGameHistory from "./components/ViewGameHistory";
-import ViewNotes from "./components/ViewNotes";
-import AddNotes from "./components/AddNotes";
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -29,6 +27,14 @@ function App() {
   const handleLogin = () => {
     // Handle login logic
     setLoggedIn(true);
+  };
+
+  const openLogin = () => {
+    setShowLogin(true);
+  };
+
+  const openRegister = () => {
+    setShowRegister(true);
   };
 
   return (
@@ -59,9 +65,7 @@ function App() {
           <Route path='/student' element={<Student />} />
           <Route path='/viewlessons' element={<ViewLessons />} />
           <Route path='/viewgamehistory' element={<ViewGameHistory />} />
-          <Route path="/viewnotes" element={<ViewNotes />} />
-          <Route path="/addnotes" element={<AddNotes />} />
-        </Routes> 
+        </Routes>
       </div>
     </Router>
   );

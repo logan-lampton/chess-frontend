@@ -23,21 +23,21 @@ function Home() {
                     </Link>
                     <p>map student names here</p>
                 </div>
-                {/* <ChessClub /> */}
                 <div className='border 2px gray-900'>
                     <div className='bg-gray-900 text-white font-bold py-2 px-4 border hover:bg-gray-700'>
                     <h2>Name of club</h2>
                     </div>
                     <p>map student names here</p>
                 </div>
-                {/* <ChessClub /> */}
             </div>
             <div>
                 <div className='absolute right-10 bottom-5 flex flex-col space-y-4'>
                 <div>
+                    <Link to="/addclub">
                     <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mr-4'>
                     Add Club
                     </button>
+                    </Link>
                     <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
                     Show More Clubs
                     </button>
