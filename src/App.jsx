@@ -22,9 +22,7 @@ import ViewNotes from "./components/ViewNotes";
 import AddNotes from "./components/AddNotes";
 
 function App() {
-  const [showLogin, setShowLogin] = useState(false);
   const [isLoggedIn, setLoggedIn] = useState(false);
-  const [showRegister, setShowRegister] = useState(false);
 
   const handleLogin = () => {
     // Handle login logic
@@ -35,7 +33,7 @@ function App() {
     <Router>
       <div className='flex flex-col items-center h-screen'>
         <header>
-          <Header isLoggedIn={isLoggedIn} />
+          <Header isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
         </header>
         <Routes>
           <Route
