@@ -28,6 +28,7 @@ function App() {
     // Handle login logic
     setLoggedIn(true);
   };
+  // Add back button links throughout the project (or more links in the homepage, or both!)
 
   return (
     <Router>
