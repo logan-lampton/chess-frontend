@@ -31,7 +31,7 @@ function App() {
 
   return (
     <Router>
-      <div className='flex flex-col items-center h-screen'>
+      <div className='flex flex-col items-center h-screen w-screen'>
         <header>
           <Header isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
         </header>

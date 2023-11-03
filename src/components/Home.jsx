@@ -14,7 +14,7 @@ import {Link} from 'react-router-dom'
 function Home() {
   return (
     <>
-        <div className='h-64 grid grid-cols-2 gap-40 content-around w-screen flex justify-center items-center px-12'>
+        <div className='h-64 grid grid-cols-2 gap-40 content-around w-screen flex justify-center items-center px-12 w-screen'>
                 <div className='border 2px gray-900'>
                     <Link to="/chessclub">
                         <div className='bg-gray-900 text-white font-bold py-2 px-4 border hover:bg-gray-700'>
