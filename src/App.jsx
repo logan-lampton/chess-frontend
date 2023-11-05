@@ -20,12 +20,20 @@ import ViewLessons from "./components/ViewLessons";
 import ViewGameHistory from "./components/ViewGameHistory";
 import ViewNotes from "./components/ViewNotes";
 import AddNotes from "./components/AddNotes";
+import axios from "axios";
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
+  const [user, setUser] = useState({})
 
   const handleLogin = () => {
-    // Handle login logic
+    axios.get('http://localhost:3000/instructors/1')
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     setLoggedIn(true);
   };
   // Add back button links throughout the project (or more links in the homepage, or both!)
@@ -49,7 +57,7 @@ function App() {
               <Register handleLogin={handleLogin} isLoggedIn={isLoggedIn} />
             }
           />
-          <Route path='/home' element={<Home />} />
+          <Route path='/home' element={<Home clubs={user.clubs} />} />
           <Route path='/chessclub' element={<ChessClub />} />
           <Route path='/addclub' element={<AddClub />} />
           <Route path='/addstudent' element={<AddStudent />} />
