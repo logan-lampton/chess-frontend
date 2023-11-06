@@ -9,7 +9,7 @@
 // Make sure the club listings don't cover up the buttons
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 function Home({ clubs }) {
   // Ensure that 'clubs' is an array and provide a default empty array if it's undefined
@@ -19,8 +19,8 @@ function Home({ clubs }) {
     <div className='h-screen bg-gray-100'>
       <div className='h-64 grid grid-cols-2 gap-40 content-around w-screen flex justify-center items-center px-12'>
         {clubNames.map((club) => (
-          <div key={club.club_name} className='border-2 border-gray-900 w-full'>
-            <Link to={`/clubs/${club.id}`}>
+          <div key={club.id} className='border-2 border-gray-900 w-full'>
+            <Link to="/chessclub">
               <div className='bg-gray-900 text-white font-bold py-2 px-4 border hover:bg-gray-700'>
                 <h2>{club.club_name}</h2>
               </div>
@@ -30,7 +30,7 @@ function Home({ clubs }) {
       </div>
       <div className='absolute right-10 bottom-5 flex flex-col space-y-4'>
         <div>
-          <Link to='/addclub'>
+          <Link to="/addclub">
             <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mr-4'>
               Add Club
             </button>

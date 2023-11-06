@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import axios from '../axiosConfig';
 
 function ChessClub({ clubs }) {
   const { id } = useParams();
@@ -10,7 +9,7 @@ function ChessClub({ clubs }) {
 
   useEffect(() => {
     axios
-      .get(`/clubs/${id}`)
+      .get(`/api/clubs/${id}`)
       .then((response) => {
         setClubData(response.data);
       })
@@ -24,15 +23,7 @@ function ChessClub({ clubs }) {
       <div className='col-span-2 md:col-span-2 mr-5 ml-5'>
         <div className='border-2 border-gray-900'>
           <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-4'>
-          {clubData ? (
-            <>
-              <h1>{clubData.club_name}</h1>
-              <h3>School: {clubData.school}</h3>
-              <h3>Meet Time: {clubData.meet_time}</h3>
-            </>
-          ) : (
-            'Club data not found'
-          )}
+            <h2>{clubs.club_name}</h2>
           </div>
           <Link to='/student'>
             <p className='mb-4'>map student names here</p>

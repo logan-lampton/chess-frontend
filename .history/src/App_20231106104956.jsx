@@ -20,22 +20,23 @@ import ViewLessons from "./components/ViewLessons";
 import ViewGameHistory from "./components/ViewGameHistory";
 import ViewNotes from "./components/ViewNotes";
 import AddNotes from "./components/AddNotes";
-import axios from './axiosConfig';
+import axios from "axios";
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
 
-  const handleLogin = async () => {
-    try {
-      const response = await axios.get("http://localhost:3000/instructors/1");
-      setUser(response.data);
-      setLoggedIn(true);
-    } catch (error) {
-      console.log("Login failed:", error);
-    }
+  const handleLogin = () => {
+    axios
+      .get("http://localhost:3000/instructors/1")
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    setLoggedIn(true);
   };
-
   // Add back button links throughout the project (or more links in the homepage, or both!)
 
   return (
@@ -58,7 +59,7 @@ function App() {
             }
           />
           <Route path='/home' element={<Home clubs={user.clubs} />} />
-          <Route path='/clubs/:id' element={<ChessClub />} />
+          <Route path='/chessclub' element={<ChessClub clubs={user.clubs} />} />
           <Route path='/addclub' element={<AddClub />} />
           <Route path='/addstudent' element={<AddStudent />} />
           <Route path='/studentpairings' element={<StudentPairings />} />
