@@ -20,7 +20,7 @@ import ViewLessons from "./components/ViewLessons";
 import ViewGameHistory from "./components/ViewGameHistory";
 import ViewNotes from "./components/ViewNotes";
 import AddNotes from "./components/AddNotes";
-import axios from './axiosConfig';
+import axios from "axios";
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);

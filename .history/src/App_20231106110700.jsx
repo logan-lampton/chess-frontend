@@ -20,7 +20,7 @@ import ViewLessons from "./components/ViewLessons";
 import ViewGameHistory from "./components/ViewGameHistory";
 import ViewNotes from "./components/ViewNotes";
 import AddNotes from "./components/AddNotes";
-import axios from './axiosConfig';
+import axios from "axios";
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -28,7 +28,7 @@ function App() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/instructors/1");
+      const response = await axios.get("/api/instructors/1");
       setUser(response.data);
       setLoggedIn(true);
     } catch (error) {
@@ -58,7 +58,7 @@ function App() {
             }
           />
           <Route path='/home' element={<Home clubs={user.clubs} />} />
-          <Route path='/clubs/:id' element={<ChessClub />} />
+          <Route path='/chessclub/:id' element={<ChessClub />} />
           <Route path='/addclub' element={<AddClub />} />
           <Route path='/addstudent' element={<AddStudent />} />
           <Route path='/studentpairings' element={<StudentPairings />} />
