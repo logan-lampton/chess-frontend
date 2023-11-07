@@ -8,6 +8,33 @@ function ChessClub({ clubs }) {
 
   const [clubData, setClubData] = useState(null);
 
+  function convertToTwelveHourFormat(timeString) {
+    const date = new Date(timeString);
+
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+
+    let amOrPm;
+    if (hours >= 12) {
+      amOrPm = 'PM';
+    } else {
+      amOrPm = 'AM';
+    }
+
+    let hours12;
+    if (hours === 0) {
+      hours12 = 12;
+    } else if (hours > 12) {
+      hours12 = hours -12;
+    } else {
+      hours12 = hours;
+    }
+
+    const formattedTime = `${hours12}:${minutes < 10 ? '0' : ''}${minutes}${amOrPm}`;
+
+    return formattedTime;
+  }
+
   useEffect(() => {
     axios
       .get(`/clubs/${id}`)
@@ -28,7 +55,7 @@ function ChessClub({ clubs }) {
             <>
               <h1>{clubData.club_name}</h1>
               <h3>School: {clubData.school}</h3>
-              <h3>Meet Time: {clubData.meet_time}</h3>
+              <h3>Meet Time: {convertToTwelveHourFormat(clubData.meet_time)}</h3>
             </>
           ) : (
             'Club data not found'
