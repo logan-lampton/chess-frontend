@@ -82,7 +82,7 @@ function ChessClub({ clubs }) {
               ) : (
                 <p>No students available</p>
               )}
-              <div className='flex justify-beginning ml-5 my-2'>
+              <div className='flex justify-beginning ml-5'>
                 <Link to='/addstudent'>
                   <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
                     Add Student

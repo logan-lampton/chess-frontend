@@ -28,7 +28,7 @@ function App() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/instructors/2");
+      const response = await axios.get("http://localhost:3000/instructors/1");
       setUser(response.data);
       setLoggedIn(true);
     } catch (error) {
@@ -63,7 +63,7 @@ function App() {
           <Route path='/addstudent' element={<AddStudent />} />
           <Route path='/studentpairings' element={<StudentPairings />} />
           <Route path='/viewclubgames' element={<ViewClubGames />} />
-          <Route path='/students/:id' element={<Student />} />
+          <Route path='/student' element={<Student />} />
           <Route path='/viewlessons' element={<ViewLessons />} />
           <Route path='/viewgamehistory' element={<ViewGameHistory />} />
           <Route path='/viewnotes' element={<ViewNotes />} />
