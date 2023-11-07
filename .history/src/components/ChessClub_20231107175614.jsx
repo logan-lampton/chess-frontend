@@ -73,9 +73,7 @@ function ChessClub({ clubs }) {
                 <ul className='ml-5'>
                   {students.map((student) => (
                     <li key={student.id} className='mb-3'>
-                      <Link to={`/students/${student.id}`}>
-                        {student.student_name}
-                      </Link>
+                      <Link to={`/students/{id}`}>{student.student_name}</Link>
                     </li>
                   ))}
                 </ul>
