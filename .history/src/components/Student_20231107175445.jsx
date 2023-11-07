@@ -22,21 +22,16 @@ function Student() {
   return (
     <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-screen'>
       <div className='border-2 border-gray-900 col-span-2 md:col-span-2 mr-5 ml-5'>
-      {student ? (
-          <div>
-            <div className='bg-gray-900 text-white font-bold py-2 px-4 border'>
-              <h2>{student.student_name}</h2>
-            </div>
-            <div className='ml-5 mt-4'>
-              <p>Grade: {student.grade}</p>
-              <p>Number of Games Played:</p>
-              <p>Win Rate as White:</p>
-              <p>Win Rate as Black:</p>
-            </div>
-          </div>
-        ) : (
-          <p>Student not found</p>
-        )}
+        <div className='bg-gray-900 text-white font-bold py-2 px-4 border'>
+          <h2>Name of student</h2>
+        </div>
+        <div>
+          {/* insert mapped student details */}
+          <p>Grade:</p>
+          <p>Number of Games Played:</p>
+          <p>Win Rate as White:</p>
+          <p>Win Rate as Black:</p>
+        </div>
       </div>
 
       <div className='col-span-1 md:col-span-1 mr-5'>

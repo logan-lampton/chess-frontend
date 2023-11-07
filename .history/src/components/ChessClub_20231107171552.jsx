@@ -59,32 +59,26 @@ function ChessClub({ clubs }) {
     <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-screen'>
       <div className='col-span-2 md:col-span-2 mr-5 ml-5'>
         <div className='border-2 border-gray-900'>
+          <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-4'>
           {clubData ? (
             <>
-              <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-4'>
-                <h1 className='mb-5'>{clubData.club.club_name}</h1>
-                <h3>School: {clubData.club.school}</h3>
-                <h3>
-                  Meet Time:{" "}
-                  {convertToTwelveHourFormat(clubData.club.meet_time)}
-                </h3>
+              <div className="bg-gray-900 text-white font-bold py-2 px-4 border mb-4">
+                <h1 className="mb-5">{clubData.club_name}</h1>
+                <h3>School: {clubData.school}</h3>
+                <h3>Meet Time: {convertToTwelveHourFormat(clubData.meet_time)}</h3>
               </div>
               {students ? (
-                <ul className='ml-5'>
+                <ul>
                   {students.map((student) => (
-                    <li key={student.id} className='mb-3'>
-                      <Link to={`/students/${student.id}`}>
-                        {student.student_name}
-                      </Link>
-                    </li>
+                    <li key={student.id}>{student.student_name}</li>
                   ))}
                 </ul>
               ) : (
                 <p>No students available</p>
               )}
-              <div className='flex justify-beginning ml-5 my-2'>
-                <Link to='/addstudent'>
-                  <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
+              <div className="flex justify-end">
+                <Link to="/addstudent">
+                  <button className="h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded">
                     Add Student
                   </button>
                 </Link>
@@ -93,8 +87,6 @@ function ChessClub({ clubs }) {
           ) : (
             "Loading club data..."
           )}
-        </div>
-      </div>
 
       <div className='col-span-1 md:col-span-1 mr-5'>
         <div>

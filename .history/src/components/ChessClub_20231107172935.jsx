@@ -72,17 +72,13 @@ function ChessClub({ clubs }) {
               {students ? (
                 <ul className='ml-5'>
                   {students.map((student) => (
-                    <li key={student.id} className='mb-3'>
-                      <Link to={`/students/${student.id}`}>
-                        {student.student_name}
-                      </Link>
-                    </li>
+                    <li key={student.id}>{student.student_name}</li>
                   ))}
                 </ul>
               ) : (
                 <p>No students available</p>
               )}
-              <div className='flex justify-beginning ml-5 my-2'>
+              <div className='flex justify-end'>
                 <Link to='/addstudent'>
                   <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
                     Add Student

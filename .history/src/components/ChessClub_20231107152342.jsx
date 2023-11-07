@@ -42,57 +42,49 @@ function ChessClub({ clubs }) {
     axios
       .get(`/clubs/${id}`)
       .then((response) => {
-        // console.log("Received club data:", response.data);
         setClubData(response.data);
       })
       .catch((error) => {
         console.error("Error fetching club data:", error);
       });
-    axios.get(`/students?club_id=${id}`).then((response) => {
+
+    axios.get("/clubs/${id}/students").then((response) => {
       setStudents(response.data);
     });
   }, [id]);
-
-  console.log(`Club Data: ${clubData}`);
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-screen'>
       <div className='col-span-2 md:col-span-2 mr-5 ml-5'>
         <div className='border-2 border-gray-900'>
-          {clubData ? (
-            <>
-              <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-4'>
-                <h1 className='mb-5'>{clubData.club.club_name}</h1>
-                <h3>School: {clubData.club.school}</h3>
+          <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-4'>
+            {clubData ? (
+              <>
+                <h1 className='mb-5'>{clubData.club_name}</h1>
+                <h3>School: {clubData.school}</h3>
                 <h3>
-                  Meet Time:{" "}
-                  {convertToTwelveHourFormat(clubData.club.meet_time)}
+                  Meet Time: {convertToTwelveHourFormat(clubData.meet_time)}
                 </h3>
-              </div>
-              {students ? (
-                <ul className='ml-5'>
-                  {students.map((student) => (
-                    <li key={student.id} className='mb-3'>
-                      <Link to={`/students/${student.id}`}>
-                        {student.student_name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>No students available</p>
-              )}
-              <div className='flex justify-beginning ml-5 my-2'>
-                <Link to='/addstudent'>
-                  <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
-                    Add Student
-                  </button>
-                </Link>
-              </div>
-            </>
-          ) : (
-            "Loading club data..."
-          )}
+              </>
+            ) : (
+              "Club data not found"
+            )}
+          </div>
+          <ul>
+            {students.map((student) => (
+              <li key={student.id}>{student.name}</li>
+            ))}
+          </ul>
+          {/* <Link to='/student'>
+            <p className='mb-4'>map student names here</p>
+          </Link> */}
+          <div className='flex justify-end'>
+            <Link to='/addstudent'>
+              <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
+                Add Student
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
 
