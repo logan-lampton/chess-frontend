@@ -26,6 +26,9 @@ function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
 
+  // change instructorId to match the instructor logging in, once that logic is changed from seeded info
+  const instructorId = "2"
+
   const handleLogin = async () => {
     try {
       const response = await axios.get("http://localhost:3000/instructors/2");
@@ -59,7 +62,7 @@ function App() {
           />
           <Route path='/home' element={<Home clubs={user.clubs} />} />
           <Route path='/clubs/:id' element={<ChessClub />} />
-          <Route path='/addclub' element={<AddClub />} />
+          <Route path='/addclub' element={<AddClub instructorId={instructorId} />} />
           <Route path='/addstudent' element={<AddStudent />} />
           <Route path='/studentpairings' element={<StudentPairings />} />
           <Route path='/viewclubgames' element={<ViewClubGames />} />
