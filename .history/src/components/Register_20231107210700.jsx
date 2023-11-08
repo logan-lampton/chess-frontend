@@ -2,7 +2,7 @@
 // notify users if they have not successfully registered
 // notify users that they have registered successfully
 
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Register({ handleLogin }) {
