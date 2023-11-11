@@ -38,7 +38,6 @@ function App() {
       console.log("Login failed:", error);
     }
   };
-  console.log(user.clubs)
 
   // Add back button links throughout the project (or more links in the homepage, or both!)
 

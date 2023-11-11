@@ -14,14 +14,13 @@ import { Link } from "react-router-dom";
 function Home({ clubs }) {
   // Ensure that 'clubs' is an array and provide a default empty array if it's undefined
   const clubNames = Array.isArray(clubs) ? clubs : [];
-  // console.log(clubs)
 
   return (
     <div className='h-screen bg-gray-100'>
       <div className='h-64 grid grid-cols-2 gap-40 content-around w-screen flex justify-center items-center px-12'>
         {clubNames.map((club) => (
           <div key={club.club_name} className='border-2 border-gray-900 w-full'>
-            <Link to={`/clubs/${club.id}`} state={{ club }}>
+            <Link to={`/clubs/${club.id}`}>
               <div className='bg-gray-900 text-white font-bold py-2 px-4 border hover:bg-gray-700'>
                 <h2>{club.club_name}</h2>
               </div>
