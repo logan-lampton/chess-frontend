@@ -38,7 +38,6 @@ function App() {
       console.log("Login failed:", error);
     }
   };
-  console.log(user.clubs)
 
   // Add back button links throughout the project (or more links in the homepage, or both!)
 
@@ -61,7 +60,7 @@ function App() {
               <Register handleLogin={handleLogin} isLoggedIn={isLoggedIn} />
             }
           />
-          <Route path='/home' element={<Home clubs={user.clubs} />} />
+          <Route path='/home' element={<Home />} />
           <Route path='/clubs/:id' element={<ChessClub />} />
           <Route
             path='/addclub'
