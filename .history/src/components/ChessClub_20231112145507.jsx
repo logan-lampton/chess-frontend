@@ -131,9 +131,9 @@ function ChessClub() {
                   (s) => s.student_name === topThree.student
                 );
                 return (
-                  <li className='mb-3' key={student.id}>
-                    <Link to={`/students/${student.id}`}>
-                      {topThree.student}: {topThree.wins}
+                  <li className='mb-3'>
+                    <Link to={`/students/${club.students.id}`}>
+                      {student.student}: {student.wins}
                     </Link>
                   </li>
                 );

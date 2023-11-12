@@ -124,20 +124,15 @@ function ChessClub() {
             <h2>Club Stats</h2>
           </div>
           <div className='ml-5'>
-            <h2 className='mb-3'> Students with Highest Winrate: </h2>
-            <ul className='ml-7'>
-              {club.top_3.map((topThree) => {
-                const student = club.students.find(
-                  (s) => s.student_name === topThree.student
-                );
-                return (
-                  <li className='mb-3' key={student.id}>
-                    <Link to={`/students/${student.id}`}>
-                      {topThree.student}: {topThree.wins}
-                    </Link>
-                  </li>
-                );
-              })}
+            <h2>Students with Highest Winrate </h2>
+            <ul>
+              {club.students.map((student) => (
+                <li key={student.id} className='mb-3'>
+                  <Link to={`/students/${student.id}`}>
+                    {student.student_name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
