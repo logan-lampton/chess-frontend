@@ -22,16 +22,17 @@ function AddStudent() {
     body: JSON.stringify(formData),
   };
 
-  function handleCreateStudent() {
-    fetch("http://localhost:3000/students/create", requestOptions)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-  }
+  const handleCreateStudent = () => {
+    axios
+      .post("http://localhost:3000/students", formData)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error creating student:", error);
+      });
+  };
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -76,18 +77,6 @@ function AddStudent() {
                 onChange={handleInputChange}
               />
             </div>
-            {/* <div className='mb-4'>
-              <label htmlFor='meet_time'>Meet Time: </label>
-              <input
-                className='border border-gray-300 rounded p-2'
-                type='text'
-                id='meet_time'
-                name='meet_time'
-                placeholder='Insert meet time'
-                value={formData.meet_time}
-                onChange={handleInputChange}
-              />
-            </div> */}
             <Link to='/home'>
               <button
                 onClick={handleCreateStudent}
