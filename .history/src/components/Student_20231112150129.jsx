@@ -29,7 +29,7 @@ function Student() {
             </div>
             <div className='ml-5 mt-4'>
               <p>Grade: {student.grade}</p>
-              <p>Number of Games Played: {student.games.length}</p>
+              <p>Number of Games Played: {len(student.games)}</p>
               <p>Total Wins: {student.total_wins}</p>
               <p>Total Win Rate: {student.win_rate}</p>
               <p>Win Rate as White: {student.win_rate_white}</p>
