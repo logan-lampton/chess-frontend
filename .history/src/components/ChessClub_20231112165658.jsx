@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import axios from "../axiosConfig";
 
 function ChessClub() {
   const { id } = useParams();
+
+  // const location = useLocation();
+  // const { club } = location.state || {};
+
+  // console.log(club);
 
   const [clubData, setClubData] = useState(null);
   const [students, setStudents] = useState(null);

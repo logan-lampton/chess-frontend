@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import axios from "../axiosConfig";
 
 function ChessClub() {
   const { id } = useParams();
 
-  const [clubData, setClubData] = useState(null);
-  const [students, setStudents] = useState(null);
+  const location = useLocation();
+  const { club } = location.state;
+
+  console.log(club);
+
+  // const [clubData, setClubData] = useState(null);
+  // const [students, setStudents] = useState(null);
 
   function convertToTwelveHourFormat(timeString) {
     const date = new Date(timeString);
@@ -38,39 +43,37 @@ function ChessClub() {
     return formattedTime;
   }
 
-  useEffect(() => {
-    axios
-      .get(`/clubs/${id}`)
-      .then((response) => {
-        // console.log("Received club data:", response.data);
-        setClubData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching club data:", error);
-      });
-    axios.get(`/students?club_id=${id}`).then((response) => {
-      setStudents(response.data);
-    });
-  }, [id]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`/clubs/${id}`)
+  //     .then((response) => {
+  //       // console.log("Received club data:", response.data);
+  //       setClubData(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching club data:", error);
+  //     });
+  //   axios.get(`/students?club_id=${id}`).then((response) => {
+  //     setStudents(response.data);
+  //   });
+  // }, [id]);
 
-  console.log(`Club Data: ${clubData}`);
+  // console.log(`Club Data: ${clubData}`);
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-screen'>
       <div className='col-span-2 md:col-span-2 mr-5 ml-5'>
         <div className='border-2 border-gray-900'>
-          {clubData ? (
+          {club ? (
             <>
               <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-4'>
-                <h1 className='mb-5'>{clubData.club_name}</h1>
-                <h3>School: {clubData.school}</h3>
-                <h3>
-                  Meet Time: {convertToTwelveHourFormat(clubData?.meet_time)}
-                </h3>
+                <h1 className='mb-5'>{club.club_name}</h1>
+                <h3>School: {club.school}</h3>
+                <h3>Meet Time: {convertToTwelveHourFormat(club.meet_time)}</h3>
               </div>
-              {students ? (
+              {club.students ? (
                 <ul className='ml-5'>
-                  {clubData.students.map((student) => (
+                  {club.students.map((student) => (
                     <li key={student.id} className='mb-3'>
                       <Link to={`/students/${student.id}`}>
                         {student.student_name}
@@ -86,7 +89,6 @@ function ChessClub() {
                   to={{
                     pathname: "/addstudent",
                     search: `?club_id=${id}`,
-                    state: { setStudents: setStudents, id: id },
                   }}
                 >
                   <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
@@ -116,31 +118,24 @@ function ChessClub() {
             </button>
           </Link>
         </div>
-        {clubData && (
-          <div className='border-2 border-gray-900'>
-            <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-4'>
-              <h2>Club Stats</h2>
-            </div>
-            <div className='ml-5'>
-              <h2 className='mb-3'> Students with Highest Winrate: </h2>
-              <ul className='ml-7'>
-                {clubData.top_3 &&
-                  clubData.top_3.map((topThree) => {
-                    const student = clubData.students.find(
-                      (s) => s.student_name === topThree.student
-                    );
-                    return (
-                      <li className='mb-3' key={student.id}>
-                        <Link to={`/students/${student.id}`}>
-                          {topThree.student}: {topThree.wins}
-                        </Link>
-                      </li>
-                    );
-                  })}
-              </ul>
-            </div>
+        {/* make the club stats section */}
+        <div className='border-2 border-gray-900'>
+          <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-4'>
+            <h2>Club Stats</h2>
           </div>
-        )}
+          <div className='ml-5'>
+            <h2 className='mb-3'> Students with Highest Winrate: </h2>
+            <ul className='ml-7'>
+              {club.students.map((student) => (
+                <li key={student.id} className='mb-3'>
+                  <Link to={`/students/${student.id}`}>
+                    {student.student_name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   );
