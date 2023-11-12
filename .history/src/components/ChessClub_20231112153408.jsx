@@ -89,7 +89,7 @@ function ChessClub() {
                   to={{
                     pathname: "/addstudent",
                     search: `?club_id=${id}`,
-                    state: { setStudents: setStudents, id: id },
+                    state: { setStudents: setStudents, id: club_id },
                   }}
                 >
                   <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>

@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 
 function AddStudent() {
+
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const clubId = searchParams.get("club_id");
@@ -13,13 +14,13 @@ function AddStudent() {
     club_id: clubId,
   });
 
-  // const requestOptions = {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify(formData),
-  // };
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  };
 
   const handleCreateStudent = () => {
     axios
@@ -32,15 +33,17 @@ function AddStudent() {
       });
   };
 
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+        ...formData,
+        [name]: value,
+    })
+  }
 
-  console.log(clubId);
+  console.log(clubId)
+
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-screen'>
@@ -74,7 +77,7 @@ function AddStudent() {
                 onChange={handleInputChange}
               />
             </div>
-            <Link to={`/clubs/${clubId}`}>
+            <Link to='/home'>
               <button
                 onClick={handleCreateStudent}
                 className='bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700 mr-1 mb-4'
@@ -87,7 +90,7 @@ function AddStudent() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default AddStudent;
+export default AddStudent

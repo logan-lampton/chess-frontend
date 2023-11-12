@@ -6,6 +6,7 @@ function AddStudent() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const clubId = searchParams.get("club_id");
+  const id = searchParams.get("id");
 
   const [formData, setFormData] = useState({
     student_name: "",
@@ -13,19 +14,20 @@ function AddStudent() {
     club_id: clubId,
   });
 
-  // const requestOptions = {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify(formData),
-  // };
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  };
 
   const handleCreateStudent = () => {
     axios
       .post("http://localhost:3000/students", formData)
       .then((response) => {
         console.log(response.data);
+        setStudents(response.data);
       })
       .catch((error) => {
         console.error("Error creating student:", error);
@@ -74,7 +76,7 @@ function AddStudent() {
                 onChange={handleInputChange}
               />
             </div>
-            <Link to={`/clubs/${clubId}`}>
+            <Link to={`/clubs/${id}`}>
               <button
                 onClick={handleCreateStudent}
                 className='bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700 mr-1 mb-4'

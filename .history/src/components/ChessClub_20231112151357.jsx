@@ -11,8 +11,8 @@ function ChessClub() {
 
   console.log(club);
 
-  // const [clubData, setClubData] = useState(null);
-  const [students, setStudents] = useState(null);
+  const [clubData, setClubData] = useState(null);
+  // const [students, setStudents] = useState(null);
 
   function convertToTwelveHourFormat(timeString) {
     const date = new Date(timeString);
@@ -44,18 +44,18 @@ function ChessClub() {
   }
 
   useEffect(() => {
-    // axios
-    //   .get(`/clubs/${id}`)
-    //   .then((response) => {
-    //     // console.log("Received club data:", response.data);
-    //     setClubData(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching club data:", error);
-    //   });
-    axios.get(`/students?club_id=${id}`).then((response) => {
-      setStudents(response.data);
-    });
+    axios
+      .get(`/clubs/${id}`)
+      .then((response) => {
+        // console.log("Received club data:", response.data);
+        setClubData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching club data:", error);
+      });
+    // axios.get(`/students?club_id=${id}`).then((response) => {
+    //   setStudents(response.data);
+    // });
   }, [id]);
 
   // console.log(`Club Data: ${clubData}`);
@@ -71,7 +71,7 @@ function ChessClub() {
                 <h3>School: {club.school}</h3>
                 <h3>Meet Time: {convertToTwelveHourFormat(club.meet_time)}</h3>
               </div>
-              {students ? (
+              {club.students ? (
                 <ul className='ml-5'>
                   {club.students.map((student) => (
                     <li key={student.id} className='mb-3'>
@@ -89,7 +89,7 @@ function ChessClub() {
                   to={{
                     pathname: "/addstudent",
                     search: `?club_id=${id}`,
-                    state: { setStudents: setStudents, id: id },
+                    state: { setClubData: setClubData },
                   }}
                 >
                   <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>

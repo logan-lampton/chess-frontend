@@ -45,41 +45,39 @@ function App() {
 
   return (
     <Router>
-      <ErrorBoundary>
-        <div className='flex flex-col items-center h-screen w-screen'>
-          <header>
-            <Header isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
-          </header>
-          <Routes>
-            <Route
-              path='/'
-              element={
-                <Login handleLogin={handleLogin} isLoggedIn={isLoggedIn} />
-              }
-            />
-            <Route
-              path='/register'
-              element={
-                <Register handleLogin={handleLogin} isLoggedIn={isLoggedIn} />
-              }
-            />
-            <Route path='/home' element={<Home clubs={user.clubs} />} />
-            <Route path='/clubs/:id' element={<ChessClub />} />
-            <Route
-              path='/addclub'
-              element={<AddClub instructorId={instructorId} />}
-            />
-            <Route path='/addstudent' element={<AddStudent />} />
-            <Route path='/studentpairings' element={<StudentPairings />} />
-            <Route path='/viewclubgames' element={<ViewClubGames />} />
-            <Route path='/students/:id' element={<Student />} />
-            <Route path='/viewlessons' element={<ViewLessons />} />
-            <Route path='/viewgamehistory' element={<ViewGameHistory />} />
-            <Route path='/viewnotes' element={<ViewNotes />} />
-            <Route path='/addnotes' element={<AddNotes />} />
-          </Routes>
-        </div>
-      </ErrorBoundary>
+      <div className='flex flex-col items-center h-screen w-screen'>
+        <header>
+          <Header isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
+        </header>
+        <Routes>
+          <Route
+            path='/'
+            element={
+              <Login handleLogin={handleLogin} isLoggedIn={isLoggedIn} />
+            }
+          />
+          <Route
+            path='/register'
+            element={
+              <Register handleLogin={handleLogin} isLoggedIn={isLoggedIn} />
+            }
+          />
+          <Route path='/home' element={<Home clubs={user.clubs} />} />
+          <Route path='/clubs/:id' element={<ChessClub />} />
+          <Route
+            path='/addclub'
+            element={<AddClub instructorId={instructorId} />}
+          />
+          <Route path='/addstudent' element={<AddStudent />} />
+          <Route path='/studentpairings' element={<StudentPairings />} />
+          <Route path='/viewclubgames' element={<ViewClubGames />} />
+          <Route path='/students/:id' element={<Student />} />
+          <Route path='/viewlessons' element={<ViewLessons />} />
+          <Route path='/viewgamehistory' element={<ViewGameHistory />} />
+          <Route path='/viewnotes' element={<ViewNotes />} />
+          <Route path='/addnotes' element={<AddNotes />} />
+        </Routes>
+      </div>
     </Router>
   );
 }

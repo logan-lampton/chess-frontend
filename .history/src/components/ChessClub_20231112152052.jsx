@@ -71,7 +71,7 @@ function ChessClub() {
                 <h3>School: {club.school}</h3>
                 <h3>Meet Time: {convertToTwelveHourFormat(club.meet_time)}</h3>
               </div>
-              {students ? (
+              {club.students ? (
                 <ul className='ml-5'>
                   {club.students.map((student) => (
                     <li key={student.id} className='mb-3'>
@@ -89,7 +89,7 @@ function ChessClub() {
                   to={{
                     pathname: "/addstudent",
                     search: `?club_id=${id}`,
-                    state: { setStudents: setStudents, id: id },
+                    state: { setStudents: setStudents },
                   }}
                 >
                   <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
