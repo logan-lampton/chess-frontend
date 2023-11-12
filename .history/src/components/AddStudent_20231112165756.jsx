@@ -70,6 +70,7 @@ function AddStudent() {
                 onChange={handleInputChange}
               />
             </div>
+            {/* <Link to={`/clubs/${clubId}`}> */}
             <button
               onClick={handleCreateStudent}
               className='bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700 mr-1 mb-4'
@@ -77,6 +78,7 @@ function AddStudent() {
             >
               Create
             </button>
+            {/* </Link> */}
           </form>
         </div>
       </div>

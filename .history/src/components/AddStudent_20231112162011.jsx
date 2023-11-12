@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 
 function AddStudent() {
@@ -7,7 +7,7 @@ function AddStudent() {
   const searchParams = new URLSearchParams(location.search);
   const clubId = searchParams.get("club_id");
 
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const [formData, setFormData] = useState({
     student_name: "",
@@ -15,13 +15,20 @@ function AddStudent() {
     club_id: clubId,
   });
 
-  const handleCreateStudent = async (e) => {
-    e.preventDefault();
+  // const requestOptions = {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify(formData),
+  // };
+
+  const handleCreateStudent = () => {
     axios
       .post("http://localhost:3000/students", formData)
       .then((response) => {
         console.log(response.data);
-        navigate(`/clubs/${clubId}`);
+        const newStudentId = response.data.id;
       })
       .catch((error) => {
         console.error("Error creating student:", error);
@@ -70,13 +77,15 @@ function AddStudent() {
                 onChange={handleInputChange}
               />
             </div>
-            <button
-              onClick={handleCreateStudent}
-              className='bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700 mr-1 mb-4'
-              type='submit'
-            >
-              Create
-            </button>
+            <Link to={`/clubs/${clubId}`}>
+              <button
+                onClick={handleCreateStudent}
+                className='bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700 mr-1 mb-4'
+                type='submit'
+              >
+                Create
+              </button>
+            </Link>
           </form>
         </div>
       </div>
