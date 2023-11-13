@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export default function AddClub({ instructorId, handleClubAdded }) {
+export default function AddClub({ instructorId }) {
   const navigate = useNavigate();
-
-  console.log("Instructor ID", instructorId);
+  console.log(instructorId);
 
   const [formData, setFormData] = useState({
     club_name: "",
@@ -24,24 +23,15 @@ export default function AddClub({ instructorId, handleClubAdded }) {
 
   const handleCreateClub = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post("http://localhost:3000/clubs", formData);
-      console.log(response.data);
-      handleClubAdded(response.data);
-      navigate("/home");
-    } catch (error) {
-      if (error.response && error.response.status === 422) {
-        const validationErrors = error.response.data.errors;
-  
-        if (validationErrors) {
-          console.log("Validation errors:", validationErrors);
-        } else {
-          console.log("Unexpected validation response format:", error.response.data);
-        }
-      } else {
+    axios
+      .post("http://localhost:3000/clubs", formData)
+      .then((response) => {
+        console.log(response.data);
+        navigate("/home");
+      })
+      .catch((error) => {
         console.log("Error creating club", error);
-      }
-    }
+      });
   };
 
   const handleInputChange = (e) => {
