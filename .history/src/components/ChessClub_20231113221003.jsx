@@ -52,15 +52,9 @@ function ChessClub() {
       .catch((error) => {
         console.error("Error fetching club data:", error);
       });
-    axios
-      .get(`/students?club_id=${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setStudents(response.data);
-      });
+    axios.get(`/students?club_id=${id}`).then((response) => {
+      setStudents(response.data);
+    });
   }, [id]);
 
   console.log(`Club Data: ${clubData}`);

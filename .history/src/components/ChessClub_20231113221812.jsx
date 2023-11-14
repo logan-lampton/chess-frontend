@@ -40,27 +40,20 @@ function ChessClub() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    axios
-      .get(`/clubs/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setClubData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching club data:", error);
-      });
-    axios
-      .get(`/students?club_id=${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setStudents(response.data);
-      });
+    axios.get(`/clubs/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    // .then((response) => {
+    //   setClubData(response.data);
+    // })
+    // .catch((error) => {
+    //   console.error("Error fetching club data:", error);
+    // });
+    axios.get(`/students?club_id=${id}`).then((response) => {
+      setStudents(response.data);
+    });
   }, [id]);
 
   console.log(`Club Data: ${clubData}`);
