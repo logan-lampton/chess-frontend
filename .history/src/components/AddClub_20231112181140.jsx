@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export default function AddClub({ instructorId, handleClubAdded }) {
+export default function AddClub({ instructorId }) {
   const navigate = useNavigate();
-
-  console.log("Instructor ID", instructorId);
 
   const [formData, setFormData] = useState({
     club_name: "",
@@ -24,24 +22,15 @@ export default function AddClub({ instructorId, handleClubAdded }) {
 
   const handleCreateClub = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post("http://localhost:3000/clubs", formData);
-      console.log(response.data);
-      handleClubAdded(response.data);
-      navigate("/home");
-    } catch (error) {
-      if (error.response && error.response.status === 422) {
-        const validationErrors = error.response.data.errors;
-  
-        if (validationErrors) {
-          console.log("Validation errors:", validationErrors);
-        } else {
-          console.log("Unexpected validation response format:", error.response.data);
-        }
-      } else {
+    axios
+      .post("http://localhost:3000/clubs", formData)
+      .then((response) => {
+        console.log(response.data);
+        navigate("/home");
+      })
+      .catch((error) => {
         console.log("Error creating club", error);
-      }
-    }
+      });
   };
 
   const handleInputChange = (e) => {
@@ -96,13 +85,15 @@ export default function AddClub({ instructorId, handleClubAdded }) {
                 onChange={handleInputChange}
               />
             </div>
-            <button
-              onClick={handleCreateClub}
-              className='bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700 mr-1 mb-4'
-              type='submit'
-            >
-              Create
-            </button>
+            <Link to='/home'>
+              <button
+                onClick={handleCreateClub}
+                className='bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700 mr-1 mb-4'
+                type='submit'
+              >
+                Create
+              </button>
+            </Link>
           </form>
         </div>
       </div>

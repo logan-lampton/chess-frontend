@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -6,6 +6,8 @@ import {
   useNavigate,
 } from "react-router-dom";
 import "./App.css";
+import axios from "./axiosConfig";
+
 import Header from "./components/Header";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -20,7 +22,6 @@ import ViewLessons from "./components/ViewLessons";
 import ViewGameHistory from "./components/ViewGameHistory";
 import ViewNotes from "./components/ViewNotes";
 import AddNotes from "./components/AddNotes";
-import axios from "./axiosConfig";
 import ErrorBoundary from "./ErrorBoundary";
 
 function App() {
@@ -39,7 +40,24 @@ function App() {
       console.log("Login failed:", error);
     }
   };
-  console.log(user.clubs);
+
+  const [clubs, setClubs] = useState([]);
+  
+  useEffect(() => {
+    axios
+      .get("/clubs")
+      .then((response) => {
+        console.log("Received club data:", response.data);
+        setClubs(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching club data:", error);
+      });
+  }, []);
+
+  const handleClubAdded = (newClub) => {
+    setClubs([...clubs, newClub]);
+  }
 
   // Add back button links throughout the project (or more links in the homepage, or both!)
 
@@ -63,12 +81,9 @@ function App() {
                 <Register handleLogin={handleLogin} isLoggedIn={isLoggedIn} />
               }
             />
-            <Route path='/home' element={<Home clubs={user.clubs} />} />
+            <Route path='/home' element={<Home clubs={clubs} handleClubAdded={handleClubAdded}/>} />
             <Route path='/clubs/:id' element={<ChessClub />} />
-            <Route
-              path='/addclub'
-              element={<AddClub instructorId={instructorId} />}
-            />
+            <Route path='/addclub' element={<AddClub handleClubAdded={handleClubAdded} instructorId={instructorId} />} />
             <Route path='/addstudent' element={<AddStudent />} />
             <Route path='/studentpairings' element={<StudentPairings />} />
             <Route path='/viewclubgames' element={<ViewClubGames />} />

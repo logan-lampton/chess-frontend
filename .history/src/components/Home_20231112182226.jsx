@@ -8,15 +8,19 @@
 
 // Make sure the club listings don't cover up the buttons
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-function Home({clubs}) {
+function Home({ clubs }) {
+  // Ensure that 'clubs' is an array and provide a default empty array if it's undefined
+  const clubNames = Array.isArray(clubs) ? clubs : [];
+
+  const [clubState, setClubState] = useState({});
 
   return (
     <div className='h-screen bg-gray-100'>
       <div className='h-64 grid grid-cols-2 gap-40 content-around w-screen flex justify-center items-center px-12'>
-        {clubs.map((club) => (
+        {clubNames.map((club) => (
           <div key={club.club_name} className='border-2 border-gray-900 w-full'>
             <Link to={`/clubs/${club.id}`} state={{ club }}>
               <div className='bg-gray-900 text-white font-bold py-2 px-4 border hover:bg-gray-700'>
