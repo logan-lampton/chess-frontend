@@ -31,29 +31,53 @@ function App() {
   // change instructorId to match the instructor logging in, once that logic is changed from seeded info
   const instructorId = "2";
 
-  const handleLogin = async () => {
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token');
+  //   if (token) {
+  //     axios.get(`/clubs`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`
+  //       }
+  //     })
+  //     .then((response) => {
+  //       console.log("Received club data:", response.data);
+  //       setClubs(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching club data:", error);
+  //     });
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token && !isLoggedIn) {
+      try {
+        const response = axios.get("/me", {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        setUser(response.data.user);
+      } catch (error) {
+        console.log('Error fetching user data:', error)
+      }
+    }
+  })
+
+  const handleLogin = async (userData) => {
     try {
-      const response = await axios.get("http://localhost:3000/instructors/2");
-      setUser(response.data);
+      const response = await axios.post("http://localhost:3000/login", userData);
+      setUser(response.data.user);
+      setClubs(response.data.user.clubs)
       setLoggedIn(true);
+      localStorage.setItem("token", response.data.token)
     } catch (error) {
-      console.log("Login failed:", error);
+      console.log('Login failed:', error);
     }
   };
 
   const [clubs, setClubs] = useState([]);
-  
-  useEffect(() => {
-    axios
-      .get("/clubs")
-      .then((response) => {
-        console.log("Received club data:", response.data);
-        setClubs(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching club data:", error);
-      });
-  }, []);
 
   const handleClubAdded = (newClub) => {
     setClubs([...clubs, newClub]);

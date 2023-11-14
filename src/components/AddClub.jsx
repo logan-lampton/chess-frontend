@@ -14,18 +14,13 @@ export default function AddClub({ instructorId, handleClubAdded }) {
     instructor_id: instructorId,
   });
 
-  const requestOptions = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData),
-  };
-
   const handleCreateClub = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem('token');
     try {
-      const response = await axios.post("http://localhost:3000/clubs", formData);
+      const response = await axios.post("http://localhost:3000/clubs", formData, {headers: {
+        Authorization: `Bearer ${token}`}
+      });
       console.log(response.data);
       handleClubAdded(response.data);
       navigate("/home");
