@@ -31,7 +31,7 @@ function Home({ clubs }) {
           </div>
         ))}
       </div>
-      <div className='fixed bottom-0 right-0 p-5'>
+      <div className='fixed bottom-0 right-0 p-6'>
         <Link to='/addclub'>
           <button className='h-20 w-50 bg-green-600 hover:bg-green-400 text-white font-bold border bg-gray-900 rounded mr-4'>
             Add Club

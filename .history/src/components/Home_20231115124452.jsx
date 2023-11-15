@@ -12,31 +12,31 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function Home({ clubs }) {
+  //
   return (
     <div className='h-screen bg-gray-100'>
-      <div className='grid grid-cols-2 gap-20 content-around w-screen flex items-center px-10 mt-20'>
+      <div className='h-64 grid grid-cols-2 gap-40 content-around w-screen flex items-center px-12'>
         {clubs.map((club) => (
-          <div
-            key={club.club_name}
-            className='border-1 border-gray-900 w-full flex items-center'
-          >
-            <Link to={`/clubs/${club.id}`} state={{ club }} className='w-3/4'>
+          <div key={club.club_name} className='border-2 border-gray-900 w-full'>
+            <Link to={`/clubs/${club.id}`} state={{ club }}>
               <div className='bg-gray-900 text-white font-bold py-2 px-4 border hover:bg-gray-700'>
                 <h2>{club.club_name}</h2>
               </div>
             </Link>
-            <button className='w-1/4 bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 border bg-gray-900 rounded mr-4'>
-              Delete Club
-            </button>
           </div>
         ))}
       </div>
-      <div className='fixed bottom-0 right-0 p-5'>
-        <Link to='/addclub'>
-          <button className='h-20 w-50 bg-green-600 hover:bg-green-400 text-white font-bold border bg-gray-900 rounded mr-4'>
-            Add Club
+      <div className='absolute right-10 bottom-5 flex flex-col space-y-4'>
+        <div>
+          <Link to='/addclub'>
+            <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mr-4'>
+              Add Club
+            </button>
+          </Link>
+          <button className='h-20 w-50 bg-gray-900 hover-bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
+            Show More Clubs
           </button>
-        </Link>
+        </div>
       </div>
     </div>
   );
