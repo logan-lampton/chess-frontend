@@ -10,14 +10,41 @@
 
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
-function Home({ clubs }) {
+function Home({ clubs = []}) {
+
+  const [clubState, setClubState] = useState(clubs)
+
+  useEffect(() => {
+    setClubState(clubs);
+  }, [clubs])
+
+  const deleteClub = async (clubId) => {
+    const token = localStorage.getItem("token");
+    try {
+      const deleteResponse = await axios.delete(`http://localhost:3000/clubs/${clubId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      console.log('Club deleted:', deleteResponse.data);
+
+      setClubState((prevClubs) =>
+      prevClubs.filter((club) => club.id !== clubId)
+    );
+
+    } catch (error) {
+      console.error('Error deleting club:', error);
+    }
+  }
+
   return (
     <div className='h-screen bg-gray-100'>
       <div className='grid grid-cols-2 gap-20 content-around w-screen flex items-center px-10 mt-20'>
-        {clubs.map((club) => (
+        {Array.isArray(clubState) && clubState.map((club) => (
           <div
-            key={club.club_name}
+            key={club.id}
             className='border-1 border-gray-900 w-full flex items-center'
           >
             <Link to={`/clubs/${club.id}`} state={{ club }} className='w-3/4'>
@@ -25,7 +52,7 @@ function Home({ clubs }) {
                 <h2>{club.club_name}</h2>
               </div>
             </Link>
-            <button className='w-1/4 bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 border bg-gray-900 rounded mr-4'>
+            <button onClick={() => deleteClub(club.id)} className='w-1/4 bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 border bg-gray-900 rounded mr-4'>
               Delete Club
             </button>
           </div>

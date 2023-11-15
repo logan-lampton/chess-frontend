@@ -30,40 +30,28 @@ function App() {
 
   // change instructorId to match the instructor logging in, once that logic is changed from seeded info
   const instructorId = "2";
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   if (token) {
-  //     axios.get(`/clubs`, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`
-  //       }
-  //     })
-  //     .then((response) => {
-  //       console.log("Received club data:", response.data);
-  //       setClubs(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching club data:", error);
-  //     });
-  //   }
-  // }, []);
-
+  
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token && !isLoggedIn) {
-      try {
-        const response = axios.get("/me", {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        setUser(response.data.user);
-      } catch (error) {
-        console.log('Error fetching user data:', error)
+    const fetchData = async () => {
+      const token = localStorage.getItem('token');
+      if (token && !isLoggedIn) {
+        try {
+          const response = await axios.get("/me", {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+          setUser(response.data.user);
+          setClubs(response.data.user.clubs);
+          setLoggedIn(true);
+        } catch (error) {
+          console.log('Error fetching user data:', error);
+        }
       }
-    }
-  })
+    };
+  
+    fetchData();
+  }, [isLoggedIn])
 
   const handleLogin = async (userData) => {
     try {
@@ -80,8 +68,11 @@ function App() {
   const [clubs, setClubs] = useState([]);
 
   const handleClubAdded = (newClub) => {
-    setClubs([...clubs, newClub]);
+    setClubs((prevClubs) => {
+      return [...prevClubs, newClub]
+    });
   }
+
 
   // Add back button links throughout the project (or more links in the homepage, or both!)
 
@@ -105,9 +96,9 @@ function App() {
                 <Register handleLogin={handleLogin} isLoggedIn={isLoggedIn} />
               }
             />
-            <Route path='/home' element={<Home clubs={clubs} handleClubAdded={handleClubAdded}/>} />
+            <Route path='/home' element={<Home clubs={clubs} setClubs={setClubs}/>} />
             <Route path='/clubs/:id' element={<ChessClub />} />
-            <Route path='/addclub' element={<AddClub handleClubAdded={handleClubAdded} instructorId={instructorId} />} />
+            <Route path='/addclub' element={<AddClub instructorId={instructorId} handleClubAdded={handleClubAdded}/>} />
             <Route path='/addstudent' element={<AddStudent />} />
             <Route path='/studentpairings' element={<StudentPairings />} />
             <Route path='/viewclubgames' element={<ViewClubGames />} />
