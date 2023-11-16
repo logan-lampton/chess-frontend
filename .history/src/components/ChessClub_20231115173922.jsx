@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import axios from "../axiosConfig";
 
-function ChessClub({ club }) {
+function ChessClub() {
   const { id } = useParams();
 
-  const [clubData, setClubData] = useState(club);
-  const [students, setStudents] = useState([]);
+  const [clubData, setClubData] = useState(null);
+  const [students, setStudents] = useState(null);
 
   function convertToTwelveHourFormat(timeString) {
     const date = new Date(timeString);
@@ -41,7 +41,7 @@ function ChessClub({ club }) {
   useEffect(() => {
     const token = localStorage.getItem("token");
     axios
-      .get(`http://localhost:3000/clubs/${id}`, {
+      .get(`/clubs/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -53,13 +53,12 @@ function ChessClub({ club }) {
         console.error("Error fetching club data:", error);
       });
     axios
-      .get(`http://localhost:3000/students?club_id=${id}`, {
+      .get(`/students?club_id=${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
-        console.log(response);
         setStudents(response.data);
       });
   }, [id]);
@@ -76,16 +75,11 @@ function ChessClub({ club }) {
         }
       );
       console.log("Student deleted: ", deleteResponse.data);
-      const getResponse = await axios.get(
-        `http://localhost:3000/students?club_id=${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(getResponse.data);
-      setStudents(getResponse.data);
+      setStudents((prevStudents) => {
+        prevStudents.filter((student) => {
+          student.id != studentId;
+        });
+      });
     } catch (error) {
       console.error("Error deleting student", error);
     }
@@ -128,9 +122,7 @@ function ChessClub({ club }) {
                   to={{
                     pathname: "/addstudent",
                     search: `?club_id=${id}`,
-                    state: {
-                      id: id,
-                    },
+                    state: { setStudents: setStudents, id: id },
                   }}
                 >
                   <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
