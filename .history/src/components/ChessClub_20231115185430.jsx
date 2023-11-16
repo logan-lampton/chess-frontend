@@ -40,20 +40,20 @@ function ChessClub({ club }) {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    // axios
+    //   .get(`/clubs/${id}`, {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   })
+    //   .then((response) => {
+    //     setClubData(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching club data:", error);
+    //   });
     axios
-      .get(`http://localhost:3000/clubs/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setClubData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching club data:", error);
-      });
-    axios
-      .get(`http://localhost:3000/students?club_id=${id}`, {
+      .get(`/students?club_id=${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -76,14 +76,11 @@ function ChessClub({ club }) {
         }
       );
       console.log("Student deleted: ", deleteResponse.data);
-      const getResponse = await axios.get(
-        `http://localhost:3000/students?club_id=${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const getResponse = await axios.get(`/students?club_id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log(getResponse.data);
       setStudents(getResponse.data);
     } catch (error) {

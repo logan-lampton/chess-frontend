@@ -76,14 +76,11 @@ function ChessClub({ club }) {
         }
       );
       console.log("Student deleted: ", deleteResponse.data);
-      const getResponse = await axios.get(
-        `http://localhost:3000/students?club_id=${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const getResponse = await axios.get(`/students?club_id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log(getResponse.data);
       setStudents(getResponse.data);
     } catch (error) {

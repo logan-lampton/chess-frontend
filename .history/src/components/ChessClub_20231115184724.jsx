@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import axios from "../axiosConfig";
 
-function ChessClub({ club }) {
+function ChessClub() {
   const { id } = useParams();
 
-  const [clubData, setClubData] = useState(club);
+  const [clubData, setClubData] = useState(null);
   const [students, setStudents] = useState([]);
 
   function convertToTwelveHourFormat(timeString) {
@@ -41,7 +41,7 @@ function ChessClub({ club }) {
   useEffect(() => {
     const token = localStorage.getItem("token");
     axios
-      .get(`http://localhost:3000/clubs/${id}`, {
+      .get(`/clubs/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -53,7 +53,7 @@ function ChessClub({ club }) {
         console.error("Error fetching club data:", error);
       });
     axios
-      .get(`http://localhost:3000/students?club_id=${id}`, {
+      .get(`/students?club_id=${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -76,15 +76,11 @@ function ChessClub({ club }) {
         }
       );
       console.log("Student deleted: ", deleteResponse.data);
-      const getResponse = await axios.get(
-        `http://localhost:3000/students?club_id=${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(getResponse.data);
+      const getResponse = await axios.get(`/students?club_id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setStudents(getResponse.data);
     } catch (error) {
       console.error("Error deleting student", error);

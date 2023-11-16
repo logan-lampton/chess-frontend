@@ -9,6 +9,20 @@ function ChessClub({ club }) {
   const [clubData, setClubData] = useState(club);
   const [students, setStudents] = useState([]);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    axios
+      .get(`/students?club_id=${clubData.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        setStudents(response.data);
+      });
+  }, [students]);
+
   function convertToTwelveHourFormat(timeString) {
     const date = new Date(timeString);
 
@@ -38,32 +52,6 @@ function ChessClub({ club }) {
     return formattedTime;
   }
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    axios
-      .get(`http://localhost:3000/clubs/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setClubData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching club data:", error);
-      });
-    axios
-      .get(`http://localhost:3000/students?club_id=${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        console.log(response);
-        setStudents(response.data);
-      });
-  }, [id]);
-
   const deleteStudent = async (studentId) => {
     const token = localStorage.getItem("token");
     try {
@@ -76,14 +64,11 @@ function ChessClub({ club }) {
         }
       );
       console.log("Student deleted: ", deleteResponse.data);
-      const getResponse = await axios.get(
-        `http://localhost:3000/students?club_id=${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const getResponse = await axios.get(`/students?club_id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log(getResponse.data);
       setStudents(getResponse.data);
     } catch (error) {
@@ -106,7 +91,7 @@ function ChessClub({ club }) {
               </div>
               {students ? (
                 <ul className='ml-5'>
-                  {clubData.students.map((student) => (
+                  {students.students.map((student) => (
                     <li key={student.id} className='mb-3'>
                       <Link to={`/students/${student.id}`}>
                         {student.student_name}

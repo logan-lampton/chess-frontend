@@ -40,20 +40,20 @@ function ChessClub({ club }) {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    // axios
+    //   .get(`/clubs/${id}`, {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   })
+    //   .then((response) => {
+    //     setClubData(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching club data:", error);
+    //   });
     axios
-      .get(`http://localhost:3000/clubs/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setClubData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching club data:", error);
-      });
-    axios
-      .get(`http://localhost:3000/students?club_id=${id}`, {
+      .get(`/students?club_id=${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -76,14 +76,11 @@ function ChessClub({ club }) {
         }
       );
       console.log("Student deleted: ", deleteResponse.data);
-      const getResponse = await axios.get(
-        `http://localhost:3000/students?club_id=${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const getResponse = await axios.get(`/students?club_id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log(getResponse.data);
       setStudents(getResponse.data);
     } catch (error) {
@@ -95,18 +92,16 @@ function ChessClub({ club }) {
     <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-screen'>
       <div className='col-span-2 md:col-span-2 mr-5 ml-5'>
         <div className='border-2 border-gray-900'>
-          {clubData ? (
+          {club ? (
             <>
               <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-4'>
-                <h1 className='mb-5'>{clubData.club_name}</h1>
-                <h3>School: {clubData.school}</h3>
-                <h3>
-                  Meet Time: {convertToTwelveHourFormat(clubData?.meet_time)}
-                </h3>
+                <h1 className='mb-5'>{club.club_name}</h1>
+                <h3>School: {club.school}</h3>
+                <h3>Meet Time: {convertToTwelveHourFormat(club?.meet_time)}</h3>
               </div>
               {students ? (
                 <ul className='ml-5'>
-                  {clubData.students.map((student) => (
+                  {club.students.map((student) => (
                     <li key={student.id} className='mb-3'>
                       <Link to={`/students/${student.id}`}>
                         {student.student_name}
