@@ -93,7 +93,7 @@ function ChessClub() {
                 <h3>
                   Meet Time: {convertToTwelveHourFormat(clubData?.meet_time)}
                 </h3>
-                <button className='bg-slate-50 hover:bg-white text-black font-bold py-2 px-4 border bg-white rounded mt-5 mb-5'>
+                <button className='bg-slate-50 hover:bg-white text-black font-bold py-2  border bg-white rounded ml-5'>
                   <Link to={`/updateclub/${clubData.id}`}>
                     Edit Club Details
                   </Link>
