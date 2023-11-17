@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 import axios from "../axiosConfig";
 
 function ChessClub() {
-  const location = useLocation()
-  const club = location.state ? location.state.club : null;
-  console.log("Club page:", club)
-
   const { id } = useParams();
 
   const [clubData, setClubData] = useState([]);
@@ -91,18 +87,12 @@ function ChessClub() {
         <div className='border-2 border-gray-900'>
           {clubData ? (
             <>
-              {console.log("clubData", clubData)}
               <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-4'>
                 <h1 className='mb-5'>{clubData.club_name}</h1>
                 <h3>School: {clubData.school}</h3>
                 <h3>
                   Meet Time: {convertToTwelveHourFormat(clubData?.meet_time)}
                 </h3>
-                <button className='bg-slate-50 hover:bg-white text-black font-bold py-2 px-4 border bg-white rounded mt-5 mb-5'>
-                  <Link to={`/updateclub/${id}`} state={{clubData: clubData}}>
-                    Edit Club Details
-                  </Link>
-                </button>
               </div>
               {students ? (
                 <ul className='ml-5'>

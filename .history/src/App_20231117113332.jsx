@@ -23,7 +23,6 @@ import ViewGameHistory from "./components/ViewGameHistory";
 import ViewNotes from "./components/ViewNotes";
 import AddNotes from "./components/AddNotes";
 import ErrorBoundary from "./ErrorBoundary";
-import UpdateClub from "./components/UpdateClub";
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -124,7 +123,7 @@ function App() {
                 />
               }
             />
-            <Route path='/updateclub/:id' element={<UpdateClub instructorId={instructorId} />} />
+            <Route path='/updateclub' element={<UpdateClub />} />
             <Route path='/addstudent' element={<AddStudent />} />
             <Route path='/studentpairings' element={<StudentPairings />} />
             <Route path='/viewclubgames' element={<ViewClubGames />} />
