@@ -43,7 +43,13 @@ function Home({ clubs = [], handleClubDeleted }) {
               key={club.id}
               className='border-1 border-gray-900 w-full flex items-center'
             >
-              <Link to={`/clubs/${club.id}`} className='w-3/4'>
+              <Link to={{
+                pathname: `/clubs/${club.id}`,
+                state: {
+                  club: club,
+                  user: user
+                }
+              }} className='w-3/4'>
                 <div className='bg-gray-900 text-white font-bold py-2 px-4 border hover:bg-gray-700'>
                   <h2>{club.club_name}</h2>
                 </div>

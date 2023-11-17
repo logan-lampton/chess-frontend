@@ -124,7 +124,7 @@ function App() {
                 />
               }
             />
-            <Route path='/updateclub/:id' element={<UpdateClub />} />
+            <Route path='/updateclub/:id' element={<UpdateClub instructorId={instructorId} />} />
             <Route path='/addstudent' element={<AddStudent />} />
             <Route path='/studentpairings' element={<StudentPairings />} />
             <Route path='/viewclubgames' element={<ViewClubGames />} />
