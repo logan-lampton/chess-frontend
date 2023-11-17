@@ -75,12 +75,6 @@ function App() {
     });
   };
 
-  function handleClubDeleted(id) {
-    const newArray = [...clubs];
-    setClubs(newArray.filter((club) => club.id !== id));
-  }
-  console.log("app", clubs)
-
   // Add back button links throughout the project (or more links in the homepage, or both!)
 
   return (
@@ -105,9 +99,9 @@ function App() {
             />
             <Route
               path='/home'
-              element={<Home clubs={clubs} setClubs={setClubs} handleClubDeleted={handleClubDeleted}/>}
+              element={<Home clubs={clubs} setClubs={setClubs} />}
             />
-            <Route path="/clubs/:id" element={<ChessClub />} />
+            <Route path='/clubs/:id' element={<ChessClub />} />
             <Route
               path='/addclub'
               element={

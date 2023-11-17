@@ -27,7 +27,6 @@ import ErrorBoundary from "./ErrorBoundary";
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
-  const [clubs, setClubs] = useState([]);
 
   // change instructorId to match the instructor logging in, once that logic is changed from seeded info
   const instructorId = "2";
@@ -54,6 +53,8 @@ function App() {
     fetchData();
   }, [isLoggedIn]);
 
+  const [clubs, setClubs] = useState([]);
+
   const handleLogin = async (userData) => {
     try {
       const response = await axios.post(
@@ -74,12 +75,6 @@ function App() {
       return [...prevClubs, newClub];
     });
   };
-
-  function handleClubDeleted(id) {
-    const newArray = [...clubs];
-    setClubs(newArray.filter((club) => club.id !== id));
-  }
-  console.log("app", clubs)
 
   // Add back button links throughout the project (or more links in the homepage, or both!)
 
@@ -105,9 +100,9 @@ function App() {
             />
             <Route
               path='/home'
-              element={<Home clubs={clubs} setClubs={setClubs} handleClubDeleted={handleClubDeleted}/>}
+              element={<Home clubs={clubs} setClubs={setClubs} />}
             />
-            <Route path="/clubs/:id" element={<ChessClub />} />
+            <Route path='/clubs/:id' element={<ChessClub />} />
             <Route
               path='/addclub'
               element={
