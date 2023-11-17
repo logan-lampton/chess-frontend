@@ -12,7 +12,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-function Home({ clubs = [], handleClubDeleted }) {
+function Home({ clubs = [] }) {
+  const [clubState, setClubState] = useState(clubs);
 
   const deleteClub = async (clubId) => {
     const token = localStorage.getItem("token");
@@ -27,23 +28,24 @@ function Home({ clubs = [], handleClubDeleted }) {
       );
       console.log("Club deleted:", deleteResponse.data);
 
-      handleClubDeleted(clubId);
+      setClubState((prevClubs) =>
+        prevClubs.filter((club) => club.id !== clubId)
+      );
     } catch (error) {
       console.error("Error deleting club:", error);
     }
   };
-  console.log("home", clubs)
 
   return (
     <div className='h-screen bg-gray-100'>
       <div className='grid grid-cols-2 gap-20 content-around w-screen flex items-center px-10 mt-20'>
-        {clubs.map((club) => (
+        {Array.isArray(clubState) &&
+          clubState.map((club) => (
             <div
-              {...console.log("Home2", club)}
               key={club.id}
               className='border-1 border-gray-900 w-full flex items-center'
             >
-              <Link to={`/clubs/${club.id}`} className='w-3/4'>
+              <Link to={`/clubs/${club.id}`} state={{ club }} className='w-3/4'>
                 <div className='bg-gray-900 text-white font-bold py-2 px-4 border hover:bg-gray-700'>
                   <h2>{club.club_name}</h2>
                 </div>
