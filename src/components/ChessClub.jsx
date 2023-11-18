@@ -6,30 +6,30 @@ import axios from "../axiosConfig";
 
 function ChessClub() {
   const location = useLocation()
-  const club = location.state ? location.state.club : null;
-  console.log("Club page:", club)
+  const { club } = location.state
+  console.log("Club page:", location.state)
 
   const { id } = useParams();
 
-  const [clubData, setClubData] = useState([]);
-  const [students, setStudents] = useState([]);
+  // const [clubData, setClubData] = useState([]);
+  // const [students, setStudents] = useState([]);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    axios
-      .get(`http://localhost:3000/clubs/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setClubData(response.data);
-        setStudents(response.data.students);
-      })
-      .catch((error) => {
-        console.error("Error fetching club data:", error);
-      });
-  }, [id]);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   axios
+  //     .get(`http://localhost:3000/clubs/${id}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       setClubData(response.data);
+  //       setStudents(response.data.students);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching club data:", error);
+  //     });
+  // }, [id]);
 
   function convertToTwelveHourFormat(timeString) {
     const date = new Date(timeString);
@@ -89,24 +89,23 @@ function ChessClub() {
     <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-screen'>
       <div className='col-span-2 md:col-span-2 mr-5 ml-5'>
         <div className='border-2 border-gray-900'>
-          {clubData ? (
+          {club ? (
             <>
-              {console.log("clubData", clubData)}
               <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-4'>
-                <h1 className='mb-5'>{clubData.club_name}</h1>
-                <h3>School: {clubData.school}</h3>
+                <h1 className='mb-5'>{club.club_name}</h1>
+                <h3>School: {club.school}</h3>
                 <h3>
-                  Meet Time: {convertToTwelveHourFormat(clubData?.meet_time)}
+                  Meet Time: {convertToTwelveHourFormat(club.meet_time)}
                 </h3>
                 <button className='bg-slate-50 hover:bg-white text-black font-bold py-2 px-4 border bg-white rounded mt-5 mb-5'>
-                  <Link to={`/updateclub/${id}`} state={{clubData: clubData}}>
+                  <Link to={`/updateclub/${id}`} state={{club: club}}>
                     Edit Club Details
                   </Link>
                 </button>
               </div>
-              {students ? (
+              {club.students ? (
                 <ul className='ml-5'>
-                  {students.map((student) => (
+                  {club.students.map((student) => (
                     <li key={student.id} className='mb-3'>
                       <Link to={`/students/${student.id}`}>
                         {student.student_name}
@@ -160,7 +159,7 @@ function ChessClub() {
             </button>
           </Link>
         </div>
-        {clubData && (
+        {club && (
           <div className='border-2 border-gray-900'>
             <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-4'>
               <h2>Club Stats</h2>
@@ -168,15 +167,12 @@ function ChessClub() {
             <div className='ml-5'>
               <h2 className='mb-3'> Students with Highest Winrate: </h2>
               <ul className='ml-7'>
-                {clubData.top_3 &&
-                  clubData.top_3.map((topThree) => {
-                    const student = clubData.students.find(
-                      (s) => s.student_name === topThree.student
-                    );
+                {club.top_3 &&
+                  club.top_3.map((student) => {
                     return (
                       <li className='mb-3' key={student.id}>
                         <Link to={`/students/${student.id}`}>
-                          {topThree.student}: {topThree.wins}
+                          {student.student}: {student.wins * 100}%
                         </Link>
                       </li>
                     );

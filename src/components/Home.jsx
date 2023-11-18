@@ -39,17 +39,10 @@ function Home({ clubs = [], handleClubDeleted }) {
       <div className='grid grid-cols-2 gap-20 content-around w-screen flex items-center px-10 mt-20'>
         {clubs.map((club) => (
             <div
-              {...console.log("Home2", club)}
               key={club.id}
               className='border-1 border-gray-900 w-full flex items-center'
             >
-              <Link to={{
-                pathname: `/clubs/${club.id}`,
-                state: {
-                  club: club,
-                  user: user
-                }
-              }} className='w-3/4'>
+              <Link to={`/clubs/${club.id}`} state= {{club: club}} className='w-3/4'>
                 <div className='bg-gray-900 text-white font-bold py-2 px-4 border hover:bg-gray-700'>
                   <h2>{club.club_name}</h2>
                 </div>
