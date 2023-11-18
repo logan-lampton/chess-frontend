@@ -5,8 +5,6 @@ import axios from "axios";
 export default function AddClub({ instructorId, handleClubAdded }) {
   const navigate = useNavigate();
 
-  console.log("Instructor ID", instructorId);
-
   const [formData, setFormData] = useState({
     club_name: "",
     school: "",

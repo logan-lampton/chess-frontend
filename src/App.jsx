@@ -81,6 +81,7 @@ function App() {
     setClubs(newArray.filter((club) => club.id !== id));
   }
   console.log("app", clubs);
+  console.log("user on app", user)
 
   // Add back button links throughout the project (or more links in the homepage, or both!)
 

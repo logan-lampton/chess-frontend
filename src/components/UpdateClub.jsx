@@ -6,16 +6,11 @@ import { useNavigate, useLocation } from 'react-router-dom'
 
 function UpdateClub({ instructorId }) {
 
-  console.log(instructorId)
-
   const navigate = useNavigate();
 
   const location = useLocation();
 
-  console.log(location)
-  const clubData = location.state;
-
-  console.log(clubData)
+  const clubData = location.state.club
 
   const [formData, setFormData] = useState({
     club_name: "",
@@ -48,13 +43,6 @@ function UpdateClub({ instructorId }) {
       [name]: value,
     })
   }
-  console.log("clubdata", clubData)
-
-  console.log("Keys", Object.keys(clubData));
-  console.log("Values", Object.values(clubData));
-
-  console.log("Club data length:", clubData.length)
-  console.log("First object in clubData:", clubData[0])
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-screen'>
@@ -65,9 +53,7 @@ function UpdateClub({ instructorId }) {
           </div>
           <form className='ml-5'>
             <div className='mb-4'>
-            {clubData && clubData.length > 0 && (
               <label htmlFor='club_name'>Name of Club: Currently: {clubData.club_name}</label>
-            )}
               <input
                 className='border border-gray-300 rounded p-2'
                 type='text'
