@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 // Possibly, eventually add ability to change the instructor of the club
 
-function UpdateClub({ instructorId, handleClubUpdated }) {
+function UpdateClub({ instructorId }) {
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -17,27 +17,6 @@ function UpdateClub({ instructorId, handleClubUpdated }) {
     meet_time: "",
     instructor_Id: instructorId,
   });
-
-  const handleUpdateClub = async (e) => {
-    e.preventDefault();
-    const token = localStorage.getItem("token");
-    try {
-      const response = await axios.patch(
-        `http://localhost:3000/clubs/${clubData.id}`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log("Update successful", response.data);
-      handleClubUpdated(response.data);
-      navigate(`/home`);
-    } catch (error) {
-      console.error("Error updating club data", error);
-    }
-  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

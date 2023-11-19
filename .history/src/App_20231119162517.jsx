@@ -81,14 +81,12 @@ function App() {
     setClubs(newArray.filter((club) => club.id !== id));
   }
 
-  const handleClubUpdated = (updatedClub) => {
-    setClubs((prevClubs) => {
-      return prevClubs.map((club) =>
-        club.id === updatedClub.id ? { ...club, ...updatedClub } : club
-      );
+  const handleClubUpdated = (updatedClubData) => {
+    setClubData({
+      ...clubData,
+      ...updatedClubData, // Update only the provided fields
     });
   };
-
   console.log("app", clubs);
   console.log("user on app", user);
 
@@ -121,7 +119,6 @@ function App() {
                   clubs={clubs}
                   setClubs={setClubs}
                   handleClubDeleted={handleClubDeleted}
-                  handleClubUpdated={handleClubUpdated}
                 />
               }
             />
@@ -137,12 +134,7 @@ function App() {
             />
             <Route
               path='/updateclub/:id'
-              element={
-                <UpdateClub
-                  instructorId={instructorId}
-                  handleClubUpdated={handleClubUpdated}
-                />
-              }
+              element={<UpdateClub instructorId={instructorId} />}
             />
             <Route path='/addstudent' element={<AddStudent />} />
             <Route path='/studentpairings' element={<StudentPairings />} />

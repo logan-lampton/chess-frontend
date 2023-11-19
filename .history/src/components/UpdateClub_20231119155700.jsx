@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 // Possibly, eventually add ability to change the instructor of the club
 
-function UpdateClub({ instructorId, handleClubUpdated }) {
+function UpdateClub({ instructorId }) {
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -32,8 +32,7 @@ function UpdateClub({ instructorId, handleClubUpdated }) {
         }
       );
       console.log("Update successful", response.data);
-      handleClubUpdated(response.data);
-      navigate(`/home`);
+      navigate(`/clubs/${clubData.id}`);
     } catch (error) {
       console.error("Error updating club data", error);
     }
@@ -55,8 +54,8 @@ function UpdateClub({ instructorId, handleClubUpdated }) {
             <h2>Update Club Details</h2>
           </div>
           <form className='ml-5'>
-            <div className='flex flex-col mb-4 mt-4'>
-              <label htmlFor='club_name' className='mb-2'>
+            <div className='mb-4 flex items-center'>
+              <label htmlFor='club_name' className='mr-4'>
                 Name of Club: (Currently: {clubData.club_name}):
               </label>
               <div className='flex justify-end flex-grow mr-5'>
@@ -71,7 +70,7 @@ function UpdateClub({ instructorId, handleClubUpdated }) {
                 />
               </div>
             </div>
-            <div className='flex flex-col mb-4 mt-4'>
+            <div className='mb-4 flex items-center'>
               <label htmlFor='school' className='mr-4'>
                 Name of School: (Currently: {clubData.school}):
               </label>
@@ -86,30 +85,12 @@ function UpdateClub({ instructorId, handleClubUpdated }) {
                   onChange={handleInputChange}
                 />
               </div>
-              <div className='flex flex-col mb-4 mt-4'>
+              <div className='mb-4 flex items-center'>
                 <label htmlFor='meet_time' className='mr-4'>
-                  Meet Time: (Currently: {clubData.meet_time}):
+                  Name of School: (Currently: {clubData.meet_time}):
                 </label>
-                <div className='flex justify-end flex-grow mr-5'>
-                  <input
-                    className='border border-gray-300 rounded p-2 w-full'
-                    type='text'
-                    id='meet_time'
-                    name='meet_time'
-                    placeholder='Insert meet name'
-                    value={formData.meet_time}
-                    onChange={handleInputChange}
-                  />
-                </div>
               </div>
             </div>
-            <button
-              onClick={handleUpdateClub}
-              className='bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700 mr-1 mb-4'
-              type='submit'
-            >
-              Update Club
-            </button>
           </form>
         </div>
       </div>
