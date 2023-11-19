@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 // Possibly, eventually add ability to change the instructor of the club
 
-function UpdateClub({ instructorId, handleClubUpdated }) {
+function UpdateClub({ instructorId }) {
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -32,8 +32,7 @@ function UpdateClub({ instructorId, handleClubUpdated }) {
         }
       );
       console.log("Update successful", response.data);
-      handleClubUpdated(response.data);
-      navigate(`/home`);
+      navigate(`/clubs/${clubData.id}`);
     } catch (error) {
       console.error("Error updating club data", error);
     }
@@ -59,7 +58,7 @@ function UpdateClub({ instructorId, handleClubUpdated }) {
               <label htmlFor='club_name' className='mb-2'>
                 Name of Club: (Currently: {clubData.club_name}):
               </label>
-              <div className='flex justify-end flex-grow mr-5'>
+              <div className='flex justify-end flex-grow mr-5 mt-5'>
                 <input
                   className='border border-gray-300 rounded p-2 w-full'
                   type='text'
@@ -75,7 +74,7 @@ function UpdateClub({ instructorId, handleClubUpdated }) {
               <label htmlFor='school' className='mr-4'>
                 Name of School: (Currently: {clubData.school}):
               </label>
-              <div className='flex justify-end flex-grow mr-5'>
+              <div className='flex justify-end flex-grow mr-5 mt-5'>
                 <input
                   className='border border-gray-300 rounded p-2 w-full'
                   type='text'
@@ -103,13 +102,6 @@ function UpdateClub({ instructorId, handleClubUpdated }) {
                 </div>
               </div>
             </div>
-            <button
-              onClick={handleUpdateClub}
-              className='bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700 mr-1 mb-4'
-              type='submit'
-            >
-              Update Club
-            </button>
           </form>
         </div>
       </div>

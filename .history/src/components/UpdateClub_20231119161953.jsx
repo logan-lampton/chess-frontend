@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 // Possibly, eventually add ability to change the instructor of the club
 
-function UpdateClub({ instructorId, handleClubUpdated }) {
+function UpdateClub({ instructorId }) {
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -32,7 +32,6 @@ function UpdateClub({ instructorId, handleClubUpdated }) {
         }
       );
       console.log("Update successful", response.data);
-      handleClubUpdated(response.data);
       navigate(`/home`);
     } catch (error) {
       console.error("Error updating club data", error);

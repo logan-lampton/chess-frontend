@@ -32,7 +32,6 @@ function UpdateClub({ instructorId, handleClubUpdated }) {
         }
       );
       console.log("Update successful", response.data);
-      handleClubUpdated(response.data);
       navigate(`/home`);
     } catch (error) {
       console.error("Error updating club data", error);

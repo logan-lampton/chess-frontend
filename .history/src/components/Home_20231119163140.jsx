@@ -12,7 +12,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-function Home({ clubs = [], handleClubDeleted, handleClubUpdated }) {
+function Home({ clubs = [], handleClubDeleted }) {
   const deleteClub = async (clubId) => {
     const token = localStorage.getItem("token");
     try {

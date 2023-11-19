@@ -81,11 +81,10 @@ function App() {
     setClubs(newArray.filter((club) => club.id !== id));
   }
 
-  const handleClubUpdated = (updatedClub) => {
-    setClubs((prevClubs) => {
-      return prevClubs.map((club) =>
-        club.id === updatedClub.id ? { ...club, ...updatedClub } : club
-      );
+  const handleClubUpdated = (updatedClubData) => {
+    setClubData({
+      ...clubData,
+      ...updatedClubData,
     });
   };
 
@@ -121,7 +120,6 @@ function App() {
                   clubs={clubs}
                   setClubs={setClubs}
                   handleClubDeleted={handleClubDeleted}
-                  handleClubUpdated={handleClubUpdated}
                 />
               }
             />

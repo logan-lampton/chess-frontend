@@ -12,7 +12,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-function Home({ clubs = [], handleClubDeleted, handleClubUpdated }) {
+function Home({ clubs = [], handleClubDeleted }) {
   const deleteClub = async (clubId) => {
     const token = localStorage.getItem("token");
     try {
@@ -29,6 +29,27 @@ function Home({ clubs = [], handleClubDeleted, handleClubUpdated }) {
       handleClubDeleted(clubId);
     } catch (error) {
       console.error("Error deleting club:", error);
+    }
+  };
+
+  const handleUpdateClub = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axios.patch(
+        `http://localhost:3000/clubs/${clubData.id}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Update successful", response.data);
+      handleClubUpdated(response.data);
+      navigate(`/home`);
+    } catch (error) {
+      console.error("Error updating club data", error);
     }
   };
 

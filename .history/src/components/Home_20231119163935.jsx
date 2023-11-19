@@ -12,7 +12,15 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-function Home({ clubs = [], handleClubDeleted, handleClubUpdated }) {
+function Home({ clubs = [], handleClubDeleted }) {
+  const [clubData, setClubData] = useState(clubs);
+
+  useEffect(() => {
+    if (updatedClubData) {
+      setClubData(updatedClubData);
+    }
+  }, [updatedClubData]);
+
   const deleteClub = async (clubId) => {
     const token = localStorage.getItem("token");
     try {
@@ -35,7 +43,7 @@ function Home({ clubs = [], handleClubDeleted, handleClubUpdated }) {
   return (
     <div className='h-screen bg-gray-100'>
       <div className='grid grid-cols-2 gap-20 content-around w-screen flex items-center px-10 mt-20'>
-        {clubs.map((club) => (
+        {clubData.map((club) => (
           <div
             key={club.id}
             className='border-1 border-gray-900 w-full flex items-center'
