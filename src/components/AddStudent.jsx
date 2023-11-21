@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function AddStudent({ handleStudentAdded }) {
+function AddStudent() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const clubId = searchParams.get("club_id");
@@ -29,7 +29,6 @@ function AddStudent({ handleStudentAdded }) {
         }
       );
       console.log(response.data);
-      handleStudentAdded(response.data);
       navigate(`/clubs/${clubId}`);
     } catch (error) {
       console.error("Error creating student:", error);
