@@ -10,7 +10,7 @@ function ChessClub() {
   const location = useLocation();
   const { club: initialClub } = location.state || {};
 
-  const [club, setClub] = useState(initialClub || {});
+  const [club, setClub] = useState(initialClub);
 
   const [students, setStudents] = useState(club.students || []);
 
@@ -61,7 +61,7 @@ function ChessClub() {
         },
       });
       console.log(getResponse.data.students);
-      setClub(getResponse.data);
+      setClubData(getResponse.data);
       setStudents(getResponse.data.students);
     } catch (error) {
       console.error("Error deleting student", error);

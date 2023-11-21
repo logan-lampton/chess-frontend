@@ -5,12 +5,10 @@ import { useParams } from "react-router-dom";
 import axios from "../axiosConfig";
 
 function ChessClub() {
-  const { id } = useParams();
-
   const location = useLocation();
   const { club: initialClub } = location.state || {};
 
-  const [club, setClub] = useState(initialClub || {});
+  const { id } = useParams();
 
   const [students, setStudents] = useState(club.students || []);
 
@@ -61,7 +59,7 @@ function ChessClub() {
         },
       });
       console.log(getResponse.data.students);
-      setClub(getResponse.data);
+      setClubData(getResponse.data);
       setStudents(getResponse.data.students);
     } catch (error) {
       console.error("Error deleting student", error);

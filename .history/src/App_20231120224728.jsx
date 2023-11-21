@@ -30,7 +30,6 @@ function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
   const [clubs, setClubs] = useState([]);
-  const [students, setStudents] = useState([]);
 
   // change instructorId to match the instructor logging in, once that logic is changed from seeded info
   const instructorId = "2";
@@ -47,7 +46,6 @@ function App() {
           });
           setUser(response.data.user);
           setClubs(response.data.user.clubs);
-          setStudents(response.data.user.clubs.students);
           setLoggedIn(true);
         } catch (error) {
           console.log("Error fetching user data:", error);
@@ -143,7 +141,7 @@ function App() {
             />
             <Route
               path='/addstudent'
-              element={<AddStudent handleStudentAdded={handleStudentAdded} />}
+              element={<AddStudent handleStudentAdded={handleClubAdded} />}
             />
             <Route
               path='/updateclub/:id'

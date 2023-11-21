@@ -5,12 +5,10 @@ import { useParams } from "react-router-dom";
 import axios from "../axiosConfig";
 
 function ChessClub() {
-  const { id } = useParams();
-
   const location = useLocation();
-  const { club: initialClub } = location.state || {};
+  const { club } = location.state;
 
-  const [club, setClub] = useState(initialClub || {});
+  const { id } = useParams();
 
   const [students, setStudents] = useState(club.students || []);
 
@@ -43,6 +41,12 @@ function ChessClub() {
     return formattedTime;
   }
 
+  function handleStudentAdded(newStudent) {
+    setStudents((prevStudents) => {
+      return [...prevStudents, newStudent];
+    });
+  }
+
   const deleteStudent = async (studentId) => {
     const token = localStorage.getItem("token");
     try {
@@ -61,7 +65,7 @@ function ChessClub() {
         },
       });
       console.log(getResponse.data.students);
-      setClub(getResponse.data);
+      setClubData(getResponse.data);
       setStudents(getResponse.data.students);
     } catch (error) {
       console.error("Error deleting student", error);
@@ -113,6 +117,7 @@ function ChessClub() {
                     },
                   }}
                 >
+                  <AddStudent handleStudentAdded={handleStudentAdded} />
                   <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
                     Add Student
                   </button>

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 
 import axios from "../axiosConfig";
 
-function ChessClub() {
+function ChessClub({ students }) {
   const { id } = useParams();
 
   const location = useLocation();
@@ -12,7 +12,7 @@ function ChessClub() {
 
   const [club, setClub] = useState(initialClub || {});
 
-  const [students, setStudents] = useState(club.students || []);
+  const [students, setStudents] = useState(students || []);
 
   function convertToTwelveHourFormat(timeString) {
     const date = new Date(timeString);
@@ -61,7 +61,7 @@ function ChessClub() {
         },
       });
       console.log(getResponse.data.students);
-      setClub(getResponse.data);
+      setClubData(getResponse.data);
       setStudents(getResponse.data.students);
     } catch (error) {
       console.error("Error deleting student", error);

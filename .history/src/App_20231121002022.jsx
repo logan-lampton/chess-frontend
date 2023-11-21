@@ -131,7 +131,10 @@ function App() {
                 />
               }
             />
-            <Route path='/clubs/:id' element={<ChessClub />} />
+            <Route
+              path='/clubs/:id'
+              element={<ChessClub students={students} />}
+            />
             <Route
               path='/addclub'
               element={

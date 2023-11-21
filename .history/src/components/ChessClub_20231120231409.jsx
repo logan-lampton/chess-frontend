@@ -10,7 +10,7 @@ function ChessClub() {
   const location = useLocation();
   const { club: initialClub } = location.state || {};
 
-  const [club, setClub] = useState(initialClub || {});
+  const [club, setClub] = useState(initialClub);
 
   const [students, setStudents] = useState(club.students || []);
 
@@ -43,6 +43,30 @@ function ChessClub() {
     return formattedTime;
   }
 
+  useEffect(() => {
+    const fetchClubData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(`http://localhost:3000/clubs/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        // Update the club state with fetched data
+        setClub(response.data);
+        // Assuming the students data is nested within response.data
+        setStudents(response.data.students || []);
+      } catch (error) {
+        console.error("Error fetching club data:", error);
+      }
+    };
+
+    // Fetch club data only if id exists
+    if (id) {
+      fetchClubData();
+    }
+  }, [id]);
+
   const deleteStudent = async (studentId) => {
     const token = localStorage.getItem("token");
     try {
@@ -61,7 +85,7 @@ function ChessClub() {
         },
       });
       console.log(getResponse.data.students);
-      setClub(getResponse.data);
+      setClubData(getResponse.data);
       setStudents(getResponse.data.students);
     } catch (error) {
       console.error("Error deleting student", error);
