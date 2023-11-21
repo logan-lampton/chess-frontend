@@ -136,7 +136,6 @@ function App() {
                 />
               }
             />
-            <Route path='/addstudent' element={<AddStudent />} />
             <Route
               path='/updateclub/:id'
               element={
@@ -146,7 +145,7 @@ function App() {
                 />
               }
             />
-            <Route path='/updatestudent/:id' element={<UpdateStudent />} />
+            <Route path='/addstudent' element={<AddStudent />} />
             <Route path='/studentpairings' element={<StudentPairings />} />
             <Route path='/viewclubgames' element={<ViewClubGames />} />
             <Route path='/students/:id' element={<Student />} />

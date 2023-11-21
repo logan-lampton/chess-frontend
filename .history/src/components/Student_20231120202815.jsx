@@ -29,12 +29,10 @@ function Student() {
       <div className='border-2 border-gray-900 col-span-2 md:col-span-2 mr-5 ml-5'>
         {student ? (
           <div>
-            <div className='bg-gray-900 text-white font-bold py-2 px-4 border flex justify-between items-center'>
+            <div className='bg-gray-900 text-white font-bold py-2 px-4 border flex justify-start'>
               <h2>{student.student_name}</h2>
               <button className='bg-slate-50 hover:bg-white text-black font-bold py-2 px-4 border bg-white rounded'>
-                <Link to={`/updatestudent/${id}`} state={{ student: student }}>
-                  Edit Student
-                </Link>
+                Edit Student
               </button>
             </div>
             <div className='ml-5 mt-4'>
