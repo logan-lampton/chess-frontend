@@ -18,6 +18,14 @@ function UpdateClub({ instructorId, handleClubUpdated }) {
     instructor_Id: instructorId,
   });
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
   const handleUpdateClub = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
@@ -37,14 +45,6 @@ function UpdateClub({ instructorId, handleClubUpdated }) {
     } catch (error) {
       console.error("Error updating club data", error);
     }
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
   };
 
   return (
