@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function AddStudent() {
+function AddStudent({ handleStudentAdded }) {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const clubId = searchParams.get("club_id");
@@ -18,21 +18,20 @@ function AddStudent() {
   const handleCreateStudent = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/students",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer: ${token}`,
-          },
-        }
-      );
-      console.log(response.data);
-      navigate(`/clubs/${clubId}`);
-    } catch (error) {
-      console.error("Error creating student:", error);
-    }
+    const response = axios
+      .post("http://localhost:3000/students", formData, {
+        headers: {
+          Authorization: `Bearer: ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        handleStudentAdded(response.data);
+        navigate(`/clubs/${clubId}`);
+      })
+      .catch((error) => {
+        console.error("Error creating student:", error);
+      });
   };
 
   const handleInputChange = (e) => {

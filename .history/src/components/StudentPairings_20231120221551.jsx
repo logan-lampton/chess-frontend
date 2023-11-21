@@ -11,14 +11,11 @@ function StudentPairings() {
 
   return (
     <div className='flex justify-center'>
-      {students.map((student) => (
-        <div
-          key={student.id}
-          className='h-15 w-5 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'
-        >
+      {students.map((student) => {
+        <div key={student.id} className='bg-gray-200 p-4 rounded-lg mr-4'>
           {student.student_name}
-        </div>
-      ))}
+        </div>;
+      })}
     </div>
   );
 }

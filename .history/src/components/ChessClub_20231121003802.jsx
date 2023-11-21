@@ -4,30 +4,13 @@ import { useParams } from "react-router-dom";
 
 import axios from "../axiosConfig";
 
-function ChessClub({instructorId}) {
+function ChessClub() {
   const { id } = useParams();
 
   const location = useLocation();
   const { club: initialClub } = location.state || {};
 
-  const [club, setClub] = useState(initialClub);
-
-  useEffect(() => {
-    if (!club) {
-      const token = localStorage.getItem("token");
-      axios.get(`/clubs/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setClub(response.data); // Assuming the response.data contains the club info
-      })
-      .catch((error) => {
-        console.error("Error fetching club data: ", error);
-      });
-    }
-  }, [club, id]);
+  const [club, setClub] = useState(initialClub || {});
 
   console.log("ChessClub component club object", club);
 
@@ -79,6 +62,7 @@ function ChessClub({instructorId}) {
       });
       console.log(getResponse.data.students);
       setClub(getResponse.data);
+      setStudents(getResponse.data.students);
     } catch (error) {
       console.error("Error deleting student", error);
     }

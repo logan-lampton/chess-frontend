@@ -35,26 +35,26 @@ function App() {
   // change instructorId to match the instructor logging in, once that logic is changed from seeded info
   const instructorId = "2";
 
-  const fetchData = async () => {
-    const token = localStorage.getItem("token");
-    if (token && !isLoggedIn) {
-      try {
-        const response = await axios.get("/me", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setUser(response.data.user);
-        setClubs(response.data.user.clubs);
-        setStudents(response.data.user.clubs.students);
-        setLoggedIn(true);
-      } catch (error) {
-        console.log("Error fetching user data:", error);
-      }
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      const token = localStorage.getItem("token");
+      if (token && !isLoggedIn) {
+        try {
+          const response = await axios.get("/me", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setUser(response.data.user);
+          setClubs(response.data.user.clubs);
+          setStudents(response.data.user.clubs.students);
+          setLoggedIn(true);
+        } catch (error) {
+          console.log("Error fetching user data:", error);
+        }
+      }
+    };
+
     fetchData();
   }, [isLoggedIn]);
 
@@ -92,6 +92,23 @@ function App() {
     });
   };
 
+  function handleStudentAdded(newStudent) {
+    setStudents((prevStudents) => {
+      return [...prevStudents, newStudent];
+    });
+    setClubs((prevClubs) => {
+      return prevClubs.map((club) => {
+        if (club.id === newStudent.club_id) {
+          return {
+            ...club,
+            students: [...club.students, newStudent],
+          };
+        }
+        return club;
+      });
+    });
+  }
+
   console.log("App.jsx clubs", clubs);
 
   // Add back button links throughout the project (or more links in the homepage, or both!)
@@ -127,7 +144,7 @@ function App() {
                 />
               }
             />
-            <Route path='/clubs/:id' element={<ChessClub instructorId={instructorId}/>} />
+            <Route path='/clubs/:id' element={<ChessClub />} />
             <Route
               path='/addclub'
               element={
@@ -139,7 +156,7 @@ function App() {
             />
             <Route
               path='/addstudent'
-              element={<AddStudent />}
+              element={<AddStudent handleStudentAdded={handleStudentAdded} />}
             />
             <Route
               path='/updateclub/:id'

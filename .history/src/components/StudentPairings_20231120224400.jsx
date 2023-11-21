@@ -14,7 +14,7 @@ function StudentPairings() {
       {students.map((student) => (
         <div
           key={student.id}
-          className='h-15 w-5 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'
+          className='h-15 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'
         >
           {student.student_name}
         </div>
