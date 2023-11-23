@@ -87,7 +87,7 @@ function ChessClub({ instructorId }) {
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-screen'>
-      <div className='col-span-2 md:col-span-2 mr-5 ml-5'>
+      <div className='col-span-2 md:col-span-2 mr-5 ml-5 w-5'>
         <div className='border-2 border-gray-900'>
           {club ? (
             <>
@@ -102,18 +102,15 @@ function ChessClub({ instructorId }) {
                 </button>
               </div>
               {club.students ? (
-                <ul className='ml-5'>
+                <ul className='ml-5 justify-between'>
                   {club.students.map((student) => (
-                    <li key={student.id} className='mb-3 flex items-center'>
-                      <Link
-                        to={`/students/${student.id}`}
-                        className='flex-grow'
-                      >
+                    <li key={student.id} className='mb-3'>
+                      <Link to={`/students/${student.id}`}>
                         {student.student_name}
                       </Link>
                       <button
                         onClick={() => deleteStudent(student.id)}
-                        className='bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 border bg-gray-900 rounded mr-5'
+                        className='bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 border bg-gray-900 rounded ml-5'
                       >
                         Delete
                       </button>
