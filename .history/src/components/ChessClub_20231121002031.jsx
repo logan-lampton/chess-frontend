@@ -4,33 +4,15 @@ import { useParams } from "react-router-dom";
 
 import axios from "../axiosConfig";
 
-function ChessClub({ instructorId }) {
+function ChessClub({ students }) {
   const { id } = useParams();
 
   const location = useLocation();
   const { club: initialClub } = location.state || {};
 
-  const [club, setClub] = useState(initialClub);
+  const [club, setClub] = useState(initialClub || {});
 
-  useEffect(() => {
-    if (!club) {
-      const token = localStorage.getItem("token");
-      axios
-        .get(`/clubs/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          setClub(response.data); // Assuming the response.data contains the club info
-        })
-        .catch((error) => {
-          console.error("Error fetching club data: ", error);
-        });
-    }
-  }, [club, id]);
-
-  console.log("ChessClub component club object", club);
+  const [students, setStudents] = useState(club.students || []);
 
   function convertToTwelveHourFormat(timeString) {
     const date = new Date(timeString);
@@ -79,7 +61,8 @@ function ChessClub({ instructorId }) {
         },
       });
       console.log(getResponse.data.students);
-      setClub(getResponse.data);
+      setClubData(getResponse.data);
+      setStudents(getResponse.data.students);
     } catch (error) {
       console.error("Error deleting student", error);
     }
@@ -101,19 +84,16 @@ function ChessClub({ instructorId }) {
                   </Link>
                 </button>
               </div>
-              {club.students ? (
+              {students ? (
                 <ul className='ml-5'>
-                  {club.students.map((student) => (
-                    <li key={student.id} className='mb-3 flex items-center'>
-                      <Link
-                        to={`/students/${student.id}`}
-                        className='flex-grow'
-                      >
+                  {students.map((student) => (
+                    <li key={student.id} className='mb-3'>
+                      <Link to={`/students/${student.id}`}>
                         {student.student_name}
                       </Link>
                       <button
                         onClick={() => deleteStudent(student.id)}
-                        className='bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 border bg-gray-900 rounded mr-5'
+                        className='bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 border bg-gray-900 rounded ml-5'
                       >
                         Delete
                       </button>
@@ -147,9 +127,7 @@ function ChessClub({ instructorId }) {
 
       <div className='col-span-1 md:col-span-1 mr-5'>
         <div>
-
-          <Link to='/studentpairings' state = {{students: club.students}}>
-
+          <Link to='/studentpairings' state={{ club: club }}>
             <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
               Pair Students
             </button>

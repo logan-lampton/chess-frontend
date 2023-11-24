@@ -1,3 +1,4 @@
+
 import {React, useState, useEffect} from 'react'
 import {useLocation} from 'react-router-dom'
 import { DragDropContext, Droppable} from 'react-beautiful-dnd'
@@ -77,6 +78,7 @@ function StudentPairings() {
     ))}
     </DragDropContext>
   )
+
 }
 
-export default StudentPairings
+export default StudentPairings;

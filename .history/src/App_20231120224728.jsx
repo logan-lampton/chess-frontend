@@ -30,31 +30,29 @@ function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
   const [clubs, setClubs] = useState([]);
-  const [students, setStudents] = useState([]);
 
   // change instructorId to match the instructor logging in, once that logic is changed from seeded info
   const instructorId = "2";
 
-  const fetchData = async () => {
-    const token = localStorage.getItem("token");
-    if (token && !isLoggedIn) {
-      try {
-        const response = await axios.get("/me", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setUser(response.data.user);
-        setClubs(response.data.user.clubs);
-        setStudents(response.data.user.clubs.students);
-        setLoggedIn(true);
-      } catch (error) {
-        console.log("Error fetching user data:", error);
-      }
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      const token = localStorage.getItem("token");
+      if (token && !isLoggedIn) {
+        try {
+          const response = await axios.get("/me", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setUser(response.data.user);
+          setClubs(response.data.user.clubs);
+          setLoggedIn(true);
+        } catch (error) {
+          console.log("Error fetching user data:", error);
+        }
+      }
+    };
+
     fetchData();
   }, [isLoggedIn]);
 
@@ -92,7 +90,11 @@ function App() {
     });
   };
 
-  console.log("App.jsx clubs", clubs);
+  function handleStudentAdded(newStudent) {
+    setStudents((prevStudents) => {
+      return [...prevStudents, newStudent];
+    });
+  }
 
   // Add back button links throughout the project (or more links in the homepage, or both!)
 
@@ -127,7 +129,7 @@ function App() {
                 />
               }
             />
-            <Route path='/clubs/:id' element={<ChessClub instructorId={instructorId}/>} />
+            <Route path='/clubs/:id' element={<ChessClub />} />
             <Route
               path='/addclub'
               element={
@@ -139,7 +141,7 @@ function App() {
             />
             <Route
               path='/addstudent'
-              element={<AddStudent />}
+              element={<AddStudent handleStudentAdded={handleClubAdded} />}
             />
             <Route
               path='/updateclub/:id'
