@@ -147,7 +147,9 @@ function ChessClub({ instructorId }) {
 
       <div className='col-span-1 md:col-span-1 mr-5'>
         <div>
-          <Link to='/studentpairings' state={{ club: club }}>
+
+          <Link to='/studentpairings' state = {{students: club.students}}>
+
             <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
               Pair Students
             </button>
