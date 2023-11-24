@@ -22,7 +22,7 @@ function ChessClub({ instructorId }) {
           },
         })
         .then((response) => {
-          setClub(response.data); // Assuming the response.data contains the club info
+          setClub(response.data);
         })
         .catch((error) => {
           console.error("Error fetching club data: ", error);
