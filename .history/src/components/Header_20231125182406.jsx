@@ -16,7 +16,7 @@ export default function Header({ isLoggedIn, setLoggedIn }) {
   };
 
   return (
-    <div className='bg-gray-900 text-white font-bold py-2 px-4 border w-screen flex justify-between items-center'>
+    <div className='bg-gray-900 text-white font-bold py-2 px-4 border w-screen flex'>
       {isLoggedIn ? (
         <Link to='/home'>
           <h1 className='text-white'>8 by 8 Club Manager</h1>
@@ -24,13 +24,11 @@ export default function Header({ isLoggedIn, setLoggedIn }) {
       ) : (
         <h1>8 by 8 Club Manager</h1>
       )}
-      <div className='flex items-center'>
-        <BackButton className='flex ml-auto items-center' />
+      <BackButton />
 
-        <button className='bg-neutral-100 hover:bg-neutral-50 text-black font-bold py-2 px-4 border neutral-100 rounded ml-2'>
-          {isLoggedIn ? <p onClick={handleLogout}>Log out</p> : <p>Log in</p>}
-        </button>
-      </div>
+      <button className='bg-neutral-100 hover:bg-neutral-50 text-black font-bold py-2 px-4 border neutral-100 rounded absolute top-5 right-5 h-1 w-100'>
+        {isLoggedIn ? <p onClick={handleLogout}>Log out</p> : <p>Log in</p>}
+      </button>
     </div>
   );
 }

@@ -24,13 +24,11 @@ export default function Header({ isLoggedIn, setLoggedIn }) {
       ) : (
         <h1>8 by 8 Club Manager</h1>
       )}
-      <div className='flex items-center'>
-        <BackButton className='flex ml-auto items-center' />
+      <BackButton />
 
-        <button className='bg-neutral-100 hover:bg-neutral-50 text-black font-bold py-2 px-4 border neutral-100 rounded ml-2'>
-          {isLoggedIn ? <p onClick={handleLogout}>Log out</p> : <p>Log in</p>}
-        </button>
-      </div>
+      <button className='bg-neutral-100 hover:bg-neutral-50 text-black font-bold py-2 px-4 border neutral-100 rounded ml-5 justify-end'>
+        {isLoggedIn ? <p onClick={handleLogout}>Log out</p> : <p>Log in</p>}
+      </button>
     </div>
   );
 }
