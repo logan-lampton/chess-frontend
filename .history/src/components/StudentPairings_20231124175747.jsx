@@ -5,7 +5,7 @@ import Game from "./Game";
 
 function StudentPairings() {
   const location = useLocation();
-  const { students } = location.state.club;
+  const { students } = location.state.club.students;
   const [pairs, setPairs] = useState([]);
 
   function makePairs(arr) {
