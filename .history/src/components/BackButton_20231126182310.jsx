@@ -4,14 +4,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 function BackButton() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [historyStack, setHistoryStack] = useState([]);
+  const [historyStack, setHistoryStack] = useState(["/"]);
   const historyRef = useRef([]);
 
   useEffect(() => {
-    if (!historyRef.current.includes(pathname)) {
-      historyRef.current.push(pathname);
-      setHistoryStack(historyRef.current);
-    }
+    historyRef.current.push(pathname);
+    setHistoryStack(historyRef.current);
   }, [pathname]);
 
   const excludedRoutes = ["/", "/login", "/register"];

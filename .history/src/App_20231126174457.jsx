@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import axios from "./axiosConfig";
 
 import Header from "./components/Header";
@@ -21,11 +26,14 @@ import UpdateClub from "./components/UpdateClub";
 import UpdateStudent from "./components/UpdateStudent";
 
 function App() {
+  const navigate = useNavigate();
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
   const [clubs, setClubs] = useState([]);
   const [students, setStudents] = useState([]);
-  const [instructorId, setInstructorId] = useState("");
+
+  // change instructorId to match the instructor logging in, once that logic is changed from seeded info
+  const instructorId = "2";
 
   const fetchData = async () => {
     const token = localStorage.getItem("token");
@@ -40,7 +48,6 @@ function App() {
         setClubs(response.data.user.clubs);
         setStudents(response.data.user.clubs.students);
         setLoggedIn(true);
-        setInstructorId(response.data.user.id);
       } catch (error) {
         console.log("Error fetching user data:", error);
       }
@@ -71,6 +78,7 @@ function App() {
     setClubs([]);
     setLoggedIn(false);
     localStorage.removeItem("token");
+    navigate("/");
   };
 
   const handleClubAdded = (newClub) => {

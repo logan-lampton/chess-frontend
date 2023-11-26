@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import axios from "./axiosConfig";
 
 import Header from "./components/Header";
@@ -25,7 +30,9 @@ function App() {
   const [user, setUser] = useState({});
   const [clubs, setClubs] = useState([]);
   const [students, setStudents] = useState([]);
-  const [instructorId, setInstructorId] = useState("");
+
+  // change instructorId to match the instructor logging in, once that logic is changed from seeded info
+  const instructorId = "2";
 
   const fetchData = async () => {
     const token = localStorage.getItem("token");
@@ -40,7 +47,6 @@ function App() {
         setClubs(response.data.user.clubs);
         setStudents(response.data.user.clubs.students);
         setLoggedIn(true);
-        setInstructorId(response.data.user.id);
       } catch (error) {
         console.log("Error fetching user data:", error);
       }
@@ -101,13 +107,24 @@ function App() {
       <ErrorBoundary>
         <div className='flex flex-col items-center h-screen w-screen'>
           <header>
-            <Header isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+            <Header
+              isLoggedIn={isLoggedIn}
+              setLoggedIn={setLoggedIn}
+              handleLogout={handleLogout}
+            />
           </header>
           <Routes>
-            <Route path='/' element={<Login handleLogin={handleLogin} />} />
+            <Route
+              path='/'
+              element={
+                <Login handleLogin={handleLogin} isLoggedIn={isLoggedIn} />
+              }
+            />
             <Route
               path='/register'
-              element={<Register handleLogin={handleLogin} />}
+              element={
+                <Register handleLogin={handleLogin} isLoggedIn={isLoggedIn} />
+              }
             />
             <Route
               path='/home'

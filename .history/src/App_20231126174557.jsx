@@ -25,7 +25,9 @@ function App() {
   const [user, setUser] = useState({});
   const [clubs, setClubs] = useState([]);
   const [students, setStudents] = useState([]);
-  const [instructorId, setInstructorId] = useState("");
+
+  // change instructorId to match the instructor logging in, once that logic is changed from seeded info
+  const instructorId = "2";
 
   const fetchData = async () => {
     const token = localStorage.getItem("token");
@@ -40,7 +42,6 @@ function App() {
         setClubs(response.data.user.clubs);
         setStudents(response.data.user.clubs.students);
         setLoggedIn(true);
-        setInstructorId(response.data.user.id);
       } catch (error) {
         console.log("Error fetching user data:", error);
       }

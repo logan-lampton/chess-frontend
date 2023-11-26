@@ -1,27 +1,16 @@
-import React, { useEffect, useState, useRef } from "react";
+import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 function BackButton() {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const [historyStack, setHistoryStack] = useState([]);
-  const historyRef = useRef([]);
-
-  useEffect(() => {
-    if (!historyRef.current.includes(pathname)) {
-      historyRef.current.push(pathname);
-      setHistoryStack(historyRef.current);
-    }
-  }, [pathname]);
+  const location = useLocation();
 
   const excludedRoutes = ["/", "/login", "/register"];
 
   const goBack = () => {
-    const previousRoute = historyStack[historyStack.length - 2];
+    const previousRoute = history.entries[history.index - 1]?.pathname;
 
     if (!excludedRoutes.includes(previousRoute)) {
-      historyRef.current.pop();
-      setHistoryStack(historyRef.current);
       navigate(-1);
     }
   };

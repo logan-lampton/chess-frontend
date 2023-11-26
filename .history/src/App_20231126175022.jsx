@@ -27,6 +27,9 @@ function App() {
   const [students, setStudents] = useState([]);
   const [instructorId, setInstructorId] = useState("");
 
+  // change instructorId to match the instructor logging in, once that logic is changed from seeded info
+  const instructorId = "2";
+
   const fetchData = async () => {
     const token = localStorage.getItem("token");
     if (token && !isLoggedIn) {

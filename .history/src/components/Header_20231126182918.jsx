@@ -5,7 +5,7 @@
 
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import BackButton from "./BackButton";
+// import BackButton from "./BackButton";
 
 export default function Header({ isLoggedIn, handleLogout }) {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ export default function Header({ isLoggedIn, handleLogout }) {
         <h1>8 by 8 Club Manager</h1>
       )}
       <div className='flex items-center'>
-        <BackButton className='flex ml-auto items-center' />
+        {/* <BackButton className='flex ml-auto items-center' /> */}
 
         <button className='bg-neutral-100 hover:bg-neutral-50 text-black font-bold py-2 px-4 border neutral-100 rounded ml-2'>
           {isLoggedIn ? <p onClick={logout}>Log out</p> : <p>Log in</p>}
