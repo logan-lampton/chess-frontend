@@ -20,7 +20,7 @@ function BackButton() {
   return (
     <button
       onClick={goBack}
-      className='bg-neutral-100 hover:bg-neutral-50 text-black font-bold py-2 px-4 border neutral-100 rounded'
+      className='bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700 mr-1 mb-4'
     >
       Back
     </button>
