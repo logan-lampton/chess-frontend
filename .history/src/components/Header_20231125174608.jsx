@@ -24,7 +24,6 @@ export default function Header({ isLoggedIn, setLoggedIn }) {
       ) : (
         <h1>8 by 8 Club Manager</h1>
       )}
-      <BackButton />
 
       <button className='bg-neutral-100 hover:bg-neutral-50 text-black font-bold py-2 px-4 border neutral-100 rounded absolute top-5 right-5 h-15 w-100'>
         {isLoggedIn ? <p onClick={handleLogout}>Log out</p> : <p>Log in</p>}
