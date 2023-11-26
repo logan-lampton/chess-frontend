@@ -72,6 +72,7 @@ function App() {
     setClubs([]);
     setLoggedIn(false);
     localStorage.removeItem("token");
+    navigate("/");
   };
 
   const handleClubAdded = (newClub) => {

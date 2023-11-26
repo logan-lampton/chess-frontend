@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import axios from "./axiosConfig";
 
 import Header from "./components/Header";
@@ -72,6 +77,7 @@ function App() {
     setClubs([]);
     setLoggedIn(false);
     localStorage.removeItem("token");
+    navigate("/");
   };
 
   const handleClubAdded = (newClub) => {
@@ -102,13 +108,20 @@ function App() {
       <ErrorBoundary>
         <div className='flex flex-col items-center h-screen w-screen'>
           <header>
-            <Header isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+            <Header setLoggedIn={setLoggedIn} handleLogout={handleLogout} />
           </header>
           <Routes>
-            <Route path='/' element={<Login handleLogin={handleLogin} />} />
+            <Route
+              path='/'
+              element={
+                <Login handleLogin={handleLogin} isLoggedIn={isLoggedIn} />
+              }
+            />
             <Route
               path='/register'
-              element={<Register handleLogin={handleLogin} />}
+              element={
+                <Register handleLogin={handleLogin} isLoggedIn={isLoggedIn} />
+              }
             />
             <Route
               path='/home'
