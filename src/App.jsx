@@ -66,7 +66,13 @@ function App() {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try{
+      const response = await axios.delete("/logout");
+      console.log('logged out', response.data);
+    } catch (error) {
+      console.error("error deleting token", error);
+    }
     setUser(null);
     setClubs([]);
     setLoggedIn(false);
@@ -117,6 +123,7 @@ function App() {
                   setClubs={setClubs}
                   handleClubDeleted={handleClubDeleted}
                   handleClubUpdated={handleClubUpdated}
+                  instructorId={instructorId}
                 />
               }
             />

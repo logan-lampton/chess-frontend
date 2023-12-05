@@ -12,7 +12,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-function Home({ clubs = [], handleClubDeleted }) {
+function Home({ clubs = [], handleClubDeleted, instructorId }) {
   const deleteClub = async (clubId) => {
     const token = localStorage.getItem("token");
     try {
@@ -59,7 +59,7 @@ function Home({ clubs = [], handleClubDeleted }) {
         ))}
       </div>
       <div className='fixed bottom-0 right-0 p-5'>
-        <Link to='/addclub'>
+        <Link to={'/addclub'} state={{instructorId : instructorId}}>
           <button className='h-20 w-50 bg-green-600 hover:bg-green-400 text-white font-bold border bg-gray-900 rounded mr-4'>
             Add Club
           </button>
