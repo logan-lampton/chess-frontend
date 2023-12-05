@@ -14,7 +14,7 @@ function BackButton() {
     }
   }, [pathname]);
 
-  const excludedRoutes = ["/", "/login", "/register"];
+  const excludedRoutes = ["/", "/login", "/register", undefined];
 
   const goBack = () => {
     const previousRoute = historyStack[historyStack.length - 2];
