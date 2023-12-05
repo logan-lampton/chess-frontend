@@ -123,6 +123,7 @@ function App() {
                   setClubs={setClubs}
                   handleClubDeleted={handleClubDeleted}
                   handleClubUpdated={handleClubUpdated}
+                  instructorId={instructorId}
                 />
               }
             />
