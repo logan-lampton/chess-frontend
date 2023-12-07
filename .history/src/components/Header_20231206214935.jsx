@@ -5,10 +5,7 @@ import BackButton from "./BackButton";
 export default function Header({ isLoggedIn, handleLogout }) {
   const navigate = useNavigate();
   const location = useLocation();
-
-  const onHomePage = location.pathname === "/home"
-
-  console.log(location.pathname)
+  const isHomePage = window.location.pathname === "/home";
 
   const logout = () => {
     handleLogout();
@@ -24,7 +21,7 @@ export default function Header({ isLoggedIn, handleLogout }) {
         <h1>8 by 8 Club Manager</h1>
       )}
       <div className='flex items-center'>
-        {isLoggedIn && !onHomePage ? (
+        {isLoggedIn || isHomePage ? (
           <BackButton className='flex ml-auto items-center' />
         ) : null}
 

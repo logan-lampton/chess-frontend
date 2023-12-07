@@ -5,7 +5,7 @@ function BackButton() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [historyStack, setHistoryStack] = useState([]);
-  const historyRef = useRef([]);
+  const historyRef = useRef(["/home"]);
 
   useEffect(() => {
     if (!historyRef.current.includes(pathname)) {
@@ -13,6 +13,8 @@ function BackButton() {
       setHistoryStack(historyRef.current);
     }
   }, [pathname]);
+
+  console.log(historyRef.current)
 
   const excludedRoutes = ["/", "/login", "/register", undefined];
 
