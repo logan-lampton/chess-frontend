@@ -33,7 +33,8 @@ export default function Header({ isLoggedIn, handleLogout }) {
             <p onClick={logout}>Log out</p>
           ) : (
             <Link to='/'>
-              <p>Log in</p>
+              {" "}
+              <p>Log in</p>{" "}
             </Link>
           )}
         </button>
