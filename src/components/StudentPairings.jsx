@@ -5,82 +5,96 @@ import Game from "./Game";
 
 function StudentPairings() {
   const location = useLocation();
-  const { students } = location.state.club;
-  const [pairs, setPairs] = useState([]);
+  const students = location.state.checkedStudents;
 
-  function makePairs(arr) {
-    const pairsArray = [];
-    for (let i = 0; i < arr.length; i += 2) {
-      pairsArray.push(arr.slice(i, i + 2));
-    }
-    return pairsArray;
-  }
+  // console.log(location.state)
+  console.log(students)
+  // const [pairs, setPairs] = useState([]);
 
-  useEffect(() => setPairs(makePairs(students)), [students]);
+  // function makePairs(arr) {
+  //   const pairsArray = [];
+  //   for (let i = 0; i < arr.length; i += 2) {
+  //     pairsArray.push(arr.slice(i, i + 2));
+  //   }
+  //   return pairsArray;
+  // }
 
-  function onDragEnd(result) {
-    const { destination, source, draggableId } = result;
-    console.log("result", result);
-    if (!destination) {
-      return;
-    }
+  // useEffect(() => setPairs(makePairs(students)), [students]);
 
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return;
-    }
+  // function onDragEnd(result) {
+  //   const { destination, source, draggableId } = result;
+  //   console.log("result", result);
+  //   if (!destination) {
+  //     return;
+  //   }
 
-    const newPairs = [...pairs];
-    const sourceGameId = parseInt(source.droppableId);
-    const destinationGameId = parseInt(destination.droppableId);
-    const sourcePlayerIndex = source.index;
-    const destinationPlayerIndex =
-      destination.index > 1 ? 1 : destination.index;
+  //   if (
+  //     destination.droppableId === source.droppableId &&
+  //     destination.index === source.index
+  //   ) {
+  //     return;
+  //   }
 
-    // Check if source and destination are the same game
-    if (sourceGameId === destinationGameId) {
-      const game = newPairs[sourceGameId];
+  //   const newPairs = [...pairs];
+  //   const sourceGameId = parseInt(source.droppableId);
+  //   const destinationGameId = parseInt(destination.droppableId);
+  //   const sourcePlayerIndex = source.index;
+  //   const destinationPlayerIndex =
+  //     destination.index > 1 ? 1 : destination.index;
 
-      // Insert players back into the same game
-      game.unshift(game.pop());
-    } else {
-      // Remove the source player from the source game
-      const sourceGame = newPairs[sourceGameId];
-      const sourcePlayer = sourceGame.splice(sourcePlayerIndex, 1)[0];
+  //   // Check if source and destination are the same game
+  //   if (sourceGameId === destinationGameId) {
+  //     const game = newPairs[sourceGameId];
 
-      // Remove the destination player from the destination game
-      const destinationGame = newPairs[destinationGameId];
-      const destinationPlayer = destinationGame.splice(
-        destinationPlayerIndex,
-        1
-      )[0];
+  //     // Insert players back into the same game
+  //     game.unshift(game.pop());
+  //   } else {
+  //     // Remove the source player from the source game
+  //     const sourceGame = newPairs[sourceGameId];
+  //     const sourcePlayer = sourceGame.splice(sourcePlayerIndex, 1)[0];
 
-      // Insert the source player into the destination game
-      destinationGame.splice(destinationPlayerIndex, 0, sourcePlayer);
+  //     // Remove the destination player from the destination game
+  //     const destinationGame = newPairs[destinationGameId];
+  //     const destinationPlayer = destinationGame.splice(
+  //       destinationPlayerIndex,
+  //       1
+  //     )[0];
 
-      // Insert the destination player into the source game
-      sourceGame.splice(sourcePlayerIndex, 0, destinationPlayer);
-    }
+  //     // Insert the source player into the destination game
+  //     destinationGame.splice(destinationPlayerIndex, 0, sourcePlayer);
 
-    // Set the updated pairs state
-    setPairs(newPairs);
-  }
+  //     // Insert the destination player into the source game
+  //     sourceGame.splice(sourcePlayerIndex, 0, destinationPlayer);
+  //   }
+
+  //   // Set the updated pairs state
+  //   setPairs(newPairs);
+  // }
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      {pairs.map((pair, i) => (
-        <Droppable droppableId={`${i}`} key={i}>
-          {(provided) => (
-            <div {...provided.droppableProps} ref={provided.innerRef}>
-              <Game players={pair} gamenum={i} />
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      ))}
-    </DragDropContext>
+    <div>
+      <p>Student Pairings page</p>
+      <ul>
+        {students.map((student) => (
+          <li key={student.id}>
+            {student.student_name}
+          </li>
+        ))}
+      </ul>
+    </div>
+    // <DragDropContext onDragEnd={onDragEnd}>
+    //   {pairs.map((pair, i) => (
+    //     <Droppable droppableId={`${i}`} key={i}>
+    //       {(provided) => (
+    //         <div {...provided.droppableProps} ref={provided.innerRef}>
+    //           <Game players={pair} gamenum={i} />
+    //           {provided.placeholder}
+    //         </div>
+    //       )}
+    //     </Droppable>
+    //   ))}
+    // </DragDropContext>
+
   );
 }
 

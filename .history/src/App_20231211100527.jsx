@@ -114,8 +114,6 @@ function App() {
               path='/register'
               element={<Register handleLogin={handleLogin} />}
             />
-            {isLoggedIn ? (
-              <>
             <Route
               path='/home'
               element={
@@ -160,7 +158,6 @@ function App() {
             <Route path='/viewgamehistory' element={<ViewGameHistory />} />
             <Route path='/viewnotes' element={<ViewNotes />} />
             <Route path='/addnotes' element={<AddNotes />} />
-            </>) : 'hidden'}
           </Routes>
         </div>
       </ErrorBoundary>
