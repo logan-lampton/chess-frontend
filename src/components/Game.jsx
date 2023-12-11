@@ -1,7 +1,6 @@
 import React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 export default function Game({players, gamenum}) {
-    console.log("games", players)
   return (
     <div>
         <h1>Game {gamenum +1}</h1>

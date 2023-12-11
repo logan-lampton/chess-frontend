@@ -3,25 +3,38 @@ import {React, useState, useEffect} from 'react'
 import {useLocation} from 'react-router-dom'
 import { DragDropContext, Droppable} from 'react-beautiful-dnd'
 import Game from './Game'
+import UnpairedPlayers from './UnpairedPlayers'
 
 function StudentPairings() {
 
   const location = useLocation()
-  const {students} = location.state
-  const [pairs, setPairs] = useState([])
+  const {students} = location.state.club
+  const [pairs, setPairs] = useState({pairs:[], unpaired:[]})
   
   function makePairs(arr){
-    const pairsArray = []
-    for (let i = 0; i<arr.length; i+=2){
-      pairsArray.push(arr.slice(i, i+2))
+    const pairsHash = {pairs:[], unpaired:[]}
+    if (arr.length%2 === 0){
+      for (let i = 0; i<arr.length; i+=2){
+        pairsHash.pairs.push(arr.slice(i, i+2))
+      }
+      return pairsHash
     }
-    return pairsArray
+    else{
+      for (let i = 0; i<arr.length-2; i+=2){
+        pairsHash.pairs.push(arr.slice(i, i+2))
+      }
+      pairsHash.unpaired.push(arr[arr.length-1])
+      
+      return pairsHash
+    }
   }
 
   useEffect(()=>setPairs(makePairs(students)), [students])
 
+  console.log(pairs)
+
   function onDragEnd(result){
-    const {destination, source, draggableId} = result;
+    const {destination, source, type} = result;
     console.log('result', result)
     if (!destination){
       return;
@@ -32,7 +45,7 @@ function StudentPairings() {
         return;
       }
 
-      const newPairs = [...pairs];
+      const newPairs = [...pairs.pairs];
       const sourceGameId = parseInt(source.droppableId);
       const destinationGameId = parseInt(destination.droppableId);
       const sourcePlayerIndex = source.index;
@@ -61,13 +74,13 @@ function StudentPairings() {
       }
     
       // Set the updated pairs state
-      setPairs(newPairs);
+      setPairs({...pairs, [pairs]:newPairs});
   }
   
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-    {pairs.map((pair, i)=> (
-      <Droppable droppableId = {`${i}`} key = {i}>
+    {pairs.pairs.map((pair, i)=> (
+      <Droppable droppableId = {`${i}`} key = {i} type = 'game'>
         {(provided) => (
           <div {...provided.droppableProps} ref = {provided.innerRef}>
             <Game players = {pair} gamenum = {i}/>
@@ -76,6 +89,15 @@ function StudentPairings() {
         )}
       </Droppable>
     ))}
+    <Droppable droppableId = 'unpaired' type = 'unpaired'>
+          {(provided)=> (
+            <div {...provided.droppableProps} ref = {provided.innerRef}>
+              <UnpairedPlayers  players = {pairs.unpaired}/>
+              {provided.placeholder}
+            </div>
+          )
+          }
+    </Droppable>
     </DragDropContext>
   )
 
