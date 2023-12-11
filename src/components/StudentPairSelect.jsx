@@ -52,13 +52,19 @@ function StudentPairSelect() {
             </div>
         </div>
         <div className='col-span-1 md:col-span-1 mr-5'>
-            <div>
-                <Link to='/studentpairings' state={{ checkedStudents: checkedStudents }}>
-                    <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
-                    Pair Students
-                    </button>
-                </Link>
-            </div>
+            {checkedStudents.length % 2 === 0 ? (
+                <div>
+                    <Link to='/studentpairings' state={{ checkedStudents: checkedStudents }}>
+                        <button className='w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
+                        Proceed to Pairings
+                        </button>
+                    </Link>
+                </div>
+            ) : (
+                <div>
+                    <p className="bg-gray-300 text-black font-bold py-2 px-4 border rounded">Please Select an Even Number of Students</p>
+                </div>
+            )}
         </div>
     </div>
   );
