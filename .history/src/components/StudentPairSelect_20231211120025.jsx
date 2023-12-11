@@ -7,18 +7,8 @@ function StudentPairSelect() {
   const [studentsToCheck, setStudentsToCheck] = useState([]);
 
   useEffect(() => {
-    setStudentsToCheck(
-      students.map((student) => ({ ...student, checked: true }))
-    );
-  }, [students]);
-
-  const handleCheckboxChange = (id) => {
-    setStudentsToCheck((prevStudents) =>
-      prevStudents.map((student) =>
-        student.id === id ? { ...student, checked: !student.checked } : student
-      )
-    );
-  };
+    setStudentsToCheck(students);
+  });
 
   return (
     <div className='max-w-screen-md justify-start'>
@@ -33,11 +23,7 @@ function StudentPairSelect() {
           <li key={student.id} className='flex justify-between mb-2'>
             <div>{student.student_name}</div>
             <div className='ml-auto'>
-              <input
-                type='checkbox'
-                checked={student.checked}
-                onChange={() => handleCheckboxChange(student.id)}
-              />
+              <input type='checkbox' checked></input>
             </div>
           </li>
         ))}

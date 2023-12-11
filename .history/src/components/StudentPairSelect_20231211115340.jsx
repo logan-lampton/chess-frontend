@@ -7,18 +7,8 @@ function StudentPairSelect() {
   const [studentsToCheck, setStudentsToCheck] = useState([]);
 
   useEffect(() => {
-    setStudentsToCheck(
-      students.map((student) => ({ ...student, checked: true }))
-    );
-  }, [students]);
-
-  const handleCheckboxChange = (id) => {
-    setStudentsToCheck((prevStudents) =>
-      prevStudents.map((student) =>
-        student.id === id ? { ...student, checked: !student.checked } : student
-      )
-    );
-  };
+    setStudentsToCheck(students);
+  });
 
   return (
     <div className='max-w-screen-md justify-start'>
@@ -28,16 +18,12 @@ function StudentPairSelect() {
       <div className='bg-gray-900 text-white font-bold border mb-4 rounded'>
         <h3>Please unselect any students you don't want to pair</h3>
       </div>
-      <ul>
+      <ul className=''>
         {studentsToCheck.map((student) => (
-          <li key={student.id} className='flex justify-between mb-2'>
-            <div>{student.student_name}</div>
-            <div className='ml-auto'>
-              <input
-                type='checkbox'
-                checked={student.checked}
-                onChange={() => handleCheckboxChange(student.id)}
-              />
+          <li key={student.id} className='flex items-center justify-start mb-2'>
+            <div className='w-22'>{student.student_name}</div>
+            <div className='ml-2'>
+              <input type='checkbox' checked></input>
             </div>
           </li>
         ))}

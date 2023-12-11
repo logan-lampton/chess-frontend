@@ -7,10 +7,8 @@ function StudentPairSelect() {
   const [studentsToCheck, setStudentsToCheck] = useState([]);
 
   useEffect(() => {
-    setStudentsToCheck(
-      students.map((student) => ({ ...student, checked: true }))
-    );
-  }, [students]);
+    setStudentsToCheck(students);
+  });
 
   const handleCheckboxChange = (id) => {
     setStudentsToCheck((prevStudents) =>
