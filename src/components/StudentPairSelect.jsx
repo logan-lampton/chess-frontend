@@ -1,29 +1,35 @@
+// const [pairs, setPairs] = useState({paired:[], unpaired:[]})
+
 import { React, useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 function StudentPairSelect() {
   const location = useLocation();
   const { students } = location.state.club;
-  const [studentsToCheck, setStudentsToCheck] = useState([]);
-  const [checkedStudents, setCheckedStudents] = useState([]);
+  const [renderedStudents, setRenderedStudents] = useState([]);
+  const [pairedStudents, setPairedStudents] = useState([]);
+  const [unpairedStudents, setUnpairedStudents] = useState([]);
 
   useEffect(() => {
-    setStudentsToCheck(
+    setRenderedStudents(
       students.map((student) => ({ ...student, checked: true }))
     );
-    setCheckedStudents(students)
+    setPairedStudents(students)
   }, [students]);
 
   const handleCheckboxChange = (id) => {
-    const updatedStudents = studentsToCheck.map((student) => student.id === id ? { ...student, checked: !student.checked } : student
+    const updatedStudents = renderedStudents.map((student) => student.id === id ? { ...student, checked: !student.checked } : student
     );
-    setStudentsToCheck(updatedStudents);
+    setRenderedStudents(updatedStudents);
 
-    const checked = updatedStudents.filter((student) => student.checked);
-    setCheckedStudents(checked);
+    const checkedStudents = updatedStudents.filter((student) => student.checked);
+    const uncheckedStudents = updatedStudents.filter((student) => !student.checked);
+    setPairedStudents(checkedStudents);
+    setUnpairedStudents(uncheckedStudents);
   };
 
-  console.log("checked students", checkedStudents);
+  console.log("paired students", pairedStudents);
+  console.log("unpaired students", unpairedStudents)
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-screen'>
@@ -36,7 +42,7 @@ function StudentPairSelect() {
       </div>
             <div>
                 <ul>
-                    {studentsToCheck.map((student) => (
+                    {renderedStudents.map((student) => (
                     <li key={student.id} className='flex justify-between mb-2'>
                         <div>{student.student_name}</div>
                         <div className='ml-auto'>
@@ -52,9 +58,10 @@ function StudentPairSelect() {
             </div>
         </div>
         <div className='col-span-1 md:col-span-1 mr-5'>
-            {checkedStudents.length % 2 === 0 ? (
+            {pairedStudents.length % 2 === 0 ? (
                 <div>
-                    <Link to='/studentpairings' state={{ checkedStudents: checkedStudents }}>
+                  {/* paired students and unpaired students */}
+                    <Link to='/studentpairings' state={{ paired: pairedStudents, unpaired: unpairedStudents }}>
                         <button className='w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
                         Proceed to Pairings
                         </button>
