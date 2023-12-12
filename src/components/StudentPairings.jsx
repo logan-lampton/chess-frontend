@@ -40,10 +40,12 @@ function StudentPairings() {
       return;
     }
 
-    if (destination.droppableId === source.droppableId &&
-      destination.index === source.index){
-        return;
-      }
+  //   if (
+  //     destination.droppableId === source.droppableId &&
+  //     destination.index === source.index
+  //   ) {
+  //     return;
+  //   }
 
       const newPairs = [...pairs.pairs];
       const sourceGameId = parseInt(source.droppableId);

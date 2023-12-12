@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
-export default function AddClub({ instructorId, handleClubAdded }) {
+export default function AddClub({handleClubAdded }) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { instructorId } = location.state;
 
   const [formData, setFormData] = useState({
     club_name: "",

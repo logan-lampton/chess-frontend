@@ -49,6 +49,11 @@ export default function Register({ handleLogin }) {
             Register
           </button>
         </Link>
+        <Link to='/'>
+          <button className='bg-gray-900 text-white py-2 px-10 rounded hover:bg-blue-700'>
+            Return to Login
+          </button>
+        </Link>
       </form>
     </div>
   );

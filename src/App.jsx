@@ -1,11 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useNavigate,
-} from "react-router-dom";
-import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import axios from "./axiosConfig";
 
 import Header from "./components/Header";
@@ -25,15 +19,14 @@ import AddNotes from "./components/AddNotes";
 import ErrorBoundary from "./ErrorBoundary";
 import UpdateClub from "./components/UpdateClub";
 import UpdateStudent from "./components/UpdateStudent";
+import StudentPairSelect from "./components/StudentPairSelect";
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
   const [clubs, setClubs] = useState([]);
   const [students, setStudents] = useState([]);
-
-  // change instructorId to match the instructor logging in, once that logic is changed from seeded info
-  const instructorId = "2";
+  const [instructorId, setInstructorId] = useState("");
 
   const fetchData = async () => {
     const token = localStorage.getItem("token");
@@ -48,6 +41,7 @@ function App() {
         setClubs(response.data.user.clubs);
         setStudents(response.data.user.clubs.students);
         setLoggedIn(true);
+        setInstructorId(response.data.user.id);
       } catch (error) {
         console.log("Error fetching user data:", error);
       }
@@ -73,6 +67,19 @@ function App() {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      const response = await axios.delete("/logout");
+      console.log("logged out", response.data);
+    } catch (error) {
+      console.error("error deleting token", error);
+    }
+    setUser(null);
+    setClubs([]);
+    setLoggedIn(false);
+    localStorage.removeItem("token");
+  };
+
   const handleClubAdded = (newClub) => {
     setClubs((prevClubs) => {
       return [...prevClubs, newClub];
@@ -94,28 +101,21 @@ function App() {
 
   console.log("App.jsx clubs", clubs);
 
-  // Add back button links throughout the project (or more links in the homepage, or both!)
-
   return (
     <Router>
       <ErrorBoundary>
         <div className='flex flex-col items-center h-screen w-screen'>
           <header>
-            <Header isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
+            <Header isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
           </header>
           <Routes>
-            <Route
-              path='/'
-              element={
-                <Login handleLogin={handleLogin} isLoggedIn={isLoggedIn} />
-              }
-            />
+            <Route path='/' element={<Login handleLogin={handleLogin} />} />
             <Route
               path='/register'
-              element={
-                <Register handleLogin={handleLogin} isLoggedIn={isLoggedIn} />
-              }
+              element={<Register handleLogin={handleLogin} />}
             />
+            {isLoggedIn ? (
+              <>
             <Route
               path='/home'
               element={
@@ -124,10 +124,14 @@ function App() {
                   setClubs={setClubs}
                   handleClubDeleted={handleClubDeleted}
                   handleClubUpdated={handleClubUpdated}
+                  instructorId={instructorId}
                 />
               }
             />
-            <Route path='/clubs/:id' element={<ChessClub instructorId={instructorId}/>} />
+            <Route
+              path='/clubs/:id'
+              element={<ChessClub instructorId={instructorId} />}
+            />
             <Route
               path='/addclub'
               element={
@@ -137,10 +141,7 @@ function App() {
                 />
               }
             />
-            <Route
-              path='/addstudent'
-              element={<AddStudent />}
-            />
+            <Route path='/addstudent' element={<AddStudent />} />
             <Route
               path='/updateclub/:id'
               element={
@@ -151,6 +152,7 @@ function App() {
               }
             />
             <Route path='/updatestudent/:id' element={<UpdateStudent />} />
+            <Route path='/studentpairselect' element={<StudentPairSelect />} />
             <Route path='/studentpairings' element={<StudentPairings />} />
             <Route path='/viewclubgames' element={<ViewClubGames />} />
             <Route path='/students/:id' element={<Student />} />
@@ -158,6 +160,7 @@ function App() {
             <Route path='/viewgamehistory' element={<ViewGameHistory />} />
             <Route path='/viewnotes' element={<ViewNotes />} />
             <Route path='/addnotes' element={<AddNotes />} />
+            </>) : 'hidden'}
           </Routes>
         </div>
       </ErrorBoundary>
