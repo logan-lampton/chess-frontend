@@ -8,7 +8,7 @@ export default function UnpairedPlayers({ players }) {
         <h3>Unpaired Players:</h3>
       {players && (
         players.map((player, i) => (
-          <Draggable key={i} draggableId={player.id.toString()} index={i}>
+          <Draggable key={player.id} draggableId={player.id.toString()} index={i}>
             {(provided) => (
               <div {...provided.dragHandleProps} {...provided.draggableProps} ref={provided.innerRef}>
                 <h4>{player.student_name}</h4>
