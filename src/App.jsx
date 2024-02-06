@@ -61,6 +61,7 @@ function App() {
       setUser(response.data.user);
       setClubs(response.data.user.clubs);
       setLoggedIn(true);
+      setInstructorId(response.data.user.id);
       localStorage.setItem("token", response.data.token);
     } catch (error) {
       console.log("Login failed:", error);

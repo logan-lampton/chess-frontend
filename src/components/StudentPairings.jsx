@@ -1,15 +1,18 @@
 
 import {React, useState, useEffect} from 'react'
-import {useLocation} from 'react-router-dom'
+import {useLocation, useNavigate} from 'react-router-dom'
 import { DragDropContext, Droppable} from 'react-beautiful-dnd'
 import Game from './Game'
 import UnpairedPlayers from './UnpairedPlayers'
+import axios from 'axios'
 
 function StudentPairings() {
 
   const location = useLocation()
   console.log("state", location.state)
-  const { paired, unpaired } = location.state
+  const { paired, unpaired, clubId } = location.state
+  const navigate = useNavigate()
+
 
   console.log("paired", paired)
   console.log("unpaired", unpaired)
@@ -121,13 +124,47 @@ function StudentPairings() {
       }
     }
   }
+
+  const handleCreateGames = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/games",
+        {games:pairs.paired},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response.data);
+      navigate(`/clubs/${clubId}`);
+    } catch (error) {
+      if (error.response && error.response.status === 422) {
+        const validationErrors = error.response.data.errors;
+
+        if (validationErrors) {
+          console.log("Validation errors:", validationErrors);
+        } else {
+          console.log(
+            "Unexpected validation response format:",
+            error.response.data
+          );
+        }
+      } else {
+        console.log("Error creating games", error);
+      }
+    }
+  };
   
   return (
+    <>
     <DragDropContext onDragEnd={onDragEnd}>
     {pairs.paired.map((pair, i)=> (
       <Droppable droppableId = {`${i}`} key = {i} >
         {(provided) => (
-          <div {...provided.droppableProps} ref = {provided.innerRef}>
+          <div {...provided.droppableProps} ref = {provided.innerRef} >
             <Game players = {pair} gamenum = {i}/>
             {provided.placeholder}
           </div>
@@ -144,6 +181,8 @@ function StudentPairings() {
           }
     </Droppable>
     </DragDropContext>
+    <button onClick = {handleCreateGames}>Make Games</button>
+    </>
   )
 
 }

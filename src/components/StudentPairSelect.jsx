@@ -60,7 +60,7 @@ function StudentPairSelect() {
         <div className='col-span-1 md:col-span-1 mr-5'>
             {pairedStudents.length % 2 === 0 ? (
                 <div>
-                    <Link to='/studentpairings' state={{ paired: pairedStudents, unpaired: unpairedStudents }}>
+                    <Link to='/studentpairings' state={{ paired: pairedStudents, unpaired: unpairedStudents , clubId:location.state.club.id}}>
                         <button className='w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
                         Proceed to Pairings
                         </button>
