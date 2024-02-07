@@ -48,7 +48,7 @@ function ViewClubGames() {
               <div className='ml-5'>
                 <p>White Player: {game.players.white}</p>
                 <p>Black Player: {game.players.black}</p>
-                <p>Winner: pending</p>
+                <p>Winner: {game.result}</p>
               </div>
             </div>
           </div>

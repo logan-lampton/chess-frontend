@@ -1,9 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import axios from "../axiosConfig";
+
+// club.inprogress
+// club.completed
 
 function ViewClubGames() {
+  // const location = useLocation();
+
+  // const {inProgressGames} = location.state.club.inprogress
+  // const {completedGames} = location.state.club.completed
+
   const [games, setGames] = useState([]);
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -20,11 +28,18 @@ function ViewClubGames() {
       .catch((error) => {
         console.error("Error fetching club data: ", error);
       });
-  }, [id]);
+  }, []);
 
-  useEffect(() => {
-    console.log(games);
-  }, [games]);
+  // Sample data for game boxes
+  const sampleData = [
+    { white: "Dave the Diver", black: "Grendal", result: "pending" },
+    { white: "James Bond", black: "Happy Gilmore", result: "pending" },
+    { white: "Aragorn", black: "Smeagol", result: "pending" },
+    { white: "Funky Monk", black: "Tiny Baby", result: "pending" },
+    { white: "Superman", black: "Fresh Prince", result: "pending" },
+  ];
+
+  const [activeGames, setActiveGames] = useState(sampleData);
 
   return (
     <div className='relative'>
@@ -37,18 +52,18 @@ function ViewClubGames() {
         </Link>
       </button>
       <div className='grid grid-cols-1 md:grid-cols-4 gap-4 my-20 mx-5w-screen'>
-        {games.map((game) => (
-          <div key={game.id} className='mt-5 mb-5'>
+        {activeGames.map((game, index) => (
+          <div key={index} className='mt-5 mb-5'>
             <div className='border-2 border-gray-900'>
               <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-2'>
                 <h3>
-                  {game.players.white} / {game.players.black}
+                  {game.white} / {game.black}
                 </h3>
               </div>
               <div className='ml-5'>
-                <p>White Player: {game.players.white}</p>
-                <p>Black Player: {game.players.black}</p>
-                <p>Winner: pending</p>
+                <p>White Player: {game.white}</p>
+                <p>Black Player: {game.black}</p>
+                <p>Winner: {game.result}</p>
               </div>
             </div>
           </div>

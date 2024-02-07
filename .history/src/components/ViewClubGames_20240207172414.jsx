@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+
 import axios from "../axiosConfig";
 
 function ViewClubGames() {
+  // const {inProgressGames} = location.state.club.inprogress
+  // const {completedGames} = location.state.club.completed
+
   const [games, setGames] = useState([]);
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -16,15 +21,21 @@ function ViewClubGames() {
       })
       .then((response) => {
         setGames(response.data);
+        console.log(games);
       })
       .catch((error) => {
         console.error("Error fetching club data: ", error);
       });
-  }, [id]);
+  }, []);
 
-  useEffect(() => {
-    console.log(games);
-  }, [games]);
+  // Sample data for game boxes
+  const sampleData = [
+    { white: "Dave the Diver", black: "Grendal", result: "pending" },
+    { white: "James Bond", black: "Happy Gilmore", result: "pending" },
+    { white: "Aragorn", black: "Smeagol", result: "pending" },
+    { white: "Funky Monk", black: "Tiny Baby", result: "pending" },
+    { white: "Superman", black: "Fresh Prince", result: "pending" },
+  ];
 
   return (
     <div className='relative'>
@@ -48,7 +59,7 @@ function ViewClubGames() {
               <div className='ml-5'>
                 <p>White Player: {game.players.white}</p>
                 <p>Black Player: {game.players.black}</p>
-                <p>Winner: pending</p>
+                <p>Winner: {game.result}</p>
               </div>
             </div>
           </div>

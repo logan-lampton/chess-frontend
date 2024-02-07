@@ -16,15 +16,12 @@ function ViewClubGames() {
       })
       .then((response) => {
         setGames(response.data);
+        console.log(games);
       })
       .catch((error) => {
         console.error("Error fetching club data: ", error);
       });
   }, [id]);
-
-  useEffect(() => {
-    console.log(games);
-  }, [games]);
 
   return (
     <div className='relative'>
@@ -48,7 +45,7 @@ function ViewClubGames() {
               <div className='ml-5'>
                 <p>White Player: {game.players.white}</p>
                 <p>Black Player: {game.players.black}</p>
-                <p>Winner: pending</p>
+                <p>Winner: {game.result}</p>
               </div>
             </div>
           </div>

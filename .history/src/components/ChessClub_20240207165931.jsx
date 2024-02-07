@@ -154,7 +154,7 @@ function ChessClub() {
           </Link>
         </div>
         <div>
-          <Link to={`/games/in_progress/${club.id}`}>
+          <Link to={`games/in_progress`}>
             <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
               View Club Games
             </button>
