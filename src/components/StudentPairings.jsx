@@ -160,8 +160,12 @@ function StudentPairings() {
   
   return (
     <>
+    <button onClick = {handleCreateGames} 
+      className='h-30 w-50 bg-green-600 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mt-10 mb-10'>
+        <h2>Make Games</h2>
+    </button>
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="grid grid-cols-4 gap-8 mt-8">
+      <div className="grid grid-cols-4 gap-16 mt-8">
           {pairs.paired.map((pair, i)=> (
             <Droppable droppableId = {`${i}`} key = {i} >
               {(provided) => (
@@ -173,17 +177,18 @@ function StudentPairings() {
             </Droppable>
           ))}
       </div>
-    <Droppable droppableId = 'unpaired' >
-          {(provided)=> (
-            <div {...provided.droppableProps} ref = {provided.innerRef}>
-              <UnpairedPlayers  players = {pairs.unpaired}/>
-              {provided.placeholder}
-            </div>
-          )
-          }
-    </Droppable>
+    <div>
+      <Droppable droppableId = 'unpaired' >
+            {(provided)=> (
+              <div {...provided.droppableProps} ref = {provided.innerRef}>
+                <UnpairedPlayers  players = {pairs.unpaired}/>
+                {provided.placeholder}
+              </div>
+            )
+            }
+      </Droppable>
+    </div>
     </DragDropContext>
-    <button onClick = {handleCreateGames} className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>Make Games</button>
     </>
   )
 
