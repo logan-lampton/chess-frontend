@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+
 import axios from "../axiosConfig";
 
 function ViewClubGames() {
   const [games, setGames] = useState([]);
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -16,15 +18,14 @@ function ViewClubGames() {
       })
       .then((response) => {
         setGames(response.data);
+        console.log(games);
       })
       .catch((error) => {
         console.error("Error fetching club data: ", error);
       });
-  }, [id]);
+  }, []);
 
-  useEffect(() => {
-    console.log(games);
-  }, [games]);
+  console.log(games);
 
   return (
     <div className='relative'>
@@ -48,7 +49,7 @@ function ViewClubGames() {
               <div className='ml-5'>
                 <p>White Player: {game.players.white}</p>
                 <p>Black Player: {game.players.black}</p>
-                <p>Winner: pending</p>
+                <p>Winner: {game.result}</p>
               </div>
             </div>
           </div>

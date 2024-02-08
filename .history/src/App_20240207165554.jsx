@@ -159,7 +159,7 @@ function App() {
                 />
                 <Route path='/studentpairings' element={<StudentPairings />} />
                 <Route
-                  path='games/in_progress/:id'
+                  path='/games/in_progress/:id'
                   element={<ViewClubGames />}
                 />
                 <Route path='/students/:id' element={<Student />} />

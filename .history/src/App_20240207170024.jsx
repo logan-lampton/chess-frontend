@@ -158,10 +158,7 @@ function App() {
                   element={<StudentPairSelect />}
                 />
                 <Route path='/studentpairings' element={<StudentPairings />} />
-                <Route
-                  path='games/in_progress/:id'
-                  element={<ViewClubGames />}
-                />
+                <Route path='/games/in_progress' element={<ViewClubGames />} />
                 <Route path='/students/:id' element={<Student />} />
                 <Route path='/viewlessons' element={<ViewLessons />} />
                 <Route

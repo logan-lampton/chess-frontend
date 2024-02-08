@@ -22,10 +22,6 @@ function ViewClubGames() {
       });
   }, [id]);
 
-  useEffect(() => {
-    console.log(games);
-  }, [games]);
-
   return (
     <div className='relative'>
       <button className='absolute top-5 right-0 h-15 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
@@ -48,7 +44,7 @@ function ViewClubGames() {
               <div className='ml-5'>
                 <p>White Player: {game.players.white}</p>
                 <p>Black Player: {game.players.black}</p>
-                <p>Winner: pending</p>
+                <p>Winner: {game.result}</p>
               </div>
             </div>
           </div>

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
+
 import axios from "../axiosConfig";
 
 function ChessClub() {
@@ -26,7 +28,7 @@ function ChessClub() {
           console.error("Error fetching club data: ", error);
         });
     }
-  }, []);
+  }, [club, id]);
 
   console.log("ChessClub component club object", club);
 
@@ -151,15 +153,14 @@ function ChessClub() {
             </button>
           </Link>
         </div>
+        <div>
+          <Link to='/games/in_progress'>
+            <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
+              View Club Games
+            </button>
+          </Link>
+        </div>
         {club && (
-          <>
-          <div>
-            <Link to={`/games/in_progress/${club.id}`}>
-              <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
-                View Club Games
-              </button>
-            </Link>
-          </div>
           <div className='border-2 border-gray-900'>
             <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-4'>
               <h2>Club Stats</h2>
@@ -180,7 +181,6 @@ function ChessClub() {
               </ul>
             </div>
           </div>
-          </>
         )}
       </div>
     </div>
