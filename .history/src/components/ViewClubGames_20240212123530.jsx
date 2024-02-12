@@ -37,11 +37,11 @@ function ViewClubGames() {
           View Completed Games
         </Link>
       </button>
-      <div className='grid grid-cols-1 md:grid-cols-3 gap-8 my-20 mx-auto text-lg'>
+      <div className='grid grid-cols-1 md:grid-cols-3 gap-8 my-20 mx-auto'>
         {games.map((game) => (
           <div key={game.id} className='mt-5 mb-5 p-8'>
             <div className='border-2 border-gray-900'>
-              <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-2 flex justify-between'>
+              <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-2 flex justify-between text-large'>
                 <h3>
                   {game.players.white} / {game.players.black}
                 </h3>

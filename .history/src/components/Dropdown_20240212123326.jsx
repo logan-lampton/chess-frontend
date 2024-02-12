@@ -15,13 +15,13 @@ function Dropdown() {
       </button>
       {isOpen && (
         <div className='bg-green-100 absolute mt-2 rounded-lg p-2 text-lg border-2 border-black cursor-pointer'>
-          <div className='hover:bg-green-50 hover:border-2 border-black rounded'>
+          <div className='hover:bg-white rounded border-2'>
             <h3>White Won</h3>
           </div>
-          <div className='hover:bg-green-50 hover:border-2 border-black rounded'>
+          <div className='hover:bg-green-50'>
             <h3>Black Won</h3>
           </div>
-          <div className='hover:bg-green-50 hover:border-2 border-black rounded'>
+          <div className='hover:bg-green-50'>
             <h3>Draw</h3>
           </div>
         </div>

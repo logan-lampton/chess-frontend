@@ -14,14 +14,14 @@ function Dropdown() {
         {!isOpen ? <AiOutlineCaretUp /> : <AiOutlineCaretDown />}
       </button>
       {isOpen && (
-        <div className='bg-green-100 absolute mt-2 rounded-lg p-2 text-lg border-2 border-black cursor-pointer'>
-          <div className='hover:bg-green-50 hover:border-2 border-black rounded'>
+        <div className='bg-green-100 absolute mt-2 rounded-lg p-2 text-lg border-2 border-black hover:bg-green-50 cursor-pointer'>
+          <div>
             <h3>White Won</h3>
           </div>
-          <div className='hover:bg-green-50 hover:border-2 border-black rounded'>
+          <div>
             <h3>Black Won</h3>
           </div>
-          <div className='hover:bg-green-50 hover:border-2 border-black rounded'>
+          <div>
             <h3>Draw</h3>
           </div>
         </div>

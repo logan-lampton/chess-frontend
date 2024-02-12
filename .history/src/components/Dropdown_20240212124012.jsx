@@ -18,7 +18,7 @@ function Dropdown() {
           <div className='hover:bg-green-50 hover:border-2 border-black rounded'>
             <h3>White Won</h3>
           </div>
-          <div className='hover:bg-green-50 hover:border-2 border-black rounded'>
+          <div className='hover:bg-green-50 hover:border-l-white hover:border-l-4 rounded'>
             <h3>Black Won</h3>
           </div>
           <div className='hover:bg-green-50 hover:border-2 border-black rounded'>

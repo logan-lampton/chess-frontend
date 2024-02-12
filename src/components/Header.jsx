@@ -26,7 +26,7 @@ export default function Header({ isLoggedIn, handleLogout }) {
           <BackButton className='flex ml-auto items-center' />
         ) : null}
 
-        <button className='bg-neutral-100 hover:bg-neutral-50 text-black font-bold py-2 px-4 border neutral-100 rounded ml-2'>
+        <button className='bg-neutral-100 hover:bg-neutral-50 text-black font-bold py-2 px-4 border neutral-100 rounded ml-2 mr-2'>
           {isLoggedIn ? (
             <p onClick={logout}>Log out</p>
           ) : (
