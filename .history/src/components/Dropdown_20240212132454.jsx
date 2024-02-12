@@ -15,13 +15,13 @@ function Dropdown({patchGame, gameId}) {
       </button>
       {isOpen && (
         <div className='bg-green-100 absolute mt-2 rounded-lg p-2 text-lg border-2 border-black cursor-pointer'>
-          <div onClick={() =>patchGame(gameId, 'white')} className='hover:bg-green-50 hover:border-2 border-black rounded'>
+          <div onClick={patchGame} className='hover:bg-green-50 hover:border-2 border-black rounded'>
             <h3>White Won</h3>
           </div>
-          <div onClick={() => patchGame(gameId, 'black')} className='hover:bg-green-50 hover:border-2 border-black rounded'>
+          <div onClick={patchGame} className='hover:bg-green-50 hover:border-2 border-black rounded'>
             <h3>Black Won</h3>
           </div>
-          <div onClick={() =>patchGame(gameId, 'draw')} className='hover:bg-green-50 hover:border-2 border-black rounded'>
+          <div onClick={patchGame} className='hover:bg-green-50 hover:border-2 border-black rounded'>
             <h3>Draw</h3>
           </div>
         </div>
