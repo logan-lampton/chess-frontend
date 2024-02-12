@@ -50,32 +50,6 @@ function ViewClubGames() {
     }
   };
 
-  const patchGame = async (gameId, dropdownResult) => {
-    const token = localStorage.getItem("token");
-    try {
-      const patchResponse = await axios.patch(
-        `http://localhost:3000/games/${gameId}`,
-        {
-          result: dropdownResult
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log("Game winner declared: ", patchResponse);
-      const getResponse = await axios.get(`/games/in_progress/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setGames(getResponse.data);
-    } catch (error) {
-      console.error("Error fetching game data: ", error);
-    }
-  };
-
   return (
     <div className='relative'>
       <button className='absolute top-12 right-10 h-15 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
@@ -107,7 +81,7 @@ function ViewClubGames() {
                 <div className='flex mt-3 mb-2'>
                   <p className='mt-3'>Winner:</p>
                   <div className='ml-2 align-middle'>
-                    <Dropdown patchGame={patchGame} gameId={game.id} />
+                    <Dropdown />
                   </div>
                 </div>
               </div>

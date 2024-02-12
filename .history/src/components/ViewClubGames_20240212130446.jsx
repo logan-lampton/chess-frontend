@@ -31,7 +31,7 @@ function ViewClubGames() {
     const token = localStorage.getItem("token");
     try {
       const deleteResponse = await axios.delete(
-        `http://localhost:3000/games/${gameId}`,
+        `http://localhost:3000/games/in_progress/${gameId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -47,32 +47,6 @@ function ViewClubGames() {
       setGames(getResponse.data);
     } catch (error) {
       console.error("Error fetching club data: ", error);
-    }
-  };
-
-  const patchGame = async (gameId, dropdownResult) => {
-    const token = localStorage.getItem("token");
-    try {
-      const patchResponse = await axios.patch(
-        `http://localhost:3000/games/${gameId}`,
-        {
-          result: dropdownResult
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log("Game winner declared: ", patchResponse);
-      const getResponse = await axios.get(`/games/in_progress/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setGames(getResponse.data);
-    } catch (error) {
-      console.error("Error fetching game data: ", error);
     }
   };
 
@@ -107,7 +81,7 @@ function ViewClubGames() {
                 <div className='flex mt-3 mb-2'>
                   <p className='mt-3'>Winner:</p>
                   <div className='ml-2 align-middle'>
-                    <Dropdown patchGame={patchGame} gameId={game.id} />
+                    <Dropdown />
                   </div>
                 </div>
               </div>
