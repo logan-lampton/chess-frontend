@@ -31,7 +31,7 @@ function ViewClubGames() {
     const token = localStorage.getItem("token");
     try {
       const deleteResponse = await axios.delete(
-        `http://localhost:3000/games/${gameId}`,
+        `http://localhost:3000/games/in_progress/${gameId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -69,7 +69,7 @@ function ViewClubGames() {
                   {game.players.white} / {game.players.black}
                 </h3>
                 <button
-                  onClick={() => deleteGame(game.id)}
+                  onClick={deleteGame}
                   className='text-black p-1 text-sm ml-2'
                 >
                   Cancel Game

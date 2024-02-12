@@ -31,7 +31,7 @@ function ViewClubGames() {
     const token = localStorage.getItem("token");
     try {
       const deleteResponse = await axios.delete(
-        `http://localhost:3000/games/${gameId}`,
+        `http://localhost:3000/games/in_progress/${gameId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

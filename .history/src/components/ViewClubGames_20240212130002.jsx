@@ -28,27 +28,28 @@ function ViewClubGames() {
   }, [games]);
 
   const deleteGame = async (gameId) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     try {
-      const deleteResponse = await axios.delete(
-        `http://localhost:3000/games/${gameId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log("Game deleted: ", deleteResponse);
-      const getResponse = await axios.get(`/games/in_progress/${id}`, {
+      const deleteResponse = await axios.delete(`http://localhost:3000/games/in_progress/${gameId}`,
+      {
         headers: {
-          Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
         },
-      });
-      setGames(getResponse.data);
-    } catch (error) {
-      console.error("Error fetching club data: ", error);
-    }
-  };
+      }
+    );
+    console.log('Game deleted: ', deleteResponse)
+    const getResponse = await axios.get(`/games/in_progress/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => {
+      setGames(getResponse);
+    })
+    .catch((error) => {
+      console.error('Error fetching club data: ', error);
+    })
+  }
 
   return (
     <div className='relative'>
@@ -68,10 +69,7 @@ function ViewClubGames() {
                 <h3>
                   {game.players.white} / {game.players.black}
                 </h3>
-                <button
-                  onClick={() => deleteGame(game.id)}
-                  className='text-black p-1 text-sm ml-2'
-                >
+                <button onClick={deleteGame} className='text-black p-1 text-sm ml-2'>
                   Cancel Game
                 </button>
               </div>
