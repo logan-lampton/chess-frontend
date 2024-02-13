@@ -67,12 +67,12 @@ function ViewClubGames() {
       );
       console.log("Game winner declared: ", patchResponse);
       // Change to stay on the screen
-      // const getResponse = await axios.get(`/games/in_progress/${id}`, {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // });
-      // setGames(getResponse.data);
+      const getResponse = await axios.get(`/games/in_progress/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setGames(getResponse.data);
     } catch (error) {
       console.error("Error fetching game data: ", error);
     }

@@ -172,7 +172,7 @@ function ChessClub() {
                       return (
                         <li className='mb-3' key={student.id}>
                           <Link to={`/students/${student.id}`}>
-                            {student.student}: Wins: {student.wins} Win Rate:{" "}
+                            {student.student}: Wins: {student.wins} Win Rate:
                             {Math.floor(student.win_rate * 100)}%
                           </Link>
                         </li>
