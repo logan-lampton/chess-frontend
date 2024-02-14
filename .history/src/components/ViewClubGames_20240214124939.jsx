@@ -27,6 +27,12 @@ function ViewClubGames() {
     console.log(games);
   }, [games]);
 
+  // const deleteByIndex = index => {
+  //   setGames(games => {
+  //     return games.filter((_))
+  //   })
+  // }
+
   const deleteGame = async (gameId) => {
     const token = localStorage.getItem("token");
     try {
