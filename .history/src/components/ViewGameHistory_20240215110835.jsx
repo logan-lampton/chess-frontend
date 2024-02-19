@@ -1,34 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useParams, useLocation } from "react-router-dom";
-import StudentGamesDropdown from "./StudentGamesDropdown"
 import axios from "../axiosConfig";
 
-// State for everything (main state)
-// State for games being displayed
-// State for dropdown
-// State for searchbar (filter the displayed games, not all the games)
-
 // Options to show:
-// Dropdown:
 // Only wins
 // Only losses
 // Only games as White
 // Only games as Black
-
-// Search menu for typing in opponent
 // Only games against a certain opponent
 
 function ViewGameHistory() {
+  // get 'games/student_games/:id', to: "games#student_games"
+  // get request, instead of passing student data down
 
-  // State for everything (main state)
   const [games, setGames] = useState([]);
-  // State for games being displayed
-  const [gamesDisplayed, setGamesDisplayed] = useState(games)
-  // State for dropdown
-  const [dropdownState, setDropdownState] = useState([])
-  // State for searchbar (filter the displayed games, not all the games)
-  const [searchbarState, setSearchbarState] = useState(dropdownState)
 
   const { id } = useParams();
 
@@ -54,14 +40,10 @@ function ViewGameHistory() {
       });
   }, []);
 
-
   return (
     <div>
       <h1>ViewGameHistory</h1>
       <p>{student.student_name}</p>
-      <StudentGamesDropdown dropdownState={dropdownState} setDropdownState={setDropdownState}/>
-
-
       <div className='grid grid-cols-1 md:grid-cols-3 gap-8 my-20 mx-auto text-lg'>
         {games.map((game) => (
           <div key={game.id} className='mt-5 mb-5 p-8'>
