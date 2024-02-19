@@ -26,9 +26,9 @@ function ViewGameHistory() {
   // State for games being displayed
   const [gamesDisplayed, setGamesDisplayed] = useState(games)
   // State for dropdown
-  const [dropdownState, setDropdownState] = useState([])
+  // const [dropdownState, setDropdownState] = useState(gamesDisplayed)
   // State for searchbar (filter the displayed games, not all the games)
-  const [searchbarState, setSearchbarState] = useState(dropdownState)
+  const [searchbarState, setSearchbarState] = useState(gamesDisplayed)
 
   const { id } = useParams();
 
@@ -36,6 +36,7 @@ function ViewGameHistory() {
   const { student } = location.state;
 
   console.log(location.state);
+  console.log(student)
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -48,6 +49,8 @@ function ViewGameHistory() {
       .then((response) => {
         console.log(response.data);
         setGames(response.data);
+        setGamesDisplayed(response.data)
+
       })
       .catch((error) => {
         console.error("Error fetching club data: ", error);
@@ -59,7 +62,7 @@ function ViewGameHistory() {
     <div>
       <h1>ViewGameHistory</h1>
       <p>{student.student_name}</p>
-      <StudentGamesDropdown dropdownState={dropdownState} setDropdownState={setDropdownState}/>
+      <StudentGamesDropdown gamesDisplayed={gamesDisplayed} setGamesDisplayed={setGamesDisplayed} student={student}/>
 
 
       <div className='grid grid-cols-1 md:grid-cols-3 gap-8 my-20 mx-auto text-lg'>
