@@ -1,17 +1,38 @@
 import React, { useState } from "react";
 import { AiOutlineCaretUp, AiOutlineCaretDown } from "react-icons/ai";
 
-function Dropdown({ gamesDisplayed, setGamesDisplayed, student }) {
+function Dropdown({ games, setGamesDisplayed, student }) {
   const [isOpen, setIsOpen] = useState(false)
   const [result, setResult] = useState("Showing all games")
-  console.log("dropdown student", student)
-  console.log('student name', student.student_name)
 
-  const win_filtered = gamesDisplayed.filter((game) => {
+// Game history function
+// Function that generates array on click
+// Set the display in the function, then pass the function down to this
+
+const win_filtered = games.filter((game) => {
     return game.result === "Black" && game.players.black === student.student_name || 
            game.result === "White" && game.players.white === student.student_name;
 });
-  console.log("win filtered", win_filtered)
+
+const loss_filtered = games.filter((game) => {
+    return game.result === "Black" && game.players.black !== student.student_name || 
+        game.result === "White" && game.players.white !== student.student_name;
+});
+
+
+const draw_filtered = games.filter((game) => {
+    return game.result === "Draw"
+})
+
+const white_filtered = games.filter((game) => {
+    return game.players.white === student.student_name
+})
+
+const black_filtered = games.filter((game) => {
+    return game.players.black === student.student_name
+})
+
+// Search by opponent on the ViewGameHistory
 
   return (
     <div>
@@ -24,13 +45,31 @@ function Dropdown({ gamesDisplayed, setGamesDisplayed, student }) {
       </button>
       {isOpen && (
         <div className='bg-green-100 absolute mt-2 rounded-lg p-2 text-lg border-2 border-black cursor-pointer'>
+            {result !== "Showing all games" && (
+                <div
+                onClick={() => {
+                //   patchGame(gameId, "White")
+                    setResult("Showing all games")
+                    setIsOpen(false)
+                    console.log("LOOK HERE!!!", win_filtered)
+
+                    setGamesDisplayed(games)
+                    
+                }}
+                className='hover:bg-green-50 hover:border-2 border-black rounded'
+                >
+                <h3>All Games</h3>
+                </div>
+            )}
           <div
             onClick={() => {
             //   patchGame(gameId, "White")
                 setResult("Wins")
-                setGamesDisplayed(win_filtered)
-                console.log(win_filtered)
                 setIsOpen(false)
+                console.log("LOOK HERE!!!", win_filtered)
+
+                setGamesDisplayed(win_filtered)
+                
             }
             }
             className='hover:bg-green-50 hover:border-2 border-black rounded'
@@ -39,7 +78,7 @@ function Dropdown({ gamesDisplayed, setGamesDisplayed, student }) {
           </div>
           <div
             onClick={() => {
-                setGamesDisplayed("Losses")
+                setGamesDisplayed(loss_filtered)
             //   patchGame(gameId, "Black")
                 setResult("Losses")
                 setIsOpen(false)
@@ -51,7 +90,7 @@ function Dropdown({ gamesDisplayed, setGamesDisplayed, student }) {
           </div>
           <div
             onClick={() => {
-                setGamesDisplayed("Draws")
+                setGamesDisplayed(draw_filtered)
             //   patchGame(gameId, "Draw")
                 setResult("Draws")
                 setIsOpen(false)
@@ -63,7 +102,7 @@ function Dropdown({ gamesDisplayed, setGamesDisplayed, student }) {
           </div>
           <div
             onClick={() => {
-                setGamesDisplayed("As White Player")
+                setGamesDisplayed(white_filtered)
             //   patchGame(gameId, "Draw")
                 setResult("As White Player")
                 setIsOpen(false)
@@ -75,7 +114,7 @@ function Dropdown({ gamesDisplayed, setGamesDisplayed, student }) {
           </div>
           <div
             onClick={() => {
-                setGamesDisplayed("As Black Player")
+                setGamesDisplayed(black_filtered)
             //   patchGame(gameId, "Draw")
                 setResult("As Black Player")
                 setIsOpen(false)

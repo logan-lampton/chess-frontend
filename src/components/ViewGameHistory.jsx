@@ -24,19 +24,19 @@ function ViewGameHistory() {
   // State for everything (main state)
   const [games, setGames] = useState([]);
   // State for games being displayed
-  const [gamesDisplayed, setGamesDisplayed] = useState(games)
+  const [gamesDisplayed, setGamesDisplayed] = useState([])
   // State for dropdown
   // const [dropdownState, setDropdownState] = useState(gamesDisplayed)
   // State for searchbar (filter the displayed games, not all the games)
-  const [searchbarState, setSearchbarState] = useState(gamesDisplayed)
+  const [searchbarState, setSearchbarState] = useState([])
 
   const { id } = useParams();
 
   const location = useLocation();
   const { student } = location.state;
 
-  console.log(location.state);
-  console.log(student)
+  // console.log(location.state);
+  // console.log(student)
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -58,15 +58,17 @@ function ViewGameHistory() {
   }, []);
 
 
+
+
   return (
     <div>
       <h1>ViewGameHistory</h1>
       <p>{student.student_name}</p>
-      <StudentGamesDropdown gamesDisplayed={gamesDisplayed} setGamesDisplayed={setGamesDisplayed} student={student}/>
+      <StudentGamesDropdown games={games} setGamesDisplayed={setGamesDisplayed} student={student}/>
 
 
       <div className='grid grid-cols-1 md:grid-cols-3 gap-8 my-20 mx-auto text-lg'>
-        {games.map((game) => (
+        {gamesDisplayed.map((game) => (
           <div key={game.id} className='mt-5 mb-5 p-8'>
             <div className='border-2 border-gray-900'>
               <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-2 flex justify-between'>
