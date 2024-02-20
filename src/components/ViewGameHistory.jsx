@@ -4,29 +4,11 @@ import { useParams, useLocation } from "react-router-dom";
 import StudentGamesDropdown from "./StudentGamesDropdown"
 import axios from "../axiosConfig";
 
-// State for everything (main state)
-// State for games being displayed
-// State for dropdown
-// State for searchbar (filter the displayed games, not all the games)
-
-// Options to show:
-// Dropdown:
-// Only wins
-// Only losses
-// Only games as White
-// Only games as Black
-
-// Search menu for typing in opponent
-// Only games against a certain opponent
-
 function ViewGameHistory() {
-
   // State for everything (main state)
   const [games, setGames] = useState([]);
   // State for games being displayed
   const [gamesDisplayed, setGamesDisplayed] = useState([])
-  // State for dropdown
-  // const [dropdownState, setDropdownState] = useState(gamesDisplayed)
   // State for searchbar (filter the displayed games, not all the games)
   const [searchbarState, setSearchbarState] = useState([])
 
@@ -34,9 +16,6 @@ function ViewGameHistory() {
 
   const location = useLocation();
   const { student } = location.state;
-
-  // console.log(location.state);
-  // console.log(student)
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -57,14 +36,49 @@ function ViewGameHistory() {
       });
   }, []);
 
+  function filterGames(games, result, student, filteredGames) {
+    switch (result) {
+      case "Wins":
+        filteredGames = games.filter((game) => {
+          return game.result === "Black" && game.players.black === student.student_name || game.result === "White" && game.players.white === student.student_name;
+        });
+        break;
+      case "Losses":
+        filteredGames = games.filter((game) => {
+          return game.result === "Black" && game.players.black !== student.student_name || game.result === "White" && game.players.white !== student.student_name;
+        });
+        break;
+      case "Draws":
+        filteredGames = games.filter((game) => {
+          return game.result === "Draw";
+        })
+        break;
+      case "As White Player":
+        filteredGames = games.filter((game) => {
+          return game.players.white === student.student_name;
+        })
+        break;
+      case "As Black Player":
+        filteredGames = games.filter((game) => {
+          return game.players.black === student.student_name;
+        })
+        break;
+      default:
+        filteredGames = games;
+        break;
+    }
+    setGamesDisplayed(filteredGames)
+  }
 
-
+  // Search by opponent on the ViewGameHistory
+  // Search menu for typing in opponent
+  // Only games against a certain opponent
 
   return (
     <div>
       <h1>ViewGameHistory</h1>
       <p>{student.student_name}</p>
-      <StudentGamesDropdown games={games} setGamesDisplayed={setGamesDisplayed} student={student}/>
+      <StudentGamesDropdown games={games} setGamesDisplayed={setGamesDisplayed} student={student} filterGames={filterGames}/>
 
 
       <div className='grid grid-cols-1 md:grid-cols-3 gap-8 my-20 mx-auto text-lg'>

@@ -1,38 +1,29 @@
 import React, { useState } from "react";
 import { AiOutlineCaretUp, AiOutlineCaretDown } from "react-icons/ai";
 
-function Dropdown({ games, setGamesDisplayed, student }) {
+function Dropdown({ games, setGamesDisplayed, student, filterGames }) {
   const [isOpen, setIsOpen] = useState(false)
   const [result, setResult] = useState("Showing all games")
 
-// Game history function
-// Function that generates array on click
-// Set the display in the function, then pass the function down to this
+//   Checks what the user is filtering by and handles logic for dropdown
+  const handleFilterClick = (filter) => {
+    setResult(filter);
+    filterGames(games, filter, student);
+    setIsOpen(false);
+  }
 
-const win_filtered = games.filter((game) => {
-    return game.result === "Black" && game.players.black === student.student_name || 
-           game.result === "White" && game.players.white === student.student_name;
-});
-
-const loss_filtered = games.filter((game) => {
-    return game.result === "Black" && game.players.black !== student.student_name || 
-        game.result === "White" && game.players.white !== student.student_name;
-});
-
-
-const draw_filtered = games.filter((game) => {
-    return game.result === "Draw"
-})
-
-const white_filtered = games.filter((game) => {
-    return game.players.white === student.student_name
-})
-
-const black_filtered = games.filter((game) => {
-    return game.players.black === student.student_name
-})
-
-// Search by opponent on the ViewGameHistory
+//   handles rendering the chosen filter
+  const renderFilterOption = (filter) => {
+    return(
+        <div 
+            key={filter} 
+            onClick={() => {handleFilterClick(filter)}}
+            className='hover:bg-green-50 hover:border-2 border-black rounded'
+        >
+            <h3>{filter}</h3>
+        </div>
+    );
+  };
 
   return (
     <div>
@@ -45,85 +36,7 @@ const black_filtered = games.filter((game) => {
       </button>
       {isOpen && (
         <div className='bg-green-100 absolute mt-2 rounded-lg p-2 text-lg border-2 border-black cursor-pointer'>
-            {result !== "Showing all games" && (
-                <div
-                onClick={() => {
-                //   patchGame(gameId, "White")
-                    setResult("Showing all games")
-                    setIsOpen(false)
-                    console.log("LOOK HERE!!!", win_filtered)
-
-                    setGamesDisplayed(games)
-                    
-                }}
-                className='hover:bg-green-50 hover:border-2 border-black rounded'
-                >
-                <h3>All Games</h3>
-                </div>
-            )}
-          <div
-            onClick={() => {
-            //   patchGame(gameId, "White")
-                setResult("Wins")
-                setIsOpen(false)
-                console.log("LOOK HERE!!!", win_filtered)
-
-                setGamesDisplayed(win_filtered)
-                
-            }
-            }
-            className='hover:bg-green-50 hover:border-2 border-black rounded'
-          >
-            <h3>Wins</h3>
-          </div>
-          <div
-            onClick={() => {
-                setGamesDisplayed(loss_filtered)
-            //   patchGame(gameId, "Black")
-                setResult("Losses")
-                setIsOpen(false)
-            }
-            }
-            className='hover:bg-green-50 hover:border-2 border-black rounded'
-          >
-            <h3>Losses</h3>
-          </div>
-          <div
-            onClick={() => {
-                setGamesDisplayed(draw_filtered)
-            //   patchGame(gameId, "Draw")
-                setResult("Draws")
-                setIsOpen(false)
-            }
-            }
-            className='hover:bg-green-50 hover:border-2 border-black rounded'
-          >
-            <h3>Draws</h3>
-          </div>
-          <div
-            onClick={() => {
-                setGamesDisplayed(white_filtered)
-            //   patchGame(gameId, "Draw")
-                setResult("As White Player")
-                setIsOpen(false)
-            }
-            }
-            className='hover:bg-green-50 hover:border-2 border-black rounded'
-          >
-            <h3>As White Player</h3>
-          </div>
-          <div
-            onClick={() => {
-                setGamesDisplayed(black_filtered)
-            //   patchGame(gameId, "Draw")
-                setResult("As Black Player")
-                setIsOpen(false)
-            }
-            }
-            className='hover:bg-green-50 hover:border-2 border-black rounded'
-          >
-            <h3>As Black Player</h3>
-          </div>
+            {["Showing all games", "Wins", "Losses", "Draws", "As White Player", "As Black Player"].map(renderFilterOption)}
         </div>
       )}
     </div>
