@@ -32,6 +32,31 @@ function StudentPairings() {
 
   console.log(pairs)
 
+  function shufflePlayers() {
+    //flatten array of games
+    const newArray = pairs.paired.flat()
+  
+    // Fisher-Yates (Knuth) Shuffle Algorithm
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+  
+    setPairs(makePairs(newArray, pairs.unpaired));
+  }
+
+  function pairByTotalWins(){
+    const newArray = pairs.paired.flat()
+    newArray.sort((a, b) => b.total_wins - a.total_wins);
+    setPairs(makePairs(newArray, pairs.unpaired))
+  }
+
+  function pairByWinPercent(){
+    const newArray = pairs.paired.flat()
+    newArray.sort((a, b) => b.win_rate - a.win_rate);
+    setPairs(makePairs(newArray, pairs.unpaired))
+  }
+
   function onDragEnd(result){
     const {destination, source} = result;
     console.log('result', result)
@@ -160,6 +185,9 @@ function StudentPairings() {
   
   return (
     <>
+    <button onClick = {shufflePlayers}>pair randomly</button>
+    <button onClick = {pairByTotalWins}>pair by total wins</button>
+    <button onClick = {pairByWinPercent}>pair by winning percentage</button>
     <button onClick = {handleCreateGames} 
       className='h-30 w-50 bg-green-600 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mt-10 mb-10'>
         <h2>Make Games</h2>
