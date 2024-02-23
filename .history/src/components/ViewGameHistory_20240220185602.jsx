@@ -77,12 +77,14 @@ function ViewGameHistory() {
     setGamesDisplayed(filteredGames);
   }
 
-  // Search by opponent
-  // track what user types into searchbar
+  // Search by opponent on the ViewGameHistory
+  // Search menu for typing in opponent
+  // Only games against a certain opponent
+
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
-  // Filter by the dropdown selected and then only include games containing the opponent typed into searchbar
+
   const filterGameBySearch = (gamesDisplayed) => {
     return (
       gamesDisplayed.players.black
@@ -94,9 +96,7 @@ function ViewGameHistory() {
     );
   };
 
-  const searchFilteredGames = gamesDisplayed.filter((game) =>
-    filterGameBySearch(game)
-  );
+  const searchFilteredGames = games.filter((game) => filterGameBySearch(game));
 
   return (
     <div>

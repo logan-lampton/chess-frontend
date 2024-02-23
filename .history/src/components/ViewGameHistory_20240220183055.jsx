@@ -9,9 +9,10 @@ function ViewGameHistory() {
   // State for games being displayed
   const [gamesDisplayed, setGamesDisplayed] = useState([]);
   // State for searchbar (filter the displayed games, not all the games)
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchbarState, setSearchbarState] = useState("");
 
   const { id } = useParams();
+
   const location = useLocation();
   const { student } = location.state;
 
@@ -77,26 +78,9 @@ function ViewGameHistory() {
     setGamesDisplayed(filteredGames);
   }
 
-  // Search by opponent
-  // track what user types into searchbar
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
-  };
-  // Filter by the dropdown selected and then only include games containing the opponent typed into searchbar
-  const filterGameBySearch = (gamesDisplayed) => {
-    return (
-      gamesDisplayed.players.black
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase()) ||
-      gamesDisplayed.players.white
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase())
-    );
-  };
-
-  const searchFilteredGames = gamesDisplayed.filter((game) =>
-    filterGameBySearch(game)
-  );
+  // Search by opponent on the ViewGameHistory
+  // Search menu for typing in opponent
+  // Only games against a certain opponent
 
   return (
     <div>
@@ -109,16 +93,8 @@ function ViewGameHistory() {
         filterGames={filterGames}
       />
 
-      {/* Searchbar */}
-      <input
-        type='text'
-        placeholder='Search by player name...'
-        value={searchQuery}
-        onChange={handleSearchChange}
-      />
-
       <div className='grid grid-cols-1 md:grid-cols-3 gap-8 my-20 mx-auto text-lg'>
-        {searchFilteredGames.map((game) => (
+        {gamesDisplayed.map((game) => (
           <div key={game.id} className='mt-5 mb-5 p-8'>
             <div className='border-2 border-gray-900'>
               <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-2 flex justify-between'>
