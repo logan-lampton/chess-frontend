@@ -33,8 +33,7 @@ function ViewGameHistory() {
       });
   }, []);
 
-  function filterGames(games, result, student) {
-    let filteredGames = gamesDisplayed;
+  function filterGames(games, result, student, filteredGames) {
     switch (result) {
       case "Wins":
         filteredGames = games.filter((game) => {

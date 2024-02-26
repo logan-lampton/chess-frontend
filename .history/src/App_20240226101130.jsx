@@ -163,10 +163,7 @@ function App() {
                   path='games/in_progress/:id'
                   element={<ViewClubGames />}
                 />
-                <Route
-                  path='/games/completed/:id'
-                  element={<ViewCompletedGames />}
-                />
+                <Route path='/games/:id' element={<ViewCompletedGames />} />
                 <Route path='/students/:id' element={<Student />} />
                 <Route path='/viewlessons' element={<ViewLessons />} />
                 <Route

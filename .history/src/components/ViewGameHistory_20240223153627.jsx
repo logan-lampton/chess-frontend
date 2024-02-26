@@ -33,8 +33,7 @@ function ViewGameHistory() {
       });
   }, []);
 
-  function filterGames(games, result, student) {
-    let filteredGames = gamesDisplayed;
+  function filterGames(games, result, student, filteredGames) {
     switch (result) {
       case "Wins":
         filteredGames = games.filter((game) => {
@@ -105,6 +104,7 @@ function ViewGameHistory() {
       <p>{student.student_name}</p>
       <StudentGamesDropdown
         games={games}
+        setGamesDisplayed={setGamesDisplayed}
         student={student}
         filterGames={filterGames}
       />

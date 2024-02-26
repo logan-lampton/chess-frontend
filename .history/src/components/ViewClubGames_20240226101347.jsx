@@ -68,7 +68,7 @@ function ViewClubGames() {
   return (
     <div className='relative'>
       <button className='absolute top-12 right-10 h-15 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
-        <Link to={`/games/completed/${id}`} className='text-white'>
+        <Link to='/games/:id' className='text-white'>
           View Completed Games
         </Link>
       </button>
