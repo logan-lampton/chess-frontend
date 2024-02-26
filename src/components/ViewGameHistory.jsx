@@ -84,7 +84,7 @@ function ViewGameHistory() {
     setSearchQuery(event.target.value);
   };
   // Filter by the dropdown selected and then only include games containing the opponent typed into searchbar
-  const filterGameBySearch = (gamesDisplayed) => {
+  const filterGamesBySearch = (gamesDisplayed) => {
     return (
       gamesDisplayed.players.black
         .toLowerCase()
@@ -96,7 +96,7 @@ function ViewGameHistory() {
   };
 
   const searchFilteredGames = gamesDisplayed.filter((game) =>
-    filterGameBySearch(game)
+    filterGamesBySearch(game)
   );
 
   return (
@@ -131,7 +131,7 @@ function ViewGameHistory() {
                 <p>Black Player: {game.players.black}</p>
                 <div className='flex mt-3 mb-2'>
                   <p className='mt-3'>
-                    Winner:{game.result ? game.result : "pending"}
+                    Winner: {game.result ? game.result : "pending"}
                   </p>
                 </div>
               </div>
