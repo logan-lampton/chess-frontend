@@ -11,7 +11,6 @@ import AddClub from "./components/AddClub";
 import AddStudent from "./components/AddStudent";
 import StudentPairings from "./components/StudentPairings";
 import ViewClubGames from "./components/ViewClubGames";
-import ViewCompletedGames from "./components/ViewCompletedGames";
 import Student from "./components/Student";
 import ViewLessons from "./components/ViewLessons";
 import ViewGameHistory from "./components/ViewGameHistory";
@@ -163,10 +162,7 @@ function App() {
                   path='games/in_progress/:id'
                   element={<ViewClubGames />}
                 />
-                <Route
-                  path='/games/completed/:id'
-                  element={<ViewCompletedGames />}
-                />
+                <Route path='/games/:id' element={<ViewCompletedGames />} />
                 <Route path='/students/:id' element={<Student />} />
                 <Route path='/viewlessons' element={<ViewLessons />} />
                 <Route

@@ -34,7 +34,6 @@ function ViewGameHistory() {
   }, []);
 
   function filterGames(games, result, student) {
-    let filteredGames = gamesDisplayed;
     switch (result) {
       case "Wins":
         filteredGames = games.filter((game) => {
