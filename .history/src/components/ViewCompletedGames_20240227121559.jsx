@@ -75,14 +75,7 @@ function ViewCompletedGames() {
                 <p className='mb-1'>White Player: {game.players.white}</p>
                 <p>Black Player: {game.players.black}</p>
                 <div className='flex mt-3 mb-2'>
-                  <p className='mt-3'>
-                    Result:{" "}
-                    {game.result === "White"
-                      ? `${game.players.white} Won`
-                      : game.result === "Black"
-                      ? `${game.players.black} Won`
-                      : "Draw"}
-                  </p>
+                  <p className='mt-3'>Result: {game.result}</p>
                 </div>
               </div>
             </div>

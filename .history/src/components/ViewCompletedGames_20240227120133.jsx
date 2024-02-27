@@ -62,7 +62,7 @@ function ViewCompletedGames() {
           onChange={handleSearchChange}
         />
       </div>
-      <div className='grid grid-cols-1 md:grid-cols-3 gap-8 my-5 mx-auto text-lg'>
+      <div className='grid grid-cols-1 md:grid-cols-3 gap-5 my-5 mx-auto text-lg'>
         {searchFilteredGames.map((game) => (
           <div key={game.id} className='mb-5 p-8'>
             <div className='border-2 border-gray-900'>
@@ -75,14 +75,7 @@ function ViewCompletedGames() {
                 <p className='mb-1'>White Player: {game.players.white}</p>
                 <p>Black Player: {game.players.black}</p>
                 <div className='flex mt-3 mb-2'>
-                  <p className='mt-3'>
-                    Result:{" "}
-                    {game.result === "White"
-                      ? `${game.players.white} Won`
-                      : game.result === "Black"
-                      ? `${game.players.black} Won`
-                      : "Draw"}
-                  </p>
+                  <p className='mt-3'>Winner: {game.result}</p>
                 </div>
               </div>
             </div>
