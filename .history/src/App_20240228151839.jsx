@@ -168,7 +168,6 @@ function App() {
                   path='/games/completed/:id'
                   element={<ViewCompletedGames />}
                 />
-                <Route path='updategame/:id' element={<UpdateGame />} />
                 <Route path='/students/:id' element={<Student />} />
                 <Route path='/viewlessons' element={<ViewLessons />} />
                 <Route

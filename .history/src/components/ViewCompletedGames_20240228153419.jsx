@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
 import axios from "../axiosConfig";
 
 function ViewCompletedGames() {
@@ -109,7 +108,7 @@ function ViewCompletedGames() {
                   {game.players.white} / {game.players.black}
                 </h3>
                 <button className='bg-slate-50 hover:bg-white text-black text-sm font-bold py-2 px-4 border bg-white rounded mt-1 mb-1'>
-                  <Link to={`/updategame/${game.id}`}>Edit Game</Link>
+                  <Link>Edit Game</Link>
                 </button>
               </div>
               <div className='ml-5 p-1'>
