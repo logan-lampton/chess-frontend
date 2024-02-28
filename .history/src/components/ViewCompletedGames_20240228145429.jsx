@@ -90,7 +90,7 @@ function ViewCompletedGames() {
                   {game.players.white} / {game.players.black}
                 </h3>
               </div>
-              <div className='ml-5 p-1'>
+              <div className='ml-5 p-1 flex'>
                 <p className='mb-1'>White Player: {game.players.white}</p>
                 <p>Black Player: {game.players.black}</p>
                 <div className='flex mt-3 mb-2'>
@@ -102,14 +102,12 @@ function ViewCompletedGames() {
                       ? `${game.players.black} Won`
                       : "Draw"}
                   </p>
-                  <div className='ml-auto mr-3'>
-                    <button
-                      onClick={() => deleteGame(game.id)}
-                      className='bg-red-600 hover:bg-red-400 text-white text-sm font-bold border bg-gray-900 rounded'
-                    >
-                      Delete
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => deleteGame(game.id)}
+                    className='bg-red-600 hover:bg-red-400 text-white font-bold border bg-gray-900 rounded'
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             </div>

@@ -105,7 +105,7 @@ function ViewCompletedGames() {
                   <div className='ml-auto mr-3'>
                     <button
                       onClick={() => deleteGame(game.id)}
-                      className='bg-red-600 hover:bg-red-400 text-white text-sm font-bold border bg-gray-900 rounded'
+                      className='bg-red-600 hover:bg-red-400 text-white text-small font-bold border bg-gray-900 rounded'
                     >
                       Delete
                     </button>

@@ -102,14 +102,12 @@ function ViewCompletedGames() {
                       ? `${game.players.black} Won`
                       : "Draw"}
                   </p>
-                  <div className='ml-auto mr-3'>
-                    <button
-                      onClick={() => deleteGame(game.id)}
-                      className='bg-red-600 hover:bg-red-400 text-white text-sm font-bold border bg-gray-900 rounded'
-                    >
-                      Delete
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => deleteGame(game.id)}
+                    className='bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 border bg-gray-900 rounded mr-5'
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             </div>
