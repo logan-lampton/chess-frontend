@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineCaretUp, AiOutlineCaretDown } from "react-icons/ai";
 
-function Dropdown({ patchGame, gameId }) {
+function Dropdown({ patchGame, gameId, onClose }) {
   const [isOpen, setIsOpen] = useState(false)
   const [result, setResult] = useState("Pending")
   // make result state:
@@ -23,6 +23,7 @@ function Dropdown({ patchGame, gameId }) {
               patchGame(gameId, "White")
               setResult("White")
               setIsOpen(false)
+              onClose()
             }
             }
             className='hover:bg-green-50 hover:border-2 border-black rounded'

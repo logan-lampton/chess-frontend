@@ -1,8 +1,10 @@
 // Add in logic to display the first two clubs that a user owns
 
+// Add logic to update the club name
+
 import React from "react";
 import { Link } from "react-router-dom";
-import axios from "../axiosConfig";
+import axios from "axios";
 
 function Home({ clubs = [], handleClubDeleted, instructorId }) {
   const deleteClub = async (clubId) => {

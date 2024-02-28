@@ -21,6 +21,7 @@ import ErrorBoundary from "./ErrorBoundary";
 import UpdateClub from "./components/UpdateClub";
 import UpdateStudent from "./components/UpdateStudent";
 import StudentPairSelect from "./components/StudentPairSelect";
+import UpdateGame from "./components/UpdateGame";
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -167,6 +168,7 @@ function App() {
                   path='/games/completed/:id'
                   element={<ViewCompletedGames />}
                 />
+                <Route path='updategame/:id' element={<UpdateGame />} />
                 <Route path='/students/:id' element={<Student />} />
                 <Route path='/viewlessons' element={<ViewLessons />} />
                 <Route

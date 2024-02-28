@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
-import Dropdown from "./Dropdown"
 import axios from "../axiosConfig";
 
 function ViewCompletedGames() {
@@ -9,7 +7,6 @@ function ViewCompletedGames() {
   const [games, setGames] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [gamesDisplayed, setGamesDisplayed] = useState([]);
-  const [editingGameResult, setEditingGameResult] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -66,32 +63,26 @@ function ViewCompletedGames() {
     }
   };
 
-  const patchGame = async (gameId, dropdownResult) => {
+  const patchGame = async (gameId) => {
     const token = localStorage.getItem("token");
     try {
       const patchResponse = await axios.patch(
         `http://localhost:3000/games/${gameId}`,
-        {
-          result: dropdownResult,
-        },
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      console.log("Game patched successfully: ", patchResponse.data);
-      const updatedGames = gamesDisplayed.map((game) => game.id === gameId ? { ...game, result: dropdownResult } : game);
-      setGamesDisplayed(updatedGames);
-      setEditingGameResult(null);
+      console.log("Game patched successfully: ", patch.Response.data);
     } catch (error) {
       console.log("Error patching game: ", error);
     }
   };
-  
-  const closeDropdown = () => {
-    setEditingGameResult(null)
-  }
+
+  console.log(games);
+  console.log("displayed", gamesDisplayed);
 
   return (
     <div>
@@ -116,11 +107,8 @@ function ViewCompletedGames() {
                 <h3>
                   {game.players.white} / {game.players.black}
                 </h3>
-                <button
-                  onClick={() => deleteGame(game.id)}
-                  className='bg-red-600 hover:bg-red-400 text-white text-sm font-bold border bg-gray-900 rounded'
-                >
-                  Delete
+                <button className='bg-slate-50 hover:bg-white text-black font-bold border bg-white rounded mt-5 mb-5'>
+                  Edit Game
                 </button>
               </div>
               <div className='ml-5 p-1'>
@@ -136,13 +124,12 @@ function ViewCompletedGames() {
                       : "Draw"}
                   </p>
                   <div className='ml-auto mr-3'>
-                    {editingGameResult === game.id ? (
-                      <Dropdown patchGame={patchGame} gameId={game.id} onClose={closeDropdown}/>
-                    ) : (
-                    <button onClick={() => setEditingGameResult(game.id)} className='bg-slate-50 hover:bg-white text-black text-sm font-bold py-2 px-4 border bg-gray-400 rounded mr-1'>
-                      Edit Result
+                    <button
+                      onClick={() => deleteGame(game.id)}
+                      className='bg-red-600 hover:bg-red-400 text-white text-sm font-bold border bg-gray-900 rounded'
+                    >
+                      Delete
                     </button>
-                    )}
                   </div>
                 </div>
               </div>

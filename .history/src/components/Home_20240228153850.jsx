@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import axios from "../axiosConfig";
+import axios from "axios";
 
 function Home({ clubs = [], handleClubDeleted, instructorId }) {
   const deleteClub = async (clubId) => {
