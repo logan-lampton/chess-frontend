@@ -34,7 +34,7 @@ function Home({ clubs = [], handleClubDeleted, instructorId }) {
           >
             <Link
               to={`/clubs/${club.id}`}
-              state={{ club: club }}
+              state={{ club: club}}
               className='w-3/4'
             >
               <div className='bg-gray-900 text-white font-bold py-2 px-4 border hover:bg-gray-700'>
