@@ -21,6 +21,7 @@ import ErrorBoundary from "./ErrorBoundary";
 import UpdateClub from "./components/UpdateClub";
 import UpdateStudent from "./components/UpdateStudent";
 import StudentPairSelect from "./components/StudentPairSelect";
+import ViewClubLessons from "./components/ViewClubLessons";
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -153,6 +154,7 @@ function App() {
                     />
                   }
                 />
+                <Route path = '/clublessons' element = {<ViewClubLessons />}/>
                 <Route path='/updatestudent/:id' element={<UpdateStudent />} />
                 <Route
                   path='/studentpairselect'
