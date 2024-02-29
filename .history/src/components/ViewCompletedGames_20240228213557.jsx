@@ -107,7 +107,7 @@ function ViewCompletedGames() {
           </Link>
         </button>
       </div>
-      <div className='mt-5 ml-3 mb-12'>
+      <div className='mt-5 ml-3'>
         <h2>Search Games</h2>
         {/* Searchbar */}
         <input
