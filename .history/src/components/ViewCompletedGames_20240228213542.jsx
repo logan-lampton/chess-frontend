@@ -101,13 +101,13 @@ function ViewCompletedGames() {
         <div className='mt-5'>
           <h1>Completed Games</h1>
         </div>
-        <button className='mt-7 mr-8 h-15 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
+        <button className='mt-12 mr-8 h-15 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
           <Link to={`/games/in_progress/${id}`} className='text-white'>
             View In-Progress Games
           </Link>
         </button>
       </div>
-      <div className='mt-5 ml-3 mb-12'>
+      <div className='mt-5 ml-3'>
         <h2>Search Games</h2>
         {/* Searchbar */}
         <input

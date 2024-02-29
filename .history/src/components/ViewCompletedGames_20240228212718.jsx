@@ -97,17 +97,17 @@ function ViewCompletedGames() {
 
   return (
     <div>
-      <div className='flex justify-between mt-10'>
-        <div className='mt-5'>
-          <h1>Completed Games</h1>
-        </div>
-        <button className='mt-7 mr-8 h-15 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
+      <div className='mt-10'>
+        <button className='absolute top-20 right-10 h-15 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
           <Link to={`/games/in_progress/${id}`} className='text-white'>
             View In-Progress Games
           </Link>
         </button>
       </div>
-      <div className='mt-5 ml-3 mb-12'>
+      <div className='mt-10'>
+        <h1>Completed Games</h1>
+      </div>
+      <div className='mt-5 ml-3'>
         <h2>Search Games</h2>
         {/* Searchbar */}
         <input
