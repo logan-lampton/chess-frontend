@@ -43,9 +43,9 @@ function Student() {
               <p>Grade: {student.grade}</p>
               <p>Number of Games Played: {student.games.length}</p>
               <p>Total Wins: {student.total_wins}</p>
-              <p>Total Win Rate: {student.win_rate * 100 + "%"}</p>
-              <p>Win Rate as White: {student.win_rate_white + "%"}</p>
-              <p>Wins Rate as Black: {student.win_rate_black + "%"}</p>
+              <p>Total Win Rate: {student.win_rate}</p>
+              <p>Win Rate as White: {student.win_rate_white}</p>
+              <p>Win Rate as Black: {student.win_rate_black}</p>
             </div>
           </div>
         ) : (
