@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Dropdown from "./Dropdown";
@@ -104,23 +104,30 @@ function ViewCompletedGames() {
     }
   };
 
-  const closeDropdown = () => {
-    setEditingGameResult(null);
-  };
+  const gameRef = useRef();
 
-  const sureDelete = (selection, id) => {
-    if(selection) {
-      deleteGame(id)
-    }
+  const handleConfirmation = (message, isLoading) => {
+    setConfirmationPopUp({
+      message,
+      isLoading
+    })
   }
 
   const handleDeleteClick = (id) => {
-    setConfirmationPopUp({
-      message: 'Are you sure you want to delete?',
-      isLoading: true,
-    });
-
+    handleConfirmation('Are you sure you want to delete?', true)
+    gameRef.current = id;
   }
+
+  const sureDelete = async (selection, id) => {
+    console.log("Game ID to delete:", id);
+    if(selection) {
+      await deleteGame(gameRef.current)
+      setConfirmationPopUp({message: '', isLoading: false})
+    }
+    else {
+      setConfirmationPopUp({message: '', isLoading: false})
+    }
+  };
 
   return (
     <div>
@@ -154,7 +161,6 @@ function ViewCompletedGames() {
                 </h3>
                 <button
                   onClick={() => handleDeleteClick(game.id)}
-                  // onClick={() => deleteGame(game.id)}
                   className='bg-red-600 hover:bg-red-400 text-white text-sm font-bold border bg-gray-900 rounded'
                 >
                   Delete
@@ -177,11 +183,10 @@ function ViewCompletedGames() {
                       <Dropdown
                         patchGame={patchGame}
                         gameId={game.id}
-                        onClose={closeDropdown}
                       />
                     ) : (
                       <button
-                        // onClick={() => setEditingGameResult(game.id)}
+                        onClick={() => setEditingGameResult(game.id)}
                         className='bg-slate-50 hover:bg-white text-black text-sm font-bold py-2 px-4 border bg-gray-400 rounded mr-1'
                       >
                         Edit Result
