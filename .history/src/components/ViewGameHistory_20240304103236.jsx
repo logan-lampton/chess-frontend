@@ -131,12 +131,7 @@ function ViewGameHistory() {
                 <p>Black Player: {game.players.black}</p>
                 <div className='flex mt-3 mb-2'>
                   <p className='mt-3'>
-                    Result:{" "}
-                    {game.result === "White"
-                      ? `${game.players.white} Won`
-                      : game.result === "Black"
-                      ? `${game.players.black} Won`
-                      : "Draw"}
+                    Result: {game.result ? game.result : "pending"}
                   </p>
                 </div>
               </div>

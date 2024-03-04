@@ -136,7 +136,7 @@ function ViewGameHistory() {
                       ? `${game.players.white} Won`
                       : game.result === "Black"
                       ? `${game.players.black} Won`
-                      : "Draw"}
+                      : ""}
                   </p>
                 </div>
               </div>

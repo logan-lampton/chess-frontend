@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import axios from "../axiosConfig";
 
+// update how white and black win rate is calculated
+// in student games, change the format for the winner to match the club games
+
 function Student() {
   const { id } = useParams();
   const [student, setStudent] = useState(null);
