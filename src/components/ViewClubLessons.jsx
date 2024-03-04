@@ -1,17 +1,19 @@
 import { React, useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "../axiosConfig";
 
 export default function ViewClubLessons() {
   const location = useLocation()
-  const {instructor_id} = location.state.club
+  const navigate= useNavigate()
+  console.log(location)
+  const {instructorId} = location.state
   
 
   const [lessons, setLessons] = useState([])
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    axios.get(`/instructor_lessons/${instructor_id}`, {
+    axios.get(`/instructor_lessons/${instructorId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -22,7 +24,6 @@ export default function ViewClubLessons() {
       .catch((error) => {
         console.error("Error fetching lesson data: ", error);
       });
-    // }
   }, []);
 
   console.log(lessons)
@@ -39,6 +40,11 @@ export default function ViewClubLessons() {
     return acc;
   }, {});
 
+  const handleLessonAdded = (newLesson) => {
+    let newArray = [...lessons, newLesson]
+    setLessons(newArray)
+  }
+
   return (
     <div>
       {Object.entries(lessonsBySource).map(([source, lessons]) => (
@@ -51,6 +57,7 @@ export default function ViewClubLessons() {
           </ul>
         </div>
       ))}
+      <button onClick = {()=>navigate('/addlesson', {state: {instructorId: instructorId}})}>Add new Lesson</button>
     </div>
   )
 }
