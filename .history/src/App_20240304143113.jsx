@@ -22,7 +22,6 @@ import UpdateClub from "./components/UpdateClub";
 import UpdateStudent from "./components/UpdateStudent";
 import StudentPairSelect from "./components/StudentPairSelect";
 import ViewClubLessons from "./components/ViewClubLessons";
-import ConfirmationPopUp from "./components/ConfirmationPopUp";
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);

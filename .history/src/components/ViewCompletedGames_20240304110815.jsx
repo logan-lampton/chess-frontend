@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Dropdown from "./Dropdown";
 import axios from "../axiosConfig";
-import ConfirmationPopUp from "./ConfirmationPopUp"
 
 // Add a warning alert when delete is clicked: "Do you really want to delete this?"
 // Sweet Alert 2, as a possible solution
@@ -19,10 +18,6 @@ function ViewCompletedGames() {
   const [searchQuery, setSearchQuery] = useState("");
   const [gamesDisplayed, setGamesDisplayed] = useState([]);
   const [editingGameResult, setEditingGameResult] = useState(null);
-  const [confirmationPopUp, setConfirmationPopUp] = useState({
-    message: '',
-    isLoading: false,
-  })
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -108,20 +103,6 @@ function ViewCompletedGames() {
     setEditingGameResult(null);
   };
 
-  const sureDelete = (selection, id) => {
-    if(selection) {
-      deleteGame(id)
-    }
-  }
-
-  const handleDeleteClick = (id) => {
-    setConfirmationPopUp({
-      message: 'Are you sure you want to delete?',
-      isLoading: true,
-    });
-
-  }
-
   return (
     <div>
       <div className='flex justify-between mt-10'>
@@ -153,8 +134,7 @@ function ViewCompletedGames() {
                   {game.players.white} / {game.players.black}
                 </h3>
                 <button
-                  onClick={() => handleDeleteClick(game.id)}
-                  // onClick={() => deleteGame(game.id)}
+                  onClick={() => deleteGame(game.id)}
                   className='bg-red-600 hover:bg-red-400 text-white text-sm font-bold border bg-gray-900 rounded'
                 >
                   Delete
@@ -181,7 +161,7 @@ function ViewCompletedGames() {
                       />
                     ) : (
                       <button
-                        // onClick={() => setEditingGameResult(game.id)}
+                        onClick={() => setEditingGameResult(game.id)}
                         className='bg-slate-50 hover:bg-white text-black text-sm font-bold py-2 px-4 border bg-gray-400 rounded mr-1'
                       >
                         Edit Result
@@ -191,7 +171,6 @@ function ViewCompletedGames() {
                 </div>
               </div>
             </div>
-            {confirmationPopUp.isLoading && <ConfirmationPopUp onDialogue={sureDelete} message={confirmationPopUp.message} />}
           </div>
         ))}
       </div>
