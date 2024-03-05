@@ -2,6 +2,15 @@ import { React, useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "../axiosConfig";
 
+
+// add create a new lesson
+// add update lesson
+// add delete lesson
+
+// Click on lesson, bring to page showing the students that have completed it/their grades
+// On that separate page, add a way to mark students as having completed a lesson/their grade
+
+
 export default function ViewClubLessons() {
   const location = useLocation()
   const navigate= useNavigate()

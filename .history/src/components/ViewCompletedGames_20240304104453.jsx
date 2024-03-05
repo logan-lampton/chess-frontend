@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Dropdown from "./Dropdown";
 import axios from "../axiosConfig";
-import ConfirmationPopUp from "./ConfirmationPopUp"
 
 // Add a warning alert when delete is clicked: "Do you really want to delete this?"
 // Sweet Alert 2, as a possible solution
@@ -19,10 +18,6 @@ function ViewCompletedGames() {
   const [searchQuery, setSearchQuery] = useState("");
   const [gamesDisplayed, setGamesDisplayed] = useState([]);
   const [editingGameResult, setEditingGameResult] = useState(null);
-  const [confirmationPopUp, setConfirmationPopUp] = useState({
-    message: '',
-    isLoading: false,
-  })
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -33,7 +28,7 @@ function ViewCompletedGames() {
         },
       })
       .then((response) => {
-        // setGames(response.data);
+        setGames(response.data);
         setGamesDisplayed(response.data);
       })
       .catch((error) => {
@@ -104,29 +99,8 @@ function ViewCompletedGames() {
     }
   };
 
-  const gameRef = useRef();
-
-  const handleConfirmation = (message, isLoading) => {
-    setConfirmationPopUp({
-      message,
-      isLoading
-    })
-  }
-
-  const handleDeleteClick = (id) => {
-    handleConfirmation('Are you sure you want to delete?', true)
-    gameRef.current = id;
-  }
-
-  const sureDelete = async (selection, id) => {
-    console.log("Game ID to delete:", id);
-    if(selection) {
-      await deleteGame(gameRef.current)
-      setConfirmationPopUp({message: '', isLoading: false})
-    }
-    else {
-      setConfirmationPopUp({message: '', isLoading: false})
-    }
+  const closeDropdown = () => {
+    setEditingGameResult(null);
   };
 
   return (
@@ -160,7 +134,7 @@ function ViewCompletedGames() {
                   {game.players.white} / {game.players.black}
                 </h3>
                 <button
-                  onClick={() => handleDeleteClick(game.id)}
+                  onClick={() => deleteGame(game.id)}
                   className='bg-red-600 hover:bg-red-400 text-white text-sm font-bold border bg-gray-900 rounded'
                 >
                   Delete
@@ -183,6 +157,7 @@ function ViewCompletedGames() {
                       <Dropdown
                         patchGame={patchGame}
                         gameId={game.id}
+                        onClose={closeDropdown}
                       />
                     ) : (
                       <button
@@ -196,7 +171,6 @@ function ViewCompletedGames() {
                 </div>
               </div>
             </div>
-            {confirmationPopUp.isLoading && <ConfirmationPopUp onDialogue={sureDelete} message={confirmationPopUp.message} />}
           </div>
         ))}
       </div>

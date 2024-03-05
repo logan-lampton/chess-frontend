@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import axios from "../axiosConfig";
 
-// possibly add in number of wins as white / number of wins as black
-// Additional formatting
+// update how white and black win rate is calculated
 
 function Student() {
   const { id } = useParams();
@@ -45,8 +44,18 @@ function Student() {
               <p>Number of Games Played: {student.games.length}</p>
               <p>Total Wins: {student.total_wins}</p>
               <p>Total Win Rate: {student.win_rate * 100 + "%"}</p>
-              <p>Win Rate as White: {student.win_rate_white + "%"}</p>
-              <p>Wins Rate as Black: {student.win_rate_black + "%"}</p>
+              <p>
+                Wins as White:{" "}
+                {student.win_rate_white > 0 ? student.win_rate_white : 0}
+              </p>
+              <p>
+                Win Rate as White:{" "}
+                {student.win_rate_white / student.games_as_white.count()}
+              </p>
+              <p>
+                Wins as Black:{" "}
+                {student.win_rate_black > 0 ? student.win_rate_black : 0}
+              </p>
             </div>
           </div>
         ) : (
