@@ -41,27 +41,19 @@ function Student() {
               </button>
             </div>
             <div className='ml-5 mt-4'>
-              <div className='mb-3'>
+              <div>
                 <p>Grade: {student.grade}</p>
               </div>
-              <div className='mb-3'>
+              <div>
                 <p>Number of Games Played: {student.games.length}</p>
                 <p>Total Wins: {student.total_wins}</p>
-                <p>
-                  Total Win Rate: {Math.floor(student.win_rate * 100) + "%"}
-                </p>
+                <p>Total Win Rate: {student.win_rate * 100 + "%"}</p>
               </div>
-              <div className='mb-3'>
-                <p>Wins as White: {student.num_white_wins}</p>
-                <p>
-                  Win Rate as White: {Math.floor(student.win_rate_white) + "%"}
-                </p>
+              <div>
+                <p>Win Rate as White: {student.win_rate_white + "%"}</p>
               </div>
-              <div className='mb-3'>
-                <p>Wins as Black: {student.num_black_wins}</p>
-                <p>
-                  Wins Rate as Black: {Math.floor(student.win_rate_black) + "%"}
-                </p>
+              <div>
+                <p>Wins Rate as Black: {student.win_rate_black + "%"}</p>
               </div>
             </div>
           </div>

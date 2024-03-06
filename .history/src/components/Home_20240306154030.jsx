@@ -1,14 +1,9 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import axios from "../axiosConfig";
 import ConfirmationPopUp from "./ConfirmationPopUp";
 
 function Home({ clubs = [], handleClubDeleted, instructorId }) {
-  const [confirmationPopUp, setConfirmationPopUp] = useState({
-    message: "",
-    isLoading: false,
-  });
-
   const deleteClub = async (clubId) => {
     const token = localStorage.getItem("token");
     try {
@@ -25,30 +20,6 @@ function Home({ clubs = [], handleClubDeleted, instructorId }) {
       handleClubDeleted(clubId);
     } catch (error) {
       console.error("Error deleting club:", error);
-    }
-  };
-
-  const clubRef = useRef();
-
-  const handleConfirmation = (message, isLoading) => {
-    setConfirmationPopUp({
-      message,
-      isLoading,
-    });
-  };
-
-  const handleDeleteClick = (id) => {
-    handleConfirmation("Are you sure you want to delete?", true);
-    clubRef.current = id;
-  };
-
-  const sureDelete = async (selection, id) => {
-    console.log("Club ID to delete: ", id);
-    if (selection) {
-      await deleteClub(clubRef.current);
-      setConfirmationPopUp({ message: "", isLoading: false });
-    } else {
-      setConfirmationPopUp({ message: "", isLoading: false });
     }
   };
 
@@ -70,7 +41,7 @@ function Home({ clubs = [], handleClubDeleted, instructorId }) {
               </div>
             </Link>
             <button
-              onClick={() => handleDeleteClick(club.id)}
+              onClick={() => deleteClub(club.id)}
               className='w-1/4 bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 border bg-gray-900 rounded mr-4'
             >
               Delete Club
@@ -85,12 +56,6 @@ function Home({ clubs = [], handleClubDeleted, instructorId }) {
           </button>
         </Link>
       </div>
-      {confirmationPopUp.isLoading && (
-        <ConfirmationPopUp
-          onDialogue={sureDelete}
-          message={confirmationPopUp.message}
-        />
-      )}
     </div>
   );
 }

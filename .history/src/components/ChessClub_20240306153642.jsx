@@ -226,12 +226,7 @@ function ChessClub() {
                 </ul>
               </div>
             </div>
-            {confirmationPopUp.isLoading && (
-              <ConfirmationPopUp
-                onDialogue={sureDelete}
-                message={confirmationPopUp.message}
-              />
-            )}
+            {confirmationPopUp.isLoading && <ConfirmationPopUp />}
           </>
         )}
       </div>

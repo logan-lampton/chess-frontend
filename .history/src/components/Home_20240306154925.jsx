@@ -85,12 +85,7 @@ function Home({ clubs = [], handleClubDeleted, instructorId }) {
           </button>
         </Link>
       </div>
-      {confirmationPopUp.isLoading && (
-        <ConfirmationPopUp
-          onDialogue={sureDelete}
-          message={confirmationPopUp.message}
-        />
-      )}
+      <ConfirmationPopUp />
     </div>
   );
 }
