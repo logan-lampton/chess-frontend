@@ -53,15 +53,11 @@ function Student() {
               </div>
               <div className='mb-3'>
                 <p>Wins as White: {student.num_white_wins}</p>
-                <p>
-                  Win Rate as White: {Math.floor(student.win_rate_white) + "%"}
-                </p>
+                <p>Win Rate as White: {student.win_rate_white + "%"}</p>
               </div>
               <div className='mb-3'>
                 <p>Wins as Black: {student.num_black_wins}</p>
-                <p>
-                  Wins Rate as Black: {Math.floor(student.win_rate_black) + "%"}
-                </p>
+                <p>Wins Rate as Black: {student.win_rate_black + "%"}</p>
               </div>
             </div>
           </div>
