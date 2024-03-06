@@ -5,6 +5,10 @@ import Dropdown from "./Dropdown";
 import axios from "../axiosConfig";
 import ConfirmationPopUp from "./ConfirmationPopUp";
 
+// Add a warning alert when delete is clicked: "Do you really want to delete this?"
+// Sweet Alert 2, as a possible solution
+// For now, use the built in .alert("EXAMPLE STRING")
+
 // POSSIBLY: toggle for games:
 // If true show completed games
 // if false show in-progress games
