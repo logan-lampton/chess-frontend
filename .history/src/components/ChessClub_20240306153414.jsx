@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "../axiosConfig";
-import ConfirmationPopUp from "./ConfirmationPopUp";
 
 // Add Lesson Plan button
 // Functionality is to add new lessons onto each student
@@ -226,12 +225,6 @@ function ChessClub() {
                 </ul>
               </div>
             </div>
-            {confirmationPopUp.isLoading && (
-              <ConfirmationPopUp
-                onDialogue={sureDelete}
-                message={confirmationPopUp.message}
-              />
-            )}
           </>
         )}
       </div>

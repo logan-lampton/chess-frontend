@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "../axiosConfig";
-import ConfirmationPopUp from "./ConfirmationPopUp";
 
 // Add Lesson Plan button
 // Functionality is to add new lessons onto each student
@@ -148,7 +147,7 @@ function ChessClub() {
                         {student.student_name}
                       </Link>
                       <button
-                        onClick={() => handleDeleteClick(student.id)}
+                        onClick={() => deleteStudent(student.id)}
                         className='bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 border bg-gray-900 rounded mr-5'
                       >
                         Delete
@@ -226,12 +225,6 @@ function ChessClub() {
                 </ul>
               </div>
             </div>
-            {confirmationPopUp.isLoading && (
-              <ConfirmationPopUp
-                onDialogue={sureDelete}
-                message={confirmationPopUp.message}
-              />
-            )}
           </>
         )}
       </div>
