@@ -19,7 +19,7 @@ function ChessClub() {
   const location = useLocation();
   const { club: initialClub } = location.state || {};
 
-  const [club, setClub] = useState(initialClub || {});
+  const [club, setClub] = useState(initialClub);
 
   const [confirmationPopUp, setConfirmationPopUp] = useState({
     message: "",
@@ -166,7 +166,6 @@ function ChessClub() {
                     search: `?club_id=${id}`,
                     state: {
                       id: id,
-                      club: club,
                     },
                   }}
                 >
