@@ -15,7 +15,7 @@ export default function ViewClubLessons() {
   const location = useLocation()
   const navigate= useNavigate()
   console.log(location)
-  const {instructorId} = location.state
+  const {instructorId, clubId} = location.state
   
 
   const [lessons, setLessons] = useState([])
@@ -49,10 +49,10 @@ export default function ViewClubLessons() {
     return acc;
   }, {});
 
-  const handleLessonAdded = (newLesson) => {
-    let newArray = [...lessons, newLesson]
-    setLessons(newArray)
-  }
+  // const handleLessonAdded = (newLesson) => {
+  //   let newArray = [...lessons, newLesson]
+  //   setLessons(newArray)
+  // }
 
   return (
     <div>
@@ -61,7 +61,7 @@ export default function ViewClubLessons() {
           <h2>{source}</h2>
           <ul>
             {lessons.map((lesson) => (
-              <li key={lesson.id}>{lesson.lesson_name}</li>
+              <Link to = {`/lesson/${lesson.id}`} state = {{lesson: lesson, clubId: clubId}}><li key={lesson.id}>{lesson.lesson_name}</li></Link>
             ))}
           </ul>
         </div>
