@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "../axiosConfig";
-import ConfirmationPopUp from "./ConfirmationPopUp";
 
 // Add Lesson Plan button
 // Functionality is to add new lessons onto each student
@@ -19,12 +18,7 @@ function ChessClub() {
   const location = useLocation();
   const { club: initialClub } = location.state || {};
 
-  const [club, setClub] = useState(initialClub || {});
-
-  const [confirmationPopUp, setConfirmationPopUp] = useState({
-    message: "",
-    isLoading: false,
-  });
+  const [club, setClub] = useState(initialClub);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -97,30 +91,6 @@ function ChessClub() {
     }
   };
 
-  const studentRef = useRef();
-
-  const handleConfirmation = (message, isLoading) => {
-    setConfirmationPopUp({
-      message,
-      isLoading,
-    });
-  };
-
-  const handleDeleteClick = (id) => {
-    handleConfirmation("Are you sure you want to delete", true);
-    studentRef.current = id;
-  };
-
-  const sureDelete = async (selection, id) => {
-    console.log("Club ID to delete: ", id);
-    if (selection) {
-      await deleteStudent(studentRef.current);
-      setConfirmationPopUp({ message: "", isLoading: false });
-    } else {
-      setConfirmationPopUp({ message: "", isLoading: false });
-    }
-  };
-
   return (
     <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-screen'>
       <div className='col-span-2 md:col-span-2 mr-5 ml-5'>
@@ -148,7 +118,7 @@ function ChessClub() {
                         {student.student_name}
                       </Link>
                       <button
-                        onClick={() => handleDeleteClick(student.id)}
+                        onClick={() => deleteStudent(student.id)}
                         className='bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 border bg-gray-900 rounded mr-5'
                       >
                         Delete
@@ -166,7 +136,6 @@ function ChessClub() {
                     search: `?club_id=${id}`,
                     state: {
                       id: id,
-                      club: club,
                     },
                   }}
                 >
@@ -183,9 +152,8 @@ function ChessClub() {
       </div>
 
       <div className='col-span-1 md:col-span-1 mr-5'>
-      <div>
-          <Link to='/clublessons' state={{ instructorId: club.instructor_id, clubId: club.id }}>
-
+        <div>
+          <Link to='/clublessons' state={{ instructorId: club.instructor_id }}>
             <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
               View Lessons
             </button>
@@ -228,12 +196,6 @@ function ChessClub() {
                 </ul>
               </div>
             </div>
-            {confirmationPopUp.isLoading && (
-              <ConfirmationPopUp
-                onDialogue={sureDelete}
-                message={confirmationPopUp.message}
-              />
-            )}
           </>
         )}
       </div>

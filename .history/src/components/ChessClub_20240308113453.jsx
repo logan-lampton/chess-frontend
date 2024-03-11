@@ -19,7 +19,7 @@ function ChessClub() {
   const location = useLocation();
   const { club: initialClub } = location.state || {};
 
-  const [club, setClub] = useState(initialClub || {});
+  const [club, setClub] = useState(initialClub);
 
   const [confirmationPopUp, setConfirmationPopUp] = useState({
     message: "",
@@ -183,9 +183,8 @@ function ChessClub() {
       </div>
 
       <div className='col-span-1 md:col-span-1 mr-5'>
-      <div>
-          <Link to='/clublessons' state={{ instructorId: club.instructor_id, clubId: club.id }}>
-
+        <div>
+          <Link to='/clublessons' state={{ instructorId: club.instructor_id }}>
             <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
               View Lessons
             </button>

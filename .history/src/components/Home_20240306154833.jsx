@@ -70,7 +70,7 @@ function Home({ clubs = [], handleClubDeleted, instructorId }) {
               </div>
             </Link>
             <button
-              onClick={() => handleDeleteClick(club.id)}
+              onClick={() => deleteClub(club.id)}
               className='w-1/4 bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 border bg-gray-900 rounded mr-4'
             >
               Delete Club
@@ -85,12 +85,6 @@ function Home({ clubs = [], handleClubDeleted, instructorId }) {
           </button>
         </Link>
       </div>
-      {confirmationPopUp.isLoading && (
-        <ConfirmationPopUp
-          onDialogue={sureDelete}
-          message={confirmationPopUp.message}
-        />
-      )}
     </div>
   );
 }

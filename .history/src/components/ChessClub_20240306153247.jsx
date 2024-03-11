@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "../axiosConfig";
-import ConfirmationPopUp from "./ConfirmationPopUp";
 
 // Add Lesson Plan button
 // Functionality is to add new lessons onto each student
@@ -19,7 +18,7 @@ function ChessClub() {
   const location = useLocation();
   const { club: initialClub } = location.state || {};
 
-  const [club, setClub] = useState(initialClub || {});
+  const [club, setClub] = useState(initialClub);
 
   const [confirmationPopUp, setConfirmationPopUp] = useState({
     message: "",
@@ -148,7 +147,7 @@ function ChessClub() {
                         {student.student_name}
                       </Link>
                       <button
-                        onClick={() => handleDeleteClick(student.id)}
+                        onClick={() => deleteStudent(student.id)}
                         className='bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 border bg-gray-900 rounded mr-5'
                       >
                         Delete
@@ -166,7 +165,6 @@ function ChessClub() {
                     search: `?club_id=${id}`,
                     state: {
                       id: id,
-                      club: club,
                     },
                   }}
                 >
@@ -183,9 +181,8 @@ function ChessClub() {
       </div>
 
       <div className='col-span-1 md:col-span-1 mr-5'>
-      <div>
-          <Link to='/clublessons' state={{ instructorId: club.instructor_id, clubId: club.id }}>
-
+        <div>
+          <Link to='/clublessons' state={{ instructorId: club.instructor_id }}>
             <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
               View Lessons
             </button>
@@ -228,12 +225,6 @@ function ChessClub() {
                 </ul>
               </div>
             </div>
-            {confirmationPopUp.isLoading && (
-              <ConfirmationPopUp
-                onDialogue={sureDelete}
-                message={confirmationPopUp.message}
-              />
-            )}
           </>
         )}
       </div>
