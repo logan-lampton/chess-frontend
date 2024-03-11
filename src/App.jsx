@@ -24,6 +24,8 @@ import StudentPairSelect from "./components/StudentPairSelect";
 import ViewClubLessons from "./components/ViewClubLessons";
 import ConfirmationPopUp from "./components/ConfirmationPopUp";
 import AddLesson from "./components/AddLesson";
+import Lesson from "./components/Lesson";
+import GradeStudentLesson from "./components/GradeStudentLesson";
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -157,8 +159,9 @@ function App() {
                   }
                 />
                 <Route path='/clublessons' element={<ViewClubLessons />} />
-                <Route path = '/clublessons' element = {<ViewClubLessons />}/>
                 <Route path = '/addlesson' element = {<AddLesson />} />
+                <Route path = '/lesson/:id' element = {<Lesson />} />
+                <Route path = '/gradelesson/:id' element = {<GradeStudentLesson />} />
                 <Route path='/updatestudent/:id' element={<UpdateStudent />} />
                 <Route
                   path='/studentpairselect'

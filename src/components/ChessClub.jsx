@@ -21,7 +21,6 @@ function ChessClub() {
   const [club, setClub] = useState(initialClub);
 
   useEffect(() => {
-    // if (!club) {
     const token = localStorage.getItem("token");
     axios
       .get(`/clubs/${id}`, {
@@ -35,7 +34,6 @@ function ChessClub() {
       .catch((error) => {
         console.error("Error fetching club data: ", error);
       });
-    // }
   }, []);
 
   console.log("ChessClub component club object", club);
@@ -155,7 +153,7 @@ function ChessClub() {
 
       <div className='col-span-1 md:col-span-1 mr-5'>
       <div>
-          <Link to='/clublessons' state={{ instructorId: club.instructor_id }}>
+          <Link to='/clublessons' state={{ instructorId: club.instructor_id, clubId: club.id }}>
             <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
               View Lessons
             </button>

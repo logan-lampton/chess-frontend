@@ -28,7 +28,6 @@ export default function AddLesson() {
             }
           );
           console.log(response.data);
-        //   handleClubAdded(response.data);
           navigate("/clublessons", {state: {instructorId: instructorId}});
         } catch (error) {
           if (error.response && error.response.status === 422) {
