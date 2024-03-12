@@ -74,22 +74,31 @@ export default function GradeStudentLesson() {
 
       };
 
-  return (
-    <div>
-        <h1>{lesson.lesson_name}</h1>
-        {students.map((student)=>
-        (<>
-        <p>{student.student_name}</p>
-        <StudentScoreInput
-          key={student.id}
-          student={student}
-          score={studentScores[student.id] || 0}
-          max = {lesson.number_of_questions}
-          onScoreChange={handleScoreChange}
-           />
-           </>
-        ))}
-      <button onClick = {handleSubmitScores}>Submit Grades</button>
-    </div>
-  )
-}
+      return (
+        <div className="p-4">
+          <h1 className="text-2xl font-bold mb-2">{lesson.lesson_name}</h1>
+          <h3 className="text-lg font-semibold text-gray-700 mb-6">
+      {lesson.number_of_questions} questions
+    </h3>
+          <div className="space-y-4">
+            {students.map((student) => (
+              <div key={student.id}>
+                <p className="font-semibold">{student.student_name}</p>
+                <StudentScoreInput
+                  student={student}
+                  score={studentScores[student.id] || 0}
+                  max={lesson.number_of_questions}
+                  onScoreChange={handleScoreChange}
+                />
+              </div>
+            ))}
+          </div>
+          <button
+            className="bg-blue-500 text-white py-2 px-4 mt-4 rounded hover:bg-blue-600"
+            onClick={handleSubmitScores}
+          >
+            Submit Grades
+          </button>
+        </div>
+      );
+    }
