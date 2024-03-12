@@ -55,18 +55,31 @@ export default function ViewClubLessons() {
   // }
 
   return (
-    <div>
+    <div className="p-4">
       {Object.entries(lessonsBySource).map(([source, lessons]) => (
-        <div key={source}>
-          <h2>{source}</h2>
+        <div key={source} className="mb-8">
+          <h2 className="text-lg font-bold mb-4">{source}</h2>
           <ul>
             {lessons.map((lesson) => (
-              <Link to = {`/lesson/${lesson.id}`} state = {{lesson: lesson, clubId: clubId}}><li key={lesson.id}>{lesson.lesson_name}</li></Link>
+              <li key={lesson.id} className="mb-2">
+                <Link
+                  to={`/lesson/${lesson.id}`}
+                  state={{ lesson: lesson, clubId: clubId }}
+                  className="text-blue-500 hover:underline"
+                >
+                  {lesson.lesson_name}
+                </Link>
+              </li>
             ))}
           </ul>
         </div>
       ))}
-      <button onClick = {()=>navigate('/addlesson', {state: {instructorId: instructorId}})}>Add new Lesson</button>
+      <button
+        onClick={() => navigate("/addlesson", { state: { instructorId: instructorId } })}
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      >
+        Add new Lesson
+      </button>
     </div>
-  )
+  );
 }

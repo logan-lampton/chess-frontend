@@ -25,16 +25,27 @@ export default function Lesson() {
           });
       }, []);
 
-  return (
-    <div>
-        <h1>{lesson.lesson_name}</h1>
-        <h3>{lesson.source}</h3>
-        <ul>
-        {students.map((student)=> (
-            <li>{student.name}  {student.score}%</li>
-        ))}
-        </ul>
-        <button onClick = {()=>navigate('/gradelesson/:id', {state:{clubId: clubId, lessonId:lesson.id}})}>Add Student Grades</button>
-    </div>
-  )
-}
+      return (
+        <div className="p-4">
+          <h1 className="text-2xl font-bold mb-4">{lesson.lesson_name}</h1>
+          <h3 className="text-lg font-semibold mb-4">{lesson.source}</h3>
+          <ul>
+            {students.map((student) => (
+              <li key={student.id} className="mb-2">
+                {student.name} {student.score}%
+              </li>
+            ))}
+          </ul>
+          <button
+            onClick={() =>
+              navigate(`/gradelesson/${lesson.id}`, {
+                state: { clubId: clubId, lesson: lesson },
+              })
+            }
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          >
+            Add Student Grades
+          </button>
+        </div>
+      );
+    }
