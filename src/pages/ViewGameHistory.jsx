@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import StudentGamesDropdown from "./StudentGamesDropdown";
+import StudentGamesDropdown from "../components/StudentGamesDropdown";
 import axios from "../axiosConfig";
 
 function ViewGameHistory() {

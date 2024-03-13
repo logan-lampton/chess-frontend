@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import axios from "../axiosConfig";
-import ConfirmationPopUp from "./ConfirmationPopUp";
+import ConfirmationPopUp from "../components/ConfirmationPopUp";
 
 function Home({ clubs = [], handleClubDeleted, instructorId }) {
   const [confirmationPopUp, setConfirmationPopUp] = useState({

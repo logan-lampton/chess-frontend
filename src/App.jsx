@@ -5,27 +5,29 @@ import axios from "./axiosConfig";
 import Header from "./components/Header";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Home from "./components/Home";
-import ChessClub from "./components/ChessClub";
 import AddClub from "./components/AddClub";
 import AddStudent from "./components/AddStudent";
 import StudentPairings from "./components/StudentPairings";
-import ViewClubGames from "./components/ViewClubGames";
-import ViewCompletedGames from "./components/ViewCompletedGames";
-import Student from "./components/Student";
-import ViewLessons from "./components/ViewLessons";
-import ViewGameHistory from "./components/ViewGameHistory";
-import ViewNotes from "./components/ViewNotes";
 import AddNotes from "./components/AddNotes";
 import ErrorBoundary from "./ErrorBoundary";
 import UpdateClub from "./components/UpdateClub";
 import UpdateStudent from "./components/UpdateStudent";
 import StudentPairSelect from "./components/StudentPairSelect";
-import ViewClubLessons from "./components/ViewClubLessons";
 import ConfirmationPopUp from "./components/ConfirmationPopUp";
 import AddLesson from "./components/AddLesson";
-import Lesson from "./components/Lesson";
-import GradeStudentLesson from "./components/GradeStudentLesson";
+
+import Home from "./pages/Home";
+import ChessClub from "./pages/ChessClub";
+import GradeStudentLesson from "./pages/GradeStudentLesson";
+import Lesson from "./pages/Lesson";
+import Student from "./pages/Student";
+import ViewClubGames from "./pages/ViewClubGames";
+import ViewCompletedGames from "./pages/ViewCompletedGames";
+import ViewLessons from "./pages/ViewLessons";
+import ViewGameHistory from "./pages/ViewGameHistory";
+import ViewNotes from "./pages/ViewNotes";
+import ViewClubLessons from "./pages/ViewClubLessons";
+
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);

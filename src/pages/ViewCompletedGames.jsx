@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import Dropdown from "./Dropdown";
+import Dropdown from "../components/Dropdown";
 import axios from "../axiosConfig";
-import ConfirmationPopUp from "./ConfirmationPopUp";
+import ConfirmationPopUp from "../components/ConfirmationPopUp";
 
 // POSSIBLY: toggle for games:
 // If true show completed games
