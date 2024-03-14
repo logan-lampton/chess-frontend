@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "../axiosConfig";
-import Dropdown from "./Dropdown";
+import Dropdown from "../components/Dropdown";
 
 function ViewClubGames() {
   const [games, setGames] = useState([]);

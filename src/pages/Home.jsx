@@ -1,13 +1,16 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "../axiosConfig";
-import ConfirmationPopUp from "./ConfirmationPopUp";
+import ConfirmationPopUp from "../components/ConfirmationPopUp";
+import { useUserContext } from "../App";
 
-function Home({ clubs = [], handleClubDeleted, instructorId }) {
+function Home({ handleClubDeleted, instructorId }) {
+  const { clubs } = useUserContext();
+
   const [confirmationPopUp, setConfirmationPopUp] = useState({
     message: "",
     isLoading: false,
-  });
+  })
 
   const deleteClub = async (clubId) => {
     const token = localStorage.getItem("token");

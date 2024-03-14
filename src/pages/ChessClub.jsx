@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "../axiosConfig";
-import ConfirmationPopUp from "./ConfirmationPopUp";
+import ConfirmationPopUp from "../components/ConfirmationPopUp";
 
 // Add Lesson Plan button
 // Functionality is to add new lessons onto each student
@@ -183,9 +183,8 @@ function ChessClub() {
       </div>
 
       <div className='col-span-1 md:col-span-1 mr-5'>
-      <div>
-          <Link to='/clublessons' state={{ instructorId: club.instructor_id, clubId: club.id }}>
-
+        <div>
+          <Link to='/clublessons' state={{ instructorId: club.instructor_id }}>
             <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
               View Lessons
             </button>
