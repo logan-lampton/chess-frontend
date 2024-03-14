@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import axios from "./axiosConfig";
 
@@ -28,13 +28,17 @@ import ViewGameHistory from "./pages/ViewGameHistory";
 import ViewNotes from "./pages/ViewNotes";
 import ViewClubLessons from "./pages/ViewClubLessons";
 
+const UserContext = createContext();
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
   const [clubs, setClubs] = useState([]);
-  // const [students, setStudents] = useState([]);
   const [instructorId, setInstructorId] = useState("");
+
+  useEffect(() => {
+    fetchData();
+  }, [isLoggedIn]);
 
   const fetchData = async () => {
     const token = localStorage.getItem("token");
@@ -47,7 +51,6 @@ function App() {
         });
         setUser(response.data.user);
         setClubs(response.data.user.clubs);
-        // setStudents(response.data.user.clubs.students);
         setLoggedIn(true);
         setInstructorId(response.data.user.id);
       } catch (error) {
@@ -55,10 +58,6 @@ function App() {
       }
     }
   };
-
-  useEffect(() => {
-    fetchData();
-  }, [isLoggedIn]);
 
   const handleLogin = async (userData) => {
     try {
@@ -108,97 +107,122 @@ function App() {
     });
   };
 
+  const contextValue = {
+    isLoggedIn,
+    user,
+    clubs,
+    instructorId,
+  };
+
   console.log("App.jsx clubs", clubs);
 
   return (
     <Router>
       <ErrorBoundary>
-        <div className='flex flex-col items-center h-screen w-screen'>
-          <header>
-            <Header isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
-          </header>
-          <Routes>
-            <Route path='/' element={<Login handleLogin={handleLogin} />} />
-            <Route
-              path='/register'
-              element={<Register handleLogin={handleLogin} />}
-            />
-            {isLoggedIn ? (
-              <>
-                <Route
-                  path='/home'
-                  element={
-                    <Home
-                      clubs={clubs}
-                      setClubs={setClubs}
-                      handleClubDeleted={handleClubDeleted}
-                      handleClubUpdated={handleClubUpdated}
-                      instructorId={instructorId}
-                    />
-                  }
-                />
-                <Route
-                  path='/clubs/:id'
-                  element={<ChessClub instructorId={instructorId} />}
-                />
-                <Route
-                  path='/addclub'
-                  element={
-                    <AddClub
-                      instructorId={instructorId}
-                      handleClubAdded={handleClubAdded}
-                    />
-                  }
-                />
-                <Route path='/addstudent' element={<AddStudent />} />
-                <Route
-                  path='/updateclub/:id'
-                  element={
-                    <UpdateClub
-                      instructorId={instructorId}
-                      handleClubUpdated={handleClubUpdated}
-                    />
-                  }
-                />
-                <Route path='/clublessons' element={<ViewClubLessons />} />
-                <Route path = '/addlesson' element = {<AddLesson />} />
-                <Route path = '/lesson/:id' element = {<Lesson />} />
-                <Route path = '/gradelesson/:id' element = {<GradeStudentLesson />} />
-                <Route path='/updatestudent/:id' element={<UpdateStudent />} />
-                <Route
-                  path='/studentpairselect'
-                  element={<StudentPairSelect />}
-                />
-                <Route path='/studentpairings' element={<StudentPairings />} />
-                <Route
-                  path='games/in_progress/:id'
-                  element={<ViewClubGames />}
-                />
-                <Route
-                  path='/games/completed/:id'
-                  element={<ViewCompletedGames />}
-                />
-                <Route path='/students/:id' element={<Student />} />
-                <Route path='/viewlessons' element={<ViewLessons />} />
-                <Route
-                  path='/viewgamehistory/:id'
-                  element={<ViewGameHistory />}
-                />
-                <Route path='/viewnotes' element={<ViewNotes />} />
-                <Route path='/addnotes' element={<AddNotes />} />
-                <Route
-                  path='/confirmation_popup'
-                  element={<ConfirmationPopUp />}
-                />
-              </>
-            ) : (
-              "hidden"
-            )}
-          </Routes>
-        </div>
+        <UserContext.Provider value={contextValue}>
+          <div className='flex flex-col items-center h-screen w-screen'>
+            <header>
+              <Header isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+            </header>
+            <Routes>
+              <Route path='/' element={<Login handleLogin={handleLogin} />} />
+              <Route
+                path='/register'
+                element={<Register handleLogin={handleLogin} />}
+              />
+              {isLoggedIn ? (
+                <>
+                  <Route
+                    path='/home'
+                    element={
+                      <Home
+                        clubs={clubs}
+                        setClubs={setClubs}
+                        handleClubDeleted={handleClubDeleted}
+                        handleClubUpdated={handleClubUpdated}
+                        instructorId={instructorId}
+                      />
+                    }
+                  />
+                  <Route
+                    path='/clubs/:id'
+                    element={<ChessClub instructorId={instructorId} />}
+                  />
+                  <Route
+                    path='/addclub'
+                    element={
+                      <AddClub
+                        instructorId={instructorId}
+                        handleClubAdded={handleClubAdded}
+                      />
+                    }
+                  />
+                  <Route path='/addstudent' element={<AddStudent />} />
+                  <Route
+                    path='/updateclub/:id'
+                    element={
+                      <UpdateClub
+                        instructorId={instructorId}
+                        handleClubUpdated={handleClubUpdated}
+                      />
+                    }
+                  />
+                  <Route path='/clublessons' element={<ViewClubLessons />} />
+                  <Route path='/addlesson' element={<AddLesson />} />
+                  <Route path='/lesson/:id' element={<Lesson />} />
+                  <Route
+                    path='/gradelesson/:id'
+                    element={<GradeStudentLesson />}
+                  />
+                  <Route
+                    path='/updatestudent/:id'
+                    element={<UpdateStudent />}
+                  />
+                  <Route
+                    path='/studentpairselect'
+                    element={<StudentPairSelect />}
+                  />
+                  <Route
+                    path='/studentpairings'
+                    element={<StudentPairings />}
+                  />
+                  <Route
+                    path='games/in_progress/:id'
+                    element={<ViewClubGames />}
+                  />
+                  <Route
+                    path='/games/completed/:id'
+                    element={<ViewCompletedGames />}
+                  />
+                  <Route path='/students/:id' element={<Student />} />
+                  <Route path='/viewlessons' element={<ViewLessons />} />
+                  <Route
+                    path='/viewgamehistory/:id'
+                    element={<ViewGameHistory />}
+                  />
+                  <Route path='/viewnotes' element={<ViewNotes />} />
+                  <Route path='/addnotes' element={<AddNotes />} />
+                  <Route
+                    path='/confirmation_popup'
+                    element={<ConfirmationPopUp />}
+                  />
+                </>
+              ) : (
+                "hidden"
+              )}
+            </Routes>
+          </div>
+        </UserContext.Provider>
       </ErrorBoundary>
     </Router>
   );
 }
 
 export default App;
+
+// Define useUserContext hook
+function useUserContext() {
+  return useContext(UserContext);
+}
+
+export { useUserContext, UserContext };
