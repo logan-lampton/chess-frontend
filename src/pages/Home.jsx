@@ -4,13 +4,13 @@ import axios from "../axiosConfig";
 import ConfirmationPopUp from "../components/ConfirmationPopUp";
 import { useUserContext } from "../App";
 
-function Home({ handleClubDeleted, instructorId }) {
-  const { clubs } = useUserContext();
+function Home({ handleClubDeleted }) {
+  const { clubs, instructorId } = useUserContext();
 
   const [confirmationPopUp, setConfirmationPopUp] = useState({
     message: "",
     isLoading: false,
-  })
+  });
 
   const deleteClub = async (clubId) => {
     const token = localStorage.getItem("token");

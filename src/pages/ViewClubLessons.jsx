@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "../axiosConfig";
+import { useUserContext } from "../App";
 
 // add create a new lesson
 // add update lesson
@@ -13,7 +14,9 @@ export default function ViewClubLessons() {
   const location = useLocation();
   const navigate = useNavigate();
   console.log(location);
-  const { instructorId, clubId } = location.state;
+  const { clubId } = location.state;
+
+  const { instructorId } = useUserContext();
 
   const [lessons, setLessons] = useState([]);
 
@@ -51,6 +54,8 @@ export default function ViewClubLessons() {
   //   let newArray = [...lessons, newLesson]
   //   setLessons(newArray)
   // }
+
+  console.log(clubId)
 
   return (
     <div className='p-4'>
