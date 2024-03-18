@@ -1,3 +1,9 @@
+// Create handleuseContext function to update the clubId when clicked on the homepage
+// pass into the contextValue on App
+// When the useEffect runs on Homepage, it will remove the clubId
+
+// Back button: when we use useNavigate, clear it from the back button queue
+
 import React, { useState, useEffect, createContext, useContext } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import axios from "./axiosConfig";
@@ -35,6 +41,7 @@ function App() {
   const [user, setUser] = useState({});
   const [clubs, setClubs] = useState([]);
   const [instructorId, setInstructorId] = useState("");
+  const [clubId, setClubId] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -107,11 +114,17 @@ function App() {
     });
   };
 
+  const updateClubId = (clubId) => {
+    setClubId(clubId);
+  };
+
   const contextValue = {
     isLoggedIn,
     user,
     clubs,
     instructorId,
+    clubId,
+    updateClubId,
   };
 
   console.log("App.jsx clubs", clubs);
