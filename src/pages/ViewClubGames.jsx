@@ -78,7 +78,7 @@ function ViewClubGames() {
             <div className='border-2 border-gray-900'>
               <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-2 flex justify-between'>
                 <h3>
-                  {game.players.white} / {game.players.black}
+                  {game.player_name_white} / {game.player_name_black}
                 </h3>
                 <button
                   onClick={() => deleteGame(game.id)}
@@ -88,8 +88,8 @@ function ViewClubGames() {
                 </button>
               </div>
               <div className='ml-5 p-1'>
-                <p className='mb-1'>White Player: {game.players.white}</p>
-                <p>Black Player: {game.players.black}</p>
+                <p className='mb-1'>White Player: {game.player_name_white}</p>
+                <p>Black Player: {game.player_name_black}</p>
                 <div className='flex mt-3 mb-2'>
                   <p className='mt-3'>Winner:</p>
                   <div className='ml-2 align-middle'>
