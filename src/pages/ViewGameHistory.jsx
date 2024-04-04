@@ -40,9 +40,9 @@ function ViewGameHistory() {
         filteredGames = games.filter((game) => {
           return (
             (game.result === "Black" &&
-              game.players.black === student.student_name) ||
+              game.player_name_black === student.student_name) ||
             (game.result === "White" &&
-              game.players.white === student.student_name)
+              game.player_name_white === student.student_name)
           );
         });
         break;
@@ -50,9 +50,9 @@ function ViewGameHistory() {
         filteredGames = games.filter((game) => {
           return (
             (game.result === "Black" &&
-              game.players.black !== student.student_name) ||
+              game.player_name_black !== student.student_name) ||
             (game.result === "White" &&
-              game.players.white !== student.student_name)
+              game.player_name_white !== student.student_name)
           );
         });
         break;
@@ -63,12 +63,12 @@ function ViewGameHistory() {
         break;
       case "As White Player":
         filteredGames = games.filter((game) => {
-          return game.players.white === student.student_name;
+          return game.player_name_white === student.student_name;
         });
         break;
       case "As Black Player":
         filteredGames = games.filter((game) => {
-          return game.players.black === student.student_name;
+          return player_name_black === student.student_name;
         });
         break;
       default:
@@ -86,10 +86,10 @@ function ViewGameHistory() {
   // Filter by the dropdown selected and then only include games containing the opponent typed into searchbar
   const filterGamesBySearch = (gamesDisplayed) => {
     return (
-      gamesDisplayed.players.black
+      gamesDisplayed.player_name_black
         .toLowerCase()
         .includes(searchQuery.toLowerCase()) ||
-      gamesDisplayed.players.white
+      gamesDisplayed.player_name_white
         .toLowerCase()
         .includes(searchQuery.toLowerCase())
     );
@@ -123,19 +123,19 @@ function ViewGameHistory() {
             <div className='border-2 border-gray-900'>
               <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-2 flex justify-between'>
                 <h3>
-                  {game.players.white} / {game.players.black}
+                  {game.player_name_white} / {game.player_name_black}
                 </h3>
               </div>
               <div className='ml-5 p-1'>
-                <p className='mb-1'>White Player: {game.players.white}</p>
-                <p>Black Player: {game.players.black}</p>
+                <p className='mb-1'>White Player: {game.player_name_white}</p>
+                <p>Black Player: {game.player_name_black}</p>
                 <div className='flex mt-3 mb-2'>
                   <p className='mt-3'>
                     Result:{" "}
                     {game.result === "White"
-                      ? `${game.players.white} Won`
+                      ? `${game.player_name_white} Won`
                       : game.result === "Black"
-                      ? `${game.players.black} Won`
+                      ? `${game.player_name_black} Won`
                       : "Draw"}
                   </p>
                 </div>
