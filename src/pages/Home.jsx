@@ -1,11 +1,26 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "../axiosConfig";
 import ConfirmationPopUp from "../components/ConfirmationPopUp";
 import { useUserContext } from "../App";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 function Home({ handleClubDeleted }) {
-  const { clubs, instructorId } = useUserContext();
+  const { clubs, instructorId, loading, setLoading } = useUserContext();
+
+  // Simulate a delay before setting loading to false
+  useEffect(() => {
+    // Set loading to true initially
+    setLoading(true);
+
+    // Simulate a delay before setting loading to false
+    const timer = setTimeout(() => {
+        setLoading(false);
+    }, 1000);
+
+    // Clean up the timer to prevent memory leaks
+    return () => clearTimeout(timer);
+}, []);
 
   const [confirmationPopUp, setConfirmationPopUp] = useState({
     message: "",
@@ -57,6 +72,8 @@ function Home({ handleClubDeleted }) {
 
   return (
     <div className='h-screen bg-gray-100'>
+      {loading && <LoadingSpinner />}
+      {!loading && (
       <div className='grid grid-cols-2 gap-20 content-around w-screen flex items-center px-10 mt-20'>
         {clubs.map((club) => (
           <div
@@ -81,6 +98,7 @@ function Home({ handleClubDeleted }) {
           </div>
         ))}
       </div>
+      )}
       <div className='fixed bottom-0 right-0 p-5'>
         <Link to={"/addclub"} state={{ instructorId: instructorId }}>
           <button className='h-20 w-50 bg-green-600 hover:bg-green-400 text-white font-bold border bg-gray-900 rounded mr-4'>
