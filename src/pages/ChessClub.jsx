@@ -3,7 +3,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "../axiosConfig";
 import ConfirmationPopUp from "../components/ConfirmationPopUp";
 import { useUserContext } from "../App";
-
+import LoadingSpinner from "../components/LoadingSpinner";
 
 // Add Lesson Plan button
 // Functionality is to add new lessons onto each student
@@ -17,10 +17,7 @@ import { useUserContext } from "../App";
 
 function ChessClub() {
     const { id } = useParams();
-    const { updateClubId, clubId } = useUserContext();
-
-    // const location = useLocation();
-    // const initialClub } = location.state || {};
+    const { updateClubId, clubId, loading, setLoading } = useUserContext();
 
     const [club, setClub] = useState([]);
 
@@ -30,20 +27,23 @@ function ChessClub() {
     });
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
-        axios
-            .get(`/clubs/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((response) => {
-                setClub(response.data);
-                updateClubId(id)
-            })
-            .catch((error) => {
-                console.error("Error fetching club data: ", error);
-            });
+      setLoading(true)
+
+      const fetchClubData = async () => {
+        try {
+          const token = localStorage.getItem("token");
+          const response = await axios.get(`/clubs/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setClub(response.data);
+          updateClubId(id)
+        } catch(error) {
+          console.error("Error fetching club data: ", error);
+        } finally {setLoading(false)}
+      }
+      fetchClubData();
     }, []);
 
     console.log("ChessClub component club object", club);
@@ -132,6 +132,8 @@ function ChessClub() {
 
     return (
         <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-screen'>
+          {loading ? (<LoadingSpinner/>) : (
+            <>
             <div className='col-span-2 md:col-span-2 mr-5 ml-5'>
                 <div className='border-2 border-gray-900'>
                     {club ? (
@@ -277,6 +279,8 @@ function ChessClub() {
                     </>
                 )}
             </div>
+            </>
+          )}
         </div>
     );
 }
