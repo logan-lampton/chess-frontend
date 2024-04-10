@@ -68,7 +68,7 @@ function ViewGameHistory() {
         break;
       case "As Black Player":
         filteredGames = games.filter((game) => {
-          return player_name_black === student.student_name;
+          return game.player_name_black === student.student_name;
         });
         break;
       default:

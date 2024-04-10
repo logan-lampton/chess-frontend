@@ -8,7 +8,7 @@ export default function Lesson() {
   const navigate = useNavigate();
   const { lesson, clubId } = location.state;
   const [students, setStudents] = useState([]);
-  console.log(lesson);
+  console.log(lesson, clubId);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
