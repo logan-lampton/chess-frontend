@@ -4,11 +4,14 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Game from "./Game";
 import UnpairedPlayers from "./UnpairedPlayers";
 import axios from "../axiosConfig";
+import { useUserContext } from "../App";
+import Back from "./Back";
 
 function StudentPairings() {
   const location = useLocation();
   console.log("state", location.state);
-  const { paired, unpaired, clubId } = location.state;
+  const { clubId } = useUserContext()
+  const { paired, unpaired, students } = location.state;
   const navigate = useNavigate();
 
   console.log("paired", paired);
@@ -198,6 +201,7 @@ function StudentPairings() {
 
   return (
     <>
+    <Back  to = {`/studentpairselect`} state = {{students: students}} />
       <button onClick={shufflePlayers}>pair randomly</button>
       <button onClick={pairByTotalWins}>pair by total wins</button>
       <button onClick={pairByWinPercent}>pair by winning percentage</button>

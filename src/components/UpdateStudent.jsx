@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "../axiosConfig";
+import Back from "./Back";
 
 function UpdateStudent() {
   const location = useLocation();
@@ -44,6 +45,8 @@ function UpdateStudent() {
   };
 
   return (
+    <>
+    <Back to = {`/students/${student.id}`}/>
     <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-screen'>
       <div className='col-span-2 md:col-span-2 mr-5 ml-5'>
         <div className='border-2 border-gray-900'>
@@ -94,6 +97,7 @@ function UpdateStudent() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

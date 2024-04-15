@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "../axiosConfig";
 import Dropdown from "../components/Dropdown";
+import Back from "../components/Back";
 
 function ViewClubGames() {
   const [games, setGames] = useState([]);
@@ -66,6 +67,8 @@ function ViewClubGames() {
   };
 
   return (
+    <>
+    <Back to = {`/clubs/${id}`}/>
     <div className='relative'>
       <button className='absolute top-12 right-8 h-15 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
         <Link to={`/games/completed/${id}`} className='text-white'>
@@ -102,6 +105,7 @@ function ViewClubGames() {
         ))}
       </div>
     </div>
+    </>
   );
 }
 
