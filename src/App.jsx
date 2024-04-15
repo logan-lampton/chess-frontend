@@ -10,7 +10,7 @@ import AddStudent from "./components/AddStudent";
 import StudentPairings from "./components/StudentPairings";
 import AddNotes from "./components/AddNotes";
 import ErrorBoundary from "./ErrorBoundary";
-import UpdateClub from "./components/UpdateClub";
+import UpdateClub from "./pages/UpdateClub";
 import UpdateStudent from "./components/UpdateStudent";
 import StudentPairSelect from "./components/StudentPairSelect";
 import ConfirmationPopUp from "./components/ConfirmationPopUp";
@@ -168,12 +168,11 @@ function App() {
                       />
                     }
                   />
-                  <Route path='/addstudent' element={<AddStudent />} />
+                  <Route path='/addstudent/:clubId' element={<AddStudent />} />
                   <Route
                     path='/updateclub/:id'
                     element={
                       <UpdateClub
-                        instructorId={instructorId}
                         handleClubUpdated={handleClubUpdated}
                       />
                     }

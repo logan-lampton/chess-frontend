@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Dropdown from "../components/Dropdown";
 import axios from "../axiosConfig";
 import ConfirmationPopUp from "../components/ConfirmationPopUp";
+import Back from "../components/Back";
 
 // POSSIBLY: toggle for games:
 // If true show completed games
@@ -123,6 +124,8 @@ function ViewCompletedGames() {
   };
 
   return (
+    <>
+    <Back to = {`/clubs/${id}`}/>
     <div>
       <div className='flex justify-between mt-10'>
         <div className='mt-5'>
@@ -196,6 +199,7 @@ function ViewCompletedGames() {
         ))}
       </div>
     </div>
+    </>
   );
 }
 

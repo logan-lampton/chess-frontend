@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import StudentGamesDropdown from "../components/StudentGamesDropdown";
 import axios from "../axiosConfig";
+import Back from "../components/Back";
 
 function ViewGameHistory() {
   // State for everything (main state)
@@ -100,6 +101,8 @@ function ViewGameHistory() {
   );
 
   return (
+    <>
+    <Back to = {`/students/${id}`} />
     <div>
       <h1>ViewGameHistory</h1>
       <p>{student.student_name}</p>
@@ -145,6 +148,7 @@ function ViewGameHistory() {
         ))}
       </div>
     </div>
+    </>
   );
 }
 

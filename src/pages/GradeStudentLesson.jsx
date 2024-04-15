@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "../axiosConfig";
 import StudentScoreInput from "../components/StudentScoreInput";
+import { useUserContext } from "../App";
+import Back from "../components/Back";
 
 export default function GradeStudentLesson() {
   const navigate = useNavigate();
   const [students, setStudents] = useState([]);
   const [studentScores, setStudentScores] = useState({});
   const location = useLocation();
-  const { lesson, clubId } = location.state;
+  const { clubId } = useUserContext()
+  const { lesson } = location.state;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -71,7 +74,7 @@ export default function GradeStudentLesson() {
       );
       console.log(response.data);
       navigate(`/lesson/${lesson.id}`, {
-        state: { clubId: clubId, lesson: lesson },
+        state: { lesson: lesson }
       });
     } catch (error) {
       console.error("Error grading lesson:", error);
@@ -79,6 +82,8 @@ export default function GradeStudentLesson() {
   };
 
   return (
+    <>
+    <Back to = {`/lesson/${lesson.id}`} state = { {lesson:lesson} }/>
     <div className='p-4'>
       <h1 className='text-2xl font-bold mb-2'>{lesson.lesson_name}</h1>
       <h3 className='text-lg font-semibold text-gray-700 mb-6'>
@@ -104,5 +109,6 @@ export default function GradeStudentLesson() {
         Submit Grades
       </button>
     </div>
+    </>
   );
 }
