@@ -78,7 +78,7 @@ function Student() {
 
       <div className='col-span-1 md:col-span-1 mr-5'>
         <div>
-          <Link to='/viewlessons'>
+          <Link to={`/viewlessons/${id}`} state={{ student: student }}>
             <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mr-4 mb-4'>
               View Lessons
             </button>

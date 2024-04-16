@@ -205,7 +205,7 @@ function App() {
                     element={<ViewCompletedGames />}
                   />
                   <Route path='/students/:id' element={<Student />} />
-                  <Route path='/viewlessons' element={<ViewLessons />} />
+                  <Route path='/viewlessons/:id' element={<ViewLessons />} />
                   <Route
                     path='/viewgamehistory/:id'
                     element={<ViewGameHistory />}
