@@ -5,7 +5,7 @@ import axios from "axios";
 export default function AddLesson() {
     const navigate = useNavigate();
     const location = useLocation();
-    const { instructorId } = location.state;
+    const { instructorId, clubId } = location.state;
     const [formData, setFormData] = useState({
         lesson_name: "",
         number_of_questions: "",
@@ -28,7 +28,7 @@ export default function AddLesson() {
                 }
             );
             console.log(response.data);
-            navigate("/clublessons", { state: { instructorId: instructorId } });
+            navigate("/clublessons", { state: { instructorId: instructorId, clubId: clubId } });
         } catch (error) {
             if (error.response && error.response.status === 422) {
                 const validationErrors = error.response.data.errors;

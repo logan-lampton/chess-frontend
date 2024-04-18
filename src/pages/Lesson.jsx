@@ -10,7 +10,7 @@ export default function Lesson() {
   const { clubId } = useUserContext()
   const { lesson } = location.state;
   const [students, setStudents] = useState([]);
-  console.log(lesson);
+  console.log(lesson, clubId);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
