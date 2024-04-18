@@ -6,7 +6,7 @@ import { useUserContext } from "../App";
 import LoadingSpinner from "../components/LoadingSpinner";
 
 function Home({ handleClubDeleted }) {
-  const { clubs, instructorId, loading, setLoading } = useUserContext();
+  const { clubs, instructorId, loading, setLoading, clubId } = useUserContext();
 
   // Simulate a delay before setting loading to false
   useEffect(() => {
@@ -16,7 +16,7 @@ function Home({ handleClubDeleted }) {
     // Simulate a delay before setting loading to false
     const timer = setTimeout(() => {
         setLoading(false);
-    }, 1000);
+    }, 500);
 
     // Clean up the timer to prevent memory leaks
     return () => clearTimeout(timer);
