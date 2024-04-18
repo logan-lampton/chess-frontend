@@ -1,9 +1,13 @@
 import { React, useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useUserContext } from "../App";
+import Back from "./Back";
 
 function StudentPairSelect() {
   const location = useLocation();
-  const { students } = location.state.club;
+  const { clubId } = useUserContext()
+  const { students } = location.state;
+  console.log('students', students)
   const [renderedStudents, setRenderedStudents] = useState([]);
   const [pairedStudents, setPairedStudents] = useState([]);
   const [unpairedStudents, setUnpairedStudents] = useState([]);
@@ -35,6 +39,8 @@ function StudentPairSelect() {
   console.log("unpaired students", unpairedStudents);
 
   return (
+    <>
+    <Back to = {`/clubs/${clubId}`}/>
     <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-screen'>
       <div className='col-span-2 md:col-span-2 mr-5 ml-5'>
         <div className='bg-gray-900 text-white font-bold border mb-4'>
@@ -68,7 +74,7 @@ function StudentPairSelect() {
               state={{
                 paired: pairedStudents,
                 unpaired: unpairedStudents,
-                clubId: location.state.club.id,
+                students: students
               }}
             >
               <button className='w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
@@ -85,6 +91,7 @@ function StudentPairSelect() {
         )}
       </div>
     </div>
+    </>
   );
 }
 

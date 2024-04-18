@@ -1,21 +1,22 @@
 import React, { useState } from "react";
 import axios from "../axiosConfig";
 import { useNavigate, useLocation } from "react-router-dom";
+import Back from "../components/Back"
 
 // Possibly, eventually add ability to change the instructor of the club
 
-function UpdateClub({ instructorId, handleClubUpdated }) {
+function UpdateClub({ handleClubUpdated }) {
   const navigate = useNavigate();
 
   const location = useLocation();
 
-  const clubData = location.state.club;
+  const club = location.state.club;
 
   const [formData, setFormData] = useState({
     club_name: "",
     school: "",
     meet_time: "",
-    instructor_Id: instructorId,
+    instructor_Id: club.instructor_id,
   });
 
   const handleInputChange = (e) => {
@@ -31,7 +32,7 @@ function UpdateClub({ instructorId, handleClubUpdated }) {
     const token = localStorage.getItem("token");
     try {
       const response = await axios.patch(
-        `http://localhost:3000/clubs/${clubData.id}`,
+        `http://localhost:3000/clubs/${club.id}`,
         formData,
         {
           headers: {
@@ -41,13 +42,15 @@ function UpdateClub({ instructorId, handleClubUpdated }) {
       );
       console.log("Update successful", response.data);
       handleClubUpdated(response.data);
-      navigate(`/home`);
+      navigate(`/clubs/${club.id}`);
     } catch (error) {
       console.error("Error updating club data", error);
     }
   };
 
   return (
+    <>
+    <Back to = {`/clubs/${club.id}`}/>
     <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-screen'>
       <div className='col-span-2 md:col-span-2 mr-5 ml-5'>
         <div className='border-2 border-gray-900'>
@@ -57,7 +60,7 @@ function UpdateClub({ instructorId, handleClubUpdated }) {
           <form className='ml-5'>
             <div className='flex flex-col mb-4 mt-4'>
               <label htmlFor='club_name' className='mb-2'>
-                Name of Club: (Currently: {clubData.club_name}):
+                Name of Club: (Currently: {club.club_name}):
               </label>
               <div className='flex justify-end flex-grow mr-5'>
                 <input
@@ -73,7 +76,7 @@ function UpdateClub({ instructorId, handleClubUpdated }) {
             </div>
             <div className='flex flex-col mb-4 mt-4'>
               <label htmlFor='school' className='mr-4'>
-                Name of School: (Currently: {clubData.school}):
+                Name of School: (Currently: {club.school}):
               </label>
               <div className='flex justify-end flex-grow mr-5'>
                 <input
@@ -88,7 +91,7 @@ function UpdateClub({ instructorId, handleClubUpdated }) {
               </div>
               <div className='flex flex-col mb-4 mt-4'>
                 <label htmlFor='meet_time' className='mr-4'>
-                  Meet Time: (Currently: {clubData.meet_time}):
+                  Meet Time: (Currently: {club.meet_time}):
                 </label>
                 <div className='flex justify-end flex-grow mr-5'>
                   <input
@@ -114,6 +117,7 @@ function UpdateClub({ instructorId, handleClubUpdated }) {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

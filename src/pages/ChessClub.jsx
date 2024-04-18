@@ -3,6 +3,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "../axiosConfig";
 import ConfirmationPopUp from "../components/ConfirmationPopUp";
 import { useUserContext } from "../App";
+import Back from "../components/Back"
 import LoadingSpinner from "../components/LoadingSpinner";
 
 // Add Lesson Plan button
@@ -16,9 +17,8 @@ import LoadingSpinner from "../components/LoadingSpinner";
 // Option to input scores on each of the students
 
 function ChessClub() {
-    const { id } = useParams();
     const { updateClubId, clubId, loading, setLoading } = useUserContext();
-
+    const {id} = useParams()
     const [club, setClub] = useState([]);
 
     const [confirmationPopUp, setConfirmationPopUp] = useState({
@@ -90,7 +90,7 @@ function ChessClub() {
             );
             console.log("Student deleted: ", deleteResponse.data);
             const getResponse = await axios.get(
-                `http://localhost:3000/clubs/${id}`,
+                `http://localhost:3000/clubs/${clubId}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -131,6 +131,8 @@ function ChessClub() {
     console.log("clubId: ", clubId)
 
     return (
+        <>
+        <Back  to = {`/home`} />
         <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-screen'>
           {loading ? (<LoadingSpinner/>) : (
             <>
@@ -147,7 +149,7 @@ function ChessClub() {
                                 </h3>
                                 <button className='bg-slate-50 hover:bg-white text-black font-bold py-2 px-4 border bg-white rounded mt-5 mb-5'>
                                     <Link
-                                        to={`/updateclub/${id}`}
+                                        to={`/updateclub/${clubId}`}
                                         state={{ club: club }}
                                     >
                                         Edit Club Details
@@ -184,16 +186,7 @@ function ChessClub() {
                                 <p>No students available</p>
                             )}
                             <div className='flex justify-beginning ml-5 my-2'>
-                                <Link
-                                    to={{
-                                        pathname: "/addstudent",
-                                        search: `?club_id=${id}`,
-                                        state: {
-                                            id: id,
-                                            club: club,
-                                        },
-                                    }}
-                                >
+                                <Link to={ `/addstudent/${clubId}`} >
                                     <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
                                         Add Student
                                     </button>
@@ -208,20 +201,14 @@ function ChessClub() {
 
             <div className='col-span-1 md:col-span-1 mr-5'>
                 <div>
-                    <Link
-                        to='/clublessons'
-                        state={{
-                            instructorId: club.instructor_id,
-                            clubId: club.id,
-                        }}
-                    >
+                    <Link to='/clublessons'>
                         <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
                             View Lessons
                         </button>
                     </Link>
                 </div>
                 <div>
-                    <Link to='/studentpairselect' state={{ club: club }}>
+                    <Link to='/studentpairselect' state={{ students: club.students }}>
                         <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
                             Pair Students
                         </button>
@@ -230,7 +217,7 @@ function ChessClub() {
                 {club && (
                     <>
                         <div>
-                            <Link to={`/games/completed/${club.id}`}>
+                            <Link to={`/games/completed/${clubId}`}>
                                 <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
                                     View Club Games
                                 </button>
@@ -282,6 +269,7 @@ function ChessClub() {
             </>
           )}
         </div>
+        </>
     );
 }
 

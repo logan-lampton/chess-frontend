@@ -2,6 +2,7 @@ import { React, useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "../axiosConfig";
 import { useUserContext } from "../App";
+import Back from "../components/Back";
 
 // add create a new lesson
 // add update lesson
@@ -11,12 +12,9 @@ import { useUserContext } from "../App";
 // On that separate page, add a way to mark students as having completed a lesson/their grade
 
 export default function ViewClubLessons() {
-  const location = useLocation();
   const navigate = useNavigate();
-  console.log(location);
-  const { clubId } = location.state;
 
-  const { instructorId } = useUserContext();
+  const { instructorId, clubId } = useUserContext();
 
   const [lessons, setLessons] = useState([]);
 
@@ -58,6 +56,8 @@ export default function ViewClubLessons() {
   console.log(clubId)
 
   return (
+    <>
+    <Back to = {`/clubs/${clubId}`}/>
     <div className='p-4'>
       {Object.entries(lessonsBySource).map(([source, lessons]) => (
         <div key={source} className='mb-8'>
@@ -67,7 +67,7 @@ export default function ViewClubLessons() {
               <li key={lesson.id} className='mb-2'>
                 <Link
                   to={`/lesson/${lesson.id}`}
-                  state={{ lesson: lesson, clubId: clubId }}
+                  state={{ lesson: lesson}}
                   className='text-blue-500 hover:underline'
                 >
                   {lesson.lesson_name}
@@ -79,12 +79,13 @@ export default function ViewClubLessons() {
       ))}
       <button
         onClick={() =>
-          navigate("/addlesson", { state: { instructorId: instructorId } })
+          navigate("/addlesson", { state: { instructorId: instructorId, clubId: clubId} })
         }
         className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'
       >
         Add new Lesson
       </button>
     </div>
+    </>
   );
 }

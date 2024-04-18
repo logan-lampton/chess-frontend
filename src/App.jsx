@@ -10,7 +10,7 @@ import AddStudent from "./components/AddStudent";
 import StudentPairings from "./components/StudentPairings";
 import AddNotes from "./components/AddNotes";
 import ErrorBoundary from "./ErrorBoundary";
-import UpdateClub from "./components/UpdateClub";
+import UpdateClub from "./pages/UpdateClub";
 import UpdateStudent from "./components/UpdateStudent";
 import ConfirmationPopUp from "./components/ConfirmationPopUp";
 import AddLesson from "./components/AddLesson";
@@ -27,7 +27,6 @@ import ViewGameHistory from "./pages/ViewGameHistory";
 import ViewNotes from "./pages/ViewNotes";
 import ViewClubLessons from "./pages/ViewClubLessons";
 import StudentPairSelect from "./pages/StudentPairSelect";
-import LoadingSpinner from "./components/LoadingSpinner";
 
 const UserContext = createContext();
 
@@ -185,14 +184,13 @@ function App() {
                                         }
                                     />
                                     <Route
-                                        path='/addstudent'
+                                        path='/addstudent/:clubId'
                                         element={<AddStudent />}
                                     />
                                     <Route
                                         path='/updateclub/:id'
                                         element={
                                             <UpdateClub
-                                                instructorId={instructorId}
                                                 handleClubUpdated={
                                                     handleClubUpdated
                                                 }
@@ -240,7 +238,7 @@ function App() {
                                         element={<Student />}
                                     />
                                     <Route
-                                        path='/viewlessons'
+                                        path='/viewlessons/:id'
                                         element={<ViewLessons />}
                                     />
                                     <Route

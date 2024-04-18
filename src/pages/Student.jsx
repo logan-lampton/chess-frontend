@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import Back from "../components/Back"
 import axios from "../axiosConfig";
+import { useUserContext } from "../App";
 
 // possibly add in number of wins as white / number of wins as black
 // Additional formatting
 
 function Student() {
   const { id } = useParams();
+  const {clubId} = useUserContext()
   const [student, setStudent] = useState(null);
+  console.log('clubId', clubId)
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -28,6 +32,8 @@ function Student() {
   }, [id]);
 
   return (
+  <>
+    <Back  to = {`/clubs/${clubId}`}/>
     <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-screen'>
       <div className='border-2 border-gray-900 col-span-2 md:col-span-2 mr-5 ml-5'>
         {student ? (
@@ -72,7 +78,7 @@ function Student() {
 
       <div className='col-span-1 md:col-span-1 mr-5'>
         <div>
-          <Link to='/viewlessons'>
+          <Link to={`/viewlessons/${id}`} state={{ student: student }}>
             <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mr-4 mb-4'>
               View Lessons
             </button>
@@ -88,6 +94,7 @@ function Student() {
         </div>
       </div>
     </div>
+  </>
   );
 }
 
