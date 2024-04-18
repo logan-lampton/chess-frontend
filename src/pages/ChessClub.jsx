@@ -28,23 +28,23 @@ function ChessClub() {
 
     useEffect(() => {
       setLoading(true)
-
-      const fetchClubData = async () => {
-        try {
-          const token = localStorage.getItem("token");
-          const response = await axios.get(`/clubs/${id}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          setClub(response.data);
-          updateClubId(id)
-        } catch(error) {
-          console.error("Error fetching club data: ", error);
-        } finally {setLoading(false)}
-      }
       fetchClubData();
     }, []);
+
+    const fetchClubData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(`/clubs/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setClub(response.data);
+        updateClubId(id)
+      } catch(error) {
+        console.error("Error fetching club data: ", error);
+      } finally {setLoading(false)}
+    }
 
     console.log("ChessClub component club object", club);
 

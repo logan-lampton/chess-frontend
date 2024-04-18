@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "../axiosConfig";
 import Dropdown from "../components/Dropdown";
+import { useUserContext } from "../App";
+import LoadingSpinner from "../components/LoadingSpinner"
 
 function ViewClubGames() {
   const [games, setGames] = useState([]);
   const { id } = useParams();
+  const { loading, setLoading } = useUserContext();
 
   useEffect(() => {
+    setLoading(true)
     const token = localStorage.getItem("token");
     axios
       .get(`/games/in_progress/${id}`, {
@@ -17,9 +21,11 @@ function ViewClubGames() {
       })
       .then((response) => {
         setGames(response.data);
+        setLoading(false)
       })
       .catch((error) => {
         console.error("Error fetching club data: ", error);
+        setLoading(false)
       });
   }, [id]);
 
@@ -67,6 +73,9 @@ function ViewClubGames() {
 
   return (
     <div className='relative'>
+      {loading && <LoadingSpinner />}
+      {!loading && (
+        <>
       <button className='absolute top-12 right-8 h-15 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
         <Link to={`/games/completed/${id}`} className='text-white'>
           View Completed Games
@@ -101,6 +110,8 @@ function ViewClubGames() {
           </div>
         ))}
       </div>
+      </>
+      )}
     </div>
   );
 }
