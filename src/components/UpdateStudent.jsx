@@ -11,8 +11,8 @@ function UpdateStudent() {
   console.log("Student", student);
 
   const [formData, setFormData] = useState({
-    student_name: "",
-    grade: "",
+    student_name: student.student_name,
+    grade: student.grade,
   });
 
   const handleInputChange = (e) => {

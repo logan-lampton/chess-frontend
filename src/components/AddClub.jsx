@@ -92,7 +92,7 @@ export default function AddClub({ handleClubAdded }) {
                             <label htmlFor='meet_time'>Meet Time: </label>
                             <input
                                 className='border border-gray-300 rounded p-2'
-                                type='text'
+                                type='time'
                                 id='meet_time'
                                 name='meet_time'
                                 placeholder='Insert meet time'

@@ -48,34 +48,34 @@ function ChessClub() {
 
     console.log("ChessClub component club object", club);
 
-    function convertToTwelveHourFormat(timeString) {
-        const date = new Date(timeString);
+    // function convertToTwelveHourFormat(timeString) {
+    //     const date = new Date(timeString);
 
-        const hours = date.getHours();
-        const minutes = date.getMinutes();
+    //     const hours = date.getHours();
+    //     const minutes = date.getMinutes();
 
-        let amOrPm;
-        if (hours >= 12) {
-            amOrPm = "PM";
-        } else {
-            amOrPm = "AM";
-        }
+    //     let amOrPm;
+    //     if (hours >= 12) {
+    //         amOrPm = "PM";
+    //     } else {
+    //         amOrPm = "AM";
+    //     }
 
-        let hours12;
-        if (hours === 0) {
-            hours12 = 12;
-        } else if (hours > 12) {
-            hours12 = hours - 12;
-        } else {
-            hours12 = hours;
-        }
+    //     let hours12;
+    //     if (hours === 0) {
+    //         hours12 = 12;
+    //     } else if (hours > 12) {
+    //         hours12 = hours - 12;
+    //     } else {
+    //         hours12 = hours;
+    //     }
 
-        const formattedTime = `${hours12}:${
-            minutes < 10 ? "0" : ""
-        }${minutes}${amOrPm}`;
+    //     const formattedTime = `${hours12}:${
+    //         minutes < 10 ? "0" : ""
+    //     }${minutes}${amOrPm}`;
 
-        return formattedTime;
-    }
+    //     return formattedTime;
+    // }
 
     const deleteStudent = async (studentId) => {
         const token = localStorage.getItem("token");
@@ -145,7 +145,7 @@ function ChessClub() {
                                 <h3>School: {club.school}</h3>
                                 <h3>
                                     Meet Time:{" "}
-                                    {convertToTwelveHourFormat(club.meet_time)}
+                                    {club.formatted_time}
                                 </h3>
                                 <button className='bg-slate-50 hover:bg-white text-black font-bold py-2 px-4 border bg-white rounded mt-5 mb-5'>
                                     <Link
