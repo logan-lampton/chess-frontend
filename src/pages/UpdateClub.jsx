@@ -13,9 +13,9 @@ function UpdateClub({ handleClubUpdated }) {
   const club = location.state.club;
 
   const [formData, setFormData] = useState({
-    club_name: "",
-    school: "",
-    meet_time: "",
+    club_name: club.club_name,
+    school: club.school,
+    meet_time: club.formatted_time,
     instructor_Id: club.instructor_id,
   });
 
@@ -91,12 +91,12 @@ function UpdateClub({ handleClubUpdated }) {
               </div>
               <div className='flex flex-col mb-4 mt-4'>
                 <label htmlFor='meet_time' className='mr-4'>
-                  Meet Time: (Currently: {club.meet_time}):
+                  Meet Time: (Currently: {club.formatted_time}):
                 </label>
                 <div className='flex justify-end flex-grow mr-5'>
                   <input
                     className='border border-gray-300 rounded p-2 w-full'
-                    type='text'
+                    type='time'
                     id='meet_time'
                     name='meet_time'
                     placeholder='Insert meet name'
