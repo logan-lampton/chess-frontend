@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 export default function Back({to, state}) {
   const navigate = useNavigate()  
   return (
-    <button onClick = {()=>navigate(`${to}`, {state: state})}  className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600"
-    style={{ fontSize: '14px' }} >Back</button>
+    <button onClick = {()=>navigate(`${to}`, {state: state})}  className="bg-neutral-100 hover:bg-neutral-50 text-black font-bold py-2 px-4 border neutral-100 rounded absolute top-3.5 right-28">
+      Back</button>
   )
 }

@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useUserContext } from "../App";
-import Back from "./Back";
+import Back from "../components/Back";
 
 function StudentPairSelect() {
   const location = useLocation();
