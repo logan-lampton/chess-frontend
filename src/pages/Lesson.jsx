@@ -48,7 +48,7 @@ export default function Lesson() {
                         <ul>
                             {students.map((student) => (
                                 <li key={student.id} className='mb-2'>
-                                    {student.name} {student.score}%
+                                    {student.name} {student.score}/{lesson.number_of_questions}
                                 </li>
                             ))}
                         </ul>
