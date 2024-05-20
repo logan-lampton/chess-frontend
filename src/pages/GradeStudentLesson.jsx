@@ -25,7 +25,7 @@ export default function GradeStudentLesson() {
         setStudents(response.data);
         // Initialize studentScores with default scores (e.g., 0)
         const initialScores = response.data.reduce((scores, student) => {
-          //scores[student.id] = 0; // Set initial score to 0
+          scores[student.id] = ''; // Set initial score to empty string
           return scores;
         }, {});
         setStudentScores(initialScores);
@@ -36,12 +36,21 @@ export default function GradeStudentLesson() {
   }, []);
 
   const handleScoreChange = (studentId, score) => {
-    if(parseInt(score)<=lesson.number_of_questions || score===undefined){
+    console.log(parseInt(score), typeof parseInt(score))
+    if(!score){
+      setStudentScores((prevScores) => ({
+        ...prevScores,
+        [studentId]: ''
+    }))
+  }
+    else if(parseInt(score)<=lesson.number_of_questions){
     setStudentScores((prevScores) => ({
       ...prevScores,
-      [studentId]: score,
+      [studentId]: score
     }));
   }
+    
+  console.log(score)
   };
 
   const handleSubmitScores = async (e) => {
@@ -52,7 +61,7 @@ export default function GradeStudentLesson() {
     const studentArray = [];
     for (const studentId in studentScores) {
       console.log(typeof studentId);
-      if (studentScores[studentId] !== undefined) {
+      if (studentScores[studentId] !== '') {
         const currScore = studentScores[studentId];
         const newArray = [...students];
         const currStudent = newArray.find(

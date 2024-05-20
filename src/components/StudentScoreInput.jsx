@@ -2,6 +2,7 @@ import React from 'react'
 
 
 export default function StudentScoreInput({student, score, onScoreChange, max}) {
+    console.log(score)
     const handleScoreInputChange = e => {
         const newScore = parseInt(e.target.value)
         onScoreChange(student.id, newScore)

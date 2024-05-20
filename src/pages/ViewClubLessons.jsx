@@ -53,7 +53,7 @@ export default function ViewClubLessons() {
   //   setLessons(newArray)
   // }
 
-  console.log(clubId)
+  console.log('clubid:',clubId, 'instructorid:', instructorId)
 
   return (
     <>
