@@ -41,6 +41,7 @@ function ChessClub() {
         });
         setClub(response.data);
         updateClubId(id)
+        localStorage.setItem('clubId', JSON.stringify(id))
       } catch(error) {
         console.error("Error fetching club data: ", error);
       } finally {setLoading(false)}

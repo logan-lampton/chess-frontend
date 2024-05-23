@@ -55,11 +55,23 @@ function App() {
                 setClubs(response.data.user.clubs);
                 setLoggedIn(true);
                 setInstructorId(response.data.user.id);
+                const savedClubId = localStorage.getItem('clubId');
+                if (savedClubId){ 
+                    console.log("Saved Club ID on fetch:", savedClubId)
+                    setClubId(JSON.parse(savedClubId))
+                };
+                
             } catch (error) {
                 console.log("Error fetching user data:", error);
             }
         }
     };
+
+    // useEffect(() => {
+    //     if (clubId) {
+    //         localStorage.setItem('clubId', JSON.stringify(clubId));
+    //     }
+    // }, [clubId])
 
     const handleLogin = async (userData) => {
         try {

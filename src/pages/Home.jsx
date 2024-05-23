@@ -10,6 +10,8 @@ function Home({ handleClubDeleted }) {
 
   // Simulate a delay before setting loading to false
   useEffect(() => {
+    localStorage.removeItem('clubId')
+    console.log('clubId cleared!')
     // Set loading to true initially
     setLoading(true);
 
