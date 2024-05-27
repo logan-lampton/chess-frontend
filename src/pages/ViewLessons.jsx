@@ -43,7 +43,12 @@ function ViewLessons() {
     <>
     <Back to = {`/students/${student.id}`} />
     <div className="flex">
-      {Object.entries(lessonsBySource).map(([source, lessons]) => (
+      {lessons.length === 0 ? (
+        <div className='w-full text-center py-4'>
+          <div className="border p-4 bg-gray-100 text-gray-700"> Student has completed no lessons.</div>
+        </div>
+      ) : (
+      Object.entries(lessonsBySource).map(([source, lessons]) => (
         <div key={source} className="flex-none mr-8 border-r pr-8">
           <h2 className="text-lg font-bold mb-4">{source}</h2>
           <ul>
@@ -55,7 +60,8 @@ function ViewLessons() {
             ))}
           </ul>
         </div>
-      ))}
+      ))
+    )}
     </div>
     </>
   )
