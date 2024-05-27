@@ -30,10 +30,6 @@ function ViewClubGames() {
             });
     }, [id]);
 
-    useEffect(() => {
-        console.log(games);
-    }, [games]);
-
     const deleteGame = async (gameId) => {
         const token = localStorage.getItem("token");
         try {
