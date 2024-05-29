@@ -100,10 +100,10 @@ export default function GradeStudentLesson() {
       <h3 className='text-lg font-semibold text-gray-700 mb-6'>
         {lesson.number_of_questions} {lesson.number_of_questions != 1 ? "questions" : "question"}
       </h3>
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-5'>
         {students.map((student) => (
           <div key={student.id} className="border-4 p-5 bg-gray-100">
-            <p className='font-semibold'>{student.student_name}</p>
+            <p className='font-semibold text-xl'>{student.student_name}</p>
             <StudentScoreInput
               student={student}
               score={studentScores[student.id]}
