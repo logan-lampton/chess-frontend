@@ -1,12 +1,18 @@
-import React from 'react'
-
+import React, { useState } from 'react'
 
 export default function StudentScoreInput({student, score, onScoreChange, max}) {
-    console.log(score)
+    
+    const [isToggled, setIsToggled] = useState(false);
+
     const handleScoreInputChange = e => {
         const newScore = parseInt(e.target.value)
         onScoreChange(student.id, newScore)
     }
+
+    const toggle = () => {
+      setIsToggled(prevState => !prevState)
+    }
+
     return (
         <div className="">
           <label htmlFor={`score-${student.id}`} className="block text-gray-700 p-2">
@@ -24,7 +30,20 @@ export default function StudentScoreInput({student, score, onScoreChange, max}) 
             />
             <p className="mt-2 ml-2 text-gray-500">/{max}</p>
           </div>
-          <button className="mt-5 bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700">Add Notes</button>
+          {!isToggled ? <button className="mt-5 bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700" onClick={toggle}>Add Notes</button>
+          : 
+          <div>
+            <div className="mt-5">
+              <textarea style={{ resize: "none", height: "auto", minHeight: "2rem", width: "100%", overflowY: "hidden" }}
+                onInput={(e) => {
+                  e.target.style.height = "auto";
+                  e.target.style.height = (e.target.scrollHeight) + "px";
+                }}>
+              </textarea>
+            </div>
+            <button className="mt-5 bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700" onClick={toggle}>Save Notes</button>
+          </div>
+          }
         </div>
       );
 }
