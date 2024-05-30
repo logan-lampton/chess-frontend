@@ -51,9 +51,6 @@ export default function StudentScoreInput({ student, score, note, onScoreChange,
               }}
             />
           </div>
-          <button className="mt-5 bg-gray-900 text-white py-2 px-4 rounded hover:bg-blue-700" onClick={toggle}>
-            Save Notes
-          </button>
         </div>
       )}
     </div>

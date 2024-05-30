@@ -39,6 +39,8 @@ function ViewLessons() {
     return acc;
   }, {});
 
+  console.log(lessons)
+
   return (
     <>
     <Back to = {`/students/${student.id}`} />
@@ -53,9 +55,10 @@ function ViewLessons() {
           <h2 className="text-lg font-bold mb-4">{source}</h2>
           <ul>
             {lessons.map((lesson) => (
-              <li key={lesson.id} className="mb-2">
+              <li key={lesson.id} className="mb-5">
                 <span className="font-semibold">{lesson.lesson_name}</span> -{' '}
                 <span className="text-gray-600">{lesson.grade}%</span>
+                <p className="text-gray-600">{lesson.note}</p>
               </li>
             ))}
           </ul>
