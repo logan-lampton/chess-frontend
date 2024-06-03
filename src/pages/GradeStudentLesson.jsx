@@ -57,11 +57,15 @@ export default function GradeStudentLesson() {
 
   const handleSubmitScores = async (e) => {
     e.preventDefault();
-    const studentArray = students.map(student => ({
-      ...student,
-      score: studentScores[student.id] || null,
-      note: studentNotes[student.id] || ''
-    }));
+    const studentArray = students.map(student => {
+      if (studentScores[student.id] !== '') {
+        return {
+        ...student,
+        score: studentScores[student.id],
+        note: studentNotes[student.id] || ''
+        };
+      }
+    });
     
     const token = localStorage.getItem("token");
     try {

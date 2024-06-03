@@ -57,7 +57,7 @@ function ViewLessons() {
             {lessons.map((lesson) => (
               <li key={lesson.id} className="mb-5">
                 <span className="font-semibold">{lesson.lesson_name}</span> -{' '}
-                <span className="text-gray-600">{lesson.grade}%</span>
+                <span className="text-gray-600">{(lesson.grade / lesson.number_of_questions) * 100}%</span>
                 <p className="text-gray-600">{lesson.note}</p>
               </li>
             ))}
