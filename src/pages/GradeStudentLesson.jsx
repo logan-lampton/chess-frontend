@@ -9,8 +9,9 @@ export default function GradeStudentLesson() {
   const navigate = useNavigate();
   const [students, setStudents] = useState([]);
   const [studentScores, setStudentScores] = useState({});
+  const [studentNotes, setStudentNotes] = useState({});
   const location = useLocation();
-  const { clubId } = useUserContext()
+  const { clubId } = useUserContext();
   const { lesson } = location.state;
 
   useEffect(() => {
@@ -23,12 +24,17 @@ export default function GradeStudentLesson() {
       })
       .then((response) => {
         setStudents(response.data);
-        // Initialize studentScores with default scores (e.g., 0)
+        // Initialize studentScores and studentNotes with default values
         const initialScores = response.data.reduce((scores, student) => {
           scores[student.id] = ''; // Set initial score to empty string
           return scores;
         }, {});
+        const initialNotes = response.data.reduce((notes, student) => {
+          notes[student.id] = ''; // Set initial notes to empty string
+          return notes;
+        }, {});
         setStudentScores(initialScores);
+        setStudentNotes(initialNotes);
       })
       .catch((error) => {
         console.error("Error fetching lesson data: ", error);
@@ -36,42 +42,31 @@ export default function GradeStudentLesson() {
   }, []);
 
   const handleScoreChange = (studentId, score) => {
-    console.log(parseInt(score), typeof parseInt(score))
-    if(!score){
-      setStudentScores((prevScores) => ({
-        ...prevScores,
-        [studentId]: ''
-    }))
-  }
-    else if(parseInt(score)<=lesson.number_of_questions){
     setStudentScores((prevScores) => ({
       ...prevScores,
       [studentId]: score
     }));
-  }
-    
-  console.log(score)
+  };
+
+  const handleNoteChange = (studentId, note) => {
+    setStudentNotes((prevNotes) => ({
+      ...prevNotes,
+      [studentId]: note
+    }));
   };
 
   const handleSubmitScores = async (e) => {
-    console.log(students);
     e.preventDefault();
-    // Send studentScores to the backend
-    console.log("Student scores:", studentScores);
-    const studentArray = [];
-    for (const studentId in studentScores) {
-      console.log(typeof studentId);
-      if (studentScores[studentId] !== '') {
-        const currScore = studentScores[studentId];
-        const newArray = [...students];
-        const currStudent = newArray.find(
-          (student) => student.id === parseInt(studentId)
-        );
-        console.log(currStudent);
-        const updatedStudent = { ...currStudent, score: currScore };
-        studentArray.push(updatedStudent);
+    const studentArray = students.map(student => {
+      if (studentScores[student.id] !== '') {
+        return {
+        ...student,
+        score: studentScores[student.id],
+        note: studentNotes[student.id] || ''
+        };
       }
-    }
+    });
+    
     const token = localStorage.getItem("token");
     try {
       const response = await axios.post(
@@ -79,7 +74,7 @@ export default function GradeStudentLesson() {
         { lesson: lesson, students: studentArray },
         {
           headers: {
-            Authorization: `Bearer: ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -94,32 +89,34 @@ export default function GradeStudentLesson() {
 
   return (
     <>
-    <Back to = {`/lesson/${lesson.id}`} state = { {lesson:lesson} }/>
-    <div className='p-4'>
-      <h1 className='text-2xl font-bold mb-2'>{lesson.lesson_name}</h1>
-      <h3 className='text-lg font-semibold text-gray-700 mb-6'>
-        {lesson.number_of_questions} questions
-      </h3>
-      <div className='space-y-4'>
-        {students.map((student) => (
-          <div key={student.id}>
-            <p className='font-semibold'>{student.student_name}</p>
-            <StudentScoreInput
-              student={student}
-              score={studentScores[student.id]}
-              max={lesson.number_of_questions}
-              onScoreChange={handleScoreChange}
-            />
-          </div>
-        ))}
+      <Back to={`/lesson/${lesson.id}`} state={{ lesson: lesson }} />
+      <div className="p-5">
+        <h1 className="text-2xl font-bold mb-2">{lesson.lesson_name}</h1>
+        <h3 className="text-lg font-semibold text-gray-700 mb-6">
+          {lesson.number_of_questions} {lesson.number_of_questions !== 1 ? "questions" : "question"}
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-5">
+          {students.map((student) => (
+            <div key={student.id} className="border-4 p-5 bg-gray-100">
+              <p className="font-semibold text-xl">{student.student_name}</p>
+              <StudentScoreInput
+                student={student}
+                score={studentScores[student.id]}
+                note={studentNotes[student.id]}
+                max={lesson.number_of_questions}
+                onScoreChange={handleScoreChange}
+                onNoteChange={handleNoteChange}
+              />
+            </div>
+          ))}
+        </div>
+        <button
+          className="bg-blue-500 text-white py-2 px-4 mt-4 rounded hover:bg-blue-600"
+          onClick={handleSubmitScores}
+        >
+          Submit Grades
+        </button>
       </div>
-      <button
-        className='bg-blue-500 text-white py-2 px-4 mt-4 rounded hover:bg-blue-600'
-        onClick={handleSubmitScores}
-      >
-        Submit Grades
-      </button>
-    </div>
     </>
   );
 }
