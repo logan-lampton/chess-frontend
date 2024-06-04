@@ -14,6 +14,7 @@ import UpdateClub from "./pages/UpdateClub";
 import UpdateStudent from "./components/UpdateStudent";
 import ConfirmationPopUp from "./components/ConfirmationPopUp";
 import AddLesson from "./components/AddLesson";
+import UpdateLesson from "./pages/UpdateLesson";
 
 import Home from "./pages/Home";
 import ChessClub from "./pages/ChessClub";
@@ -216,6 +217,10 @@ function App() {
                                     <Route
                                         path='/addlesson'
                                         element={<AddLesson />}
+                                    />
+                                    <Route
+                                        path='/editlesson/:id'
+                                        element={<UpdateLesson />}
                                     />
                                     <Route
                                         path='/lesson/:id'
