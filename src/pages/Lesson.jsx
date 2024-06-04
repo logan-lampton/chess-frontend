@@ -4,6 +4,7 @@ import axios from "../axiosConfig";
 import { useUserContext } from "../App";
 import LoadingSpinner from "../components/LoadingSpinner";
 import Back from "../components/Back";
+import ConfirmationPopUp from "../components/ConfirmationPopUp";
 
 export default function Lesson() {
     const location = useLocation();
@@ -11,8 +12,12 @@ export default function Lesson() {
     const { loading, setLoading, clubId } = useUserContext();
     const { lesson } = location.state;
     const [students, setStudents] = useState([]);
+    const [confirmationPopUp, setConfirmationPopUp] = useState({
+        message: "",
+        isLoading: false,
+    });
 
-    console.log(lesson, clubId);
+    console.log(lesson);
 
     useEffect(() => {
         setLoading(true);
@@ -32,6 +37,44 @@ export default function Lesson() {
         setLoading(false);
     }, []);
 
+    const deleteLesson = async (id) => {
+        const token = localStorage.getItem("token");
+        try {
+          const deleteResponse = await axios.delete(
+            `http://localhost:3000/lessons/${lesson.id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          console.log("Lesson deleted:", deleteResponse.data);
+          navigate('/clublessons')
+        } catch (error) {
+          console.error("Error deleting lesson:", error);
+        }
+      };
+
+      const handleConfirmation = (message, isLoading) => {
+        setConfirmationPopUp({
+            message,
+            isLoading,
+        });
+    };
+
+    const handleDeleteClick = () => {
+        handleConfirmation("Are you sure you want to delete this lesson?  You will lose all grades connected to it.", true);
+    };
+
+    const sureDelete = async (selection, id) => {
+        if (selection) {
+            await deleteLesson(lesson.id);
+            setConfirmationPopUp({ message: "", isLoading: false });
+        } else {
+            setConfirmationPopUp({ message: "", isLoading: false });
+        }
+    };
+
     return (
         <>
             <Back to={`/clublessons`} />
@@ -41,6 +84,12 @@ export default function Lesson() {
                     <>
                         <h1 className='text-2xl font-bold mb-4'>
                             {lesson.lesson_name}
+                            <button onClick={() =>
+                                navigate(`/editlesson/${lesson.id}`, {
+                                    state: { clubId: clubId, lesson: lesson },
+                                })
+                            }>Edit lesson info</button>
+                            <button onClick = {handleDeleteClick}>Delete lesson</button>
                         </h1>
                         <h3 className='text-lg font-semibold mb-4'>
                             {lesson.source}
@@ -65,6 +114,12 @@ export default function Lesson() {
                     </>
                 )}
             </div>
+            {confirmationPopUp.isLoading && (
+                            <ConfirmationPopUp
+                                onDialogue={sureDelete}
+                                message={confirmationPopUp.message}
+                            />
+                        )}
         </>
     );
 }

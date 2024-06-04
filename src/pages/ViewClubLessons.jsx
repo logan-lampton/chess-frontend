@@ -55,6 +55,7 @@ export default function ViewClubLessons() {
 
   console.log('clubid:',clubId, 'instructorid:', instructorId)
 
+
   return (
     <>
     <Back to = {`/clubs/${clubId}`}/>
