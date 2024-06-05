@@ -79,19 +79,23 @@ export default function Lesson() {
     return (
         <>
             <Back to={`/clublessons`} />
-            <div className='p-4'>
+            <div className='mt-10 p-4'>
                 {loading && <LoadingSpinner />}
                 {!loading && (
                     <>
                         <h1 className='text-2xl font-bold mb-4'>
-                            {lesson.lesson_name}
-                            <div className="flex items-center">
+                            Lesson: {lesson.lesson_name}
+                        </h1>
+                        <h3 className='text-lg font-semibold mb-4'>
+                            Source: {lesson.source}
+                        </h3>
+                        <div className="flex">
                             <button 
                                 onClick={() =>
                                     navigate(`/editlesson/${lesson.id}`, {
                                         state: { clubId: clubId, lesson: lesson },
                                     })}
-                                className="ml-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded">
+                                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded">
                                 Edit
                             </button>
                             <button 
@@ -99,15 +103,12 @@ export default function Lesson() {
                                 className="ml-4 bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded">
                                 Delete
                             </button>
-                            </div>
-                        </h1>
-                        <h3 className='text-lg font-semibold mb-4'>
-                            {lesson.source}
-                        </h3>
-                        <ul>
+                        </div>
+                        <h3 className="mt-10 font-bold">Student Scores:</h3>
+                        <ul className="mt-5">
                             {students.map((student) => (
-                                <li key={student.id} className='mb-2'>
-                                    {student.name} {student.score}/{lesson.number_of_questions}
+                                <li key={student.id} className='mb-4'>
+                                    {student.name}: {student.score}/{lesson.number_of_questions}
                                 </li>
                             ))}
                         </ul>
@@ -120,6 +121,9 @@ export default function Lesson() {
                         >
                             Add Student Grades
                         </button>
+                        {students.length > 0 && (
+                          <button className="ml-4 bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 mt-4">Update Student Grades</button>
+                        )}
                     </>
                 )}
             </div>
