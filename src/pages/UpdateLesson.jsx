@@ -2,6 +2,7 @@ import React, {useContext, useState} from 'react'
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "../axiosConfig";
 import { useUserContext } from "../App";
+import Back from '../components/Back';
 
 export default function UpdateLesson() {
     const location = useLocation();
@@ -60,6 +61,7 @@ export default function UpdateLesson() {
 
   return (
     <div>
+            <Back to = {`/lesson/${lesson.id}`} state = {{ lesson: lesson}}/>
             <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-screen'>
                 <div className='col-span-2 md:col-span-2 mr-5 ml-5'>
                     <div className='border-2 border-gray-900'>

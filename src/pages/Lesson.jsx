@@ -6,6 +6,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import Back from "../components/Back";
 import ConfirmationPopUp from "../components/ConfirmationPopUp";
 
+
 export default function Lesson() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -84,12 +85,21 @@ export default function Lesson() {
                     <>
                         <h1 className='text-2xl font-bold mb-4'>
                             {lesson.lesson_name}
-                            <button onClick={() =>
-                                navigate(`/editlesson/${lesson.id}`, {
-                                    state: { clubId: clubId, lesson: lesson },
-                                })
-                            }>Edit lesson info</button>
-                            <button onClick = {handleDeleteClick}>Delete lesson</button>
+                            <div className="flex items-center">
+                            <button 
+                                onClick={() =>
+                                    navigate(`/editlesson/${lesson.id}`, {
+                                        state: { clubId: clubId, lesson: lesson },
+                                    })}
+                                className="ml-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded">
+                                Edit
+                            </button>
+                            <button 
+                                onClick={handleDeleteClick}
+                                className="ml-4 bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded">
+                                Delete
+                            </button>
+                            </div>
                         </h1>
                         <h3 className='text-lg font-semibold mb-4'>
                             {lesson.source}
@@ -105,9 +115,8 @@ export default function Lesson() {
                             onClick={() =>
                                 navigate(`/gradelesson/${lesson.id}`, {
                                     state: { clubId: clubId, lesson: lesson },
-                                })
-                            }
-                            className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'
+                                })}
+                            className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4' // Adding Tailwind classes for styling
                         >
                             Add Student Grades
                         </button>
@@ -115,11 +124,11 @@ export default function Lesson() {
                 )}
             </div>
             {confirmationPopUp.isLoading && (
-                            <ConfirmationPopUp
-                                onDialogue={sureDelete}
-                                message={confirmationPopUp.message}
-                            />
-                        )}
+                <ConfirmationPopUp
+                    onDialogue={sureDelete}
+                    message={confirmationPopUp.message}
+                />
+            )}
         </>
     );
 }
