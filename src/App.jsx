@@ -25,9 +25,9 @@ import ViewClubGames from "./pages/ViewClubGames";
 import ViewCompletedGames from "./pages/ViewCompletedGames";
 import ViewLessons from "./pages/ViewLessons";
 import ViewGameHistory from "./pages/ViewGameHistory";
-import ViewNotes from "./pages/ViewNotes";
 import ViewClubLessons from "./pages/ViewClubLessons";
 import StudentPairSelect from "./pages/StudentPairSelect";
+import UpdateGrade from "./pages/UpdateGrade";
 
 const UserContext = createContext();
 
@@ -231,6 +231,10 @@ function App() {
                                         element={<GradeStudentLesson />}
                                     />
                                     <Route
+                                        path='/updategrade/:id'
+                                        element={<UpdateGrade />}
+                                    />
+                                    <Route
                                         path='/updatestudent/:id'
                                         element={<UpdateStudent />}
                                     />
@@ -261,10 +265,6 @@ function App() {
                                     <Route
                                         path='/viewgamehistory/:id'
                                         element={<ViewGameHistory />}
-                                    />
-                                    <Route
-                                        path='/viewnotes'
-                                        element={<ViewNotes />}
                                     />
                                     <Route
                                         path='/addnotes'

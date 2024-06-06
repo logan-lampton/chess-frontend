@@ -79,7 +79,7 @@ export default function Lesson() {
     return (
         <>
             <Back to={`/clublessons`} />
-            <div className='mt-10 p-4'>
+            <div className='mt-10 p-4 '>
                 {loading && <LoadingSpinner />}
                 {!loading && (
                     <>
@@ -89,7 +89,7 @@ export default function Lesson() {
                         <h3 className='text-lg font-semibold mb-4'>
                             Source: {lesson.source}
                         </h3>
-                        <div className="flex">
+                        <div>
                             <button 
                                 onClick={() =>
                                     navigate(`/editlesson/${lesson.id}`, {
@@ -122,7 +122,11 @@ export default function Lesson() {
                             Add Student Grades
                         </button>
                         {students.length > 0 && (
-                          <button className="ml-4 bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 mt-4">Update Student Grades</button>
+                          <button 
+                            onClick={() => navigate(`/updategrade/${lesson.id}`, {
+                              state: {clubId: clubId, lesson: lesson},
+                            })}
+                            className="ml-4 bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 mt-4">Update Student Grades</button>
                         )}
                     </>
                 )}
