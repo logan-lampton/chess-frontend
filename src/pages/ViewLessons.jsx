@@ -55,12 +55,17 @@ function ViewLessons() {
           <h2 className="text-lg font-bold mb-4">{source}</h2>
           <ul>
             {lessons.map((lesson) => (
-              <li key={lesson.id} className="mb-5">
-                <span className="font-semibold">{lesson.lesson_name}</span> -{' '}
-                <span className="text-gray-600">{(lesson.grade / lesson.number_of_questions) * 100}%</span>
-                <p className="text-gray-600">{lesson.note}</p>
-              </li>
-            ))}
+            <li key={lesson.id} className="mb-5">
+            <span className="font-semibold">{lesson.lesson_name}</span> -{' '}
+            <span className="text-gray-600 mr-4">
+            {lesson.grade} / {lesson.number_of_questions}
+            </span>
+            <span className="text-gray-600 ml-4">
+            {Math.floor((lesson.grade / lesson.number_of_questions) * 100)}%
+            </span>
+            <p className="text-gray-600">{lesson.note}</p>
+            </li>
+))}
           </ul>
         </div>
       ))
