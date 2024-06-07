@@ -105,12 +105,14 @@ export default function Lesson() {
                             </button>
                         </div>
                         <h3 className="mt-10 font-bold">Student Scores:</h3>
-                        <ul className="mt-5">
-                            {students.map((student) => (
-                                <li key={student.id} className='mb-4'>
-                                    {student.name}: {student.score}/{lesson.number_of_questions}
-                                </li>
-                            ))}
+                        <ul>
+                        {students.map((student) => (
+                            <li key={student.id} className='mb-4 grid grid-cols-[1fr_auto_auto] gap-4'>
+                            <span className='font-semibold'>{student.name}</span>
+                            <span className='text-gray-600'>{student.score}/{lesson.number_of_questions}</span>
+                            <span className='text-gray-600'>{Math.floor(student.score / lesson.number_of_questions * 100)}%</span>
+                            </li>
+                        ))}
                         </ul>
                         <button
                             onClick={() =>
