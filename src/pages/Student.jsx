@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import Back from "../components/Back"
 import axios from "../axiosConfig";
 import { useUserContext } from "../App";
+import TransferStudentSelect from "../components/TransferStudentSelect";
 
 // possibly add in number of wins as white / number of wins as black
 // Additional formatting
@@ -12,6 +13,7 @@ function Student() {
   const { id } = useParams();
   const {clubId} = useUserContext()
   const [student, setStudent] = useState(null);
+  const [showClubSelect, setShowClubSelect] = useState(false)
   console.log('clubId', clubId)
 
   useEffect(() => {
@@ -31,6 +33,10 @@ function Student() {
       });
   }, [id]);
 
+  const hideClubSelect = () => {
+    setShowClubSelect(false)
+  }
+
   return (
   <>
     <Back  to = {`/clubs/${clubId}`}/>
@@ -41,9 +47,14 @@ function Student() {
             <div className='bg-gray-900 text-white font-bold py-2 px-4 border flex justify-between items-center'>
               <h2>{student.student_name}</h2>
               <button className='bg-slate-50 hover:bg-white text-black font-bold py-2 px-4 border bg-white rounded'>
-                <Link to={`/updatestudent/${id}`} state={{ student: student }}>
+              <Link to={`/updatestudent/${id}`} state={{ student: student }}>
                   Edit Student
                 </Link>
+              </button>
+              <button onClick = {()=>setShowClubSelect(true)} className='bg-slate-50 hover:bg-white text-black font-bold py-2 px-4 border bg-white rounded'>
+                
+                  Transfer Student
+                
               </button>
             </div>
             <div className='ml-5 mt-4'>
@@ -70,6 +81,7 @@ function Student() {
                 </p>
               </div>
             </div>
+            {showClubSelect && (<TransferStudentSelect hideClubSelect = {hideClubSelect} student = {student}/>)}
           </div>
         ) : (
           <p>Student not found</p>
