@@ -224,40 +224,51 @@ function ChessClub() {
                                 </button>
                             </Link>
                         </div>
-                        <div className='border-2 border-gray-900'>
-                            <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-4'>
-                                <h2>Club Stats</h2>
-                            </div>
-                            <div className='ml-5'>
-                                <h2 className='mb-3'>
-                                    {" "}
-                                    Students with Highest Wins:{" "}
-                                </h2>
-                                <ul className='ml-7'>
-                                    {club.top_3 &&
-                                        club.top_3.map((student) => {
-                                            return (
-                                                <li
-                                                    className='mb-3'
-                                                    key={student.id}
-                                                >
-                                                    <Link
-                                                        to={`/students/${student.id}`}
-                                                    >
-                                                        {student.student}: Wins:{" "}
-                                                        {student.wins} Win Rate:{" "}
-                                                        {Math.floor(
-                                                            student.win_rate *
-                                                                100
-                                                        )}
-                                                        %
-                                                    </Link>
-                                                </li>
-                                            );
-                                        })}
-                                </ul>
-                            </div>
+                        <div className="border-2 border-gray-900 rounded-lg shadow-lg p-4 mb-6 bg-white">
+                        <div className="bg-gray-900 text-white font-bold py-2 px-4 rounded-t-lg mb-4">
+                            <h2>Club Stats</h2>
                         </div>
+                        <div className="ml-5">
+                            <h2 className="text-lg font-semibold text-gray-700 mb-3">Game Leaders:</h2>
+                            <ul className="ml-7 list-disc list-inside">
+                            {club.top_3_games &&
+                                club.top_3_games.map((student) => (
+                                <li
+                                    className="mb-3 hover:bg-gray-100 p-2 rounded transition duration-200 ease-in-out flex justify-between items-center"
+                                    key={student.id}
+                                >
+                                    <Link to={`/students/${student.id}`} className="text-blue-500 hover:underline font-semibold">
+                                    {student.student}
+                                    </Link>
+                                    <span className="text-gray-600">
+                                    Wins: {student.wins} | Win Rate: {Math.floor(student.win_rate * 100)}%
+                                    </span>
+                                </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div className="ml-5 mt-4">
+                            <h2 className="text-lg font-semibold text-gray-700 mb-3">Lesson Leaders:</h2>
+                            <ul className="ml-7 list-disc list-inside">
+                            {club.top_3_lessons &&
+                                club.top_3_lessons.map((student) => (
+                                <li
+                                    className="mb-3 hover:bg-gray-100 p-2 rounded transition duration-200 ease-in-out flex justify-between items-center"
+                                    key={student.id}
+                                >
+                                    <Link to={`/students/${student.id}`} className="text-blue-500 hover:underline font-semibold">
+                                    {student.student}
+                                    </Link>
+                                    <span className="text-gray-600">
+                                    Lessons Completed: {student.number_of_lessons} | Average Score: {Math.floor(student.average_grade)}%
+                                    </span>
+                                </li>
+                                ))}
+                            </ul>
+                        </div>
+                        </div>
+
+
                         {confirmationPopUp.isLoading && (
                             <ConfirmationPopUp
                                 onDialogue={sureDelete}
