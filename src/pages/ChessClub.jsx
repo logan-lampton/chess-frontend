@@ -6,15 +6,6 @@ import { useUserContext } from "../App";
 import Back from "../components/Back"
 import LoadingSpinner from "../components/LoadingSpinner";
 
-// Add Lesson Plan button
-// Functionality is to add new lessons onto each student
-// Have the new of the lesson
-// Click the lesson
-
-// Get a list of all the students
-// If they have completed, have a grade next to their name
-// If they haven't done the lesson, it says "incomplete"
-// Option to input scores on each of the students
 
 function ChessClub() {
     const { updateClubId, clubId, loading, setLoading } = useUserContext();
@@ -46,90 +37,6 @@ function ChessClub() {
         console.error("Error fetching club data: ", error);
       } finally {setLoading(false)}
     }
-
-    console.log("ChessClub component club object", club);
-
-    // function convertToTwelveHourFormat(timeString) {
-    //     const date = new Date(timeString);
-
-    //     const hours = date.getHours();
-    //     const minutes = date.getMinutes();
-
-    //     let amOrPm;
-    //     if (hours >= 12) {
-    //         amOrPm = "PM";
-    //     } else {
-    //         amOrPm = "AM";
-    //     }
-
-    //     let hours12;
-    //     if (hours === 0) {
-    //         hours12 = 12;
-    //     } else if (hours > 12) {
-    //         hours12 = hours - 12;
-    //     } else {
-    //         hours12 = hours;
-    //     }
-
-    //     const formattedTime = `${hours12}:${
-    //         minutes < 10 ? "0" : ""
-    //     }${minutes}${amOrPm}`;
-
-    //     return formattedTime;
-    // }
-
-    const deleteStudent = async (studentId) => {
-        const token = localStorage.getItem("token");
-        try {
-            const deleteResponse = await axios.delete(
-                `http://localhost:3000/students/${studentId}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-            console.log("Student deleted: ", deleteResponse.data);
-            const getResponse = await axios.get(
-                `http://localhost:3000/clubs/${clubId}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-            console.log(getResponse.data.students);
-            setClub(getResponse.data);
-        } catch (error) {
-            console.error("Error deleting student", error);
-        }
-    };
-
-    const studentRef = useRef();
-
-    const handleConfirmation = (message, isLoading) => {
-        setConfirmationPopUp({
-            message,
-            isLoading,
-        });
-    };
-
-    const handleDeleteClick = (id) => {
-        handleConfirmation("Are you sure you want to delete", true);
-        studentRef.current = id;
-    };
-
-    const sureDelete = async (selection, id) => {
-        console.log("Club ID to delete: ", id);
-        if (selection) {
-            await deleteStudent(studentRef.current);
-            setConfirmationPopUp({ message: "", isLoading: false });
-        } else {
-            setConfirmationPopUp({ message: "", isLoading: false });
-        }
-    };
-
-    console.log("clubId: ", clubId)
 
     return (
         <>
@@ -170,16 +77,6 @@ function ChessClub() {
                                             >
                                                 {student.student_name}
                                             </Link>
-                                            <button
-                                                onClick={() =>
-                                                    handleDeleteClick(
-                                                        student.id
-                                                    )
-                                                }
-                                                className='bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 border bg-gray-900 rounded mr-5'
-                                            >
-                                                Delete
-                                            </button>
                                         </li>
                                     ))}
                                 </ul>
@@ -269,12 +166,12 @@ function ChessClub() {
                         </div>
 
 
-                        {confirmationPopUp.isLoading && (
+                        {/* {confirmationPopUp.isLoading && (
                             <ConfirmationPopUp
                                 onDialogue={sureDelete}
                                 message={confirmationPopUp.message}
                             />
-                        )}
+                        )} */}
                     </>
                 )}
             </div>

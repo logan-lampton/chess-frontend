@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Back from "../components/Back"
 import axios from "../axiosConfig";
 import { useUserContext } from "../App";
 import TransferStudentSelect from "../components/TransferStudentSelect";
+import ConfirmationPopUp from "../components/ConfirmationPopUp";
 
 // possibly add in number of wins as white / number of wins as black
 // Additional formatting
 
 function Student() {
   const { id } = useParams();
+  const navigate = useNavigate()
   const {clubId} = useUserContext()
   const [student, setStudent] = useState(null);
   const [showClubSelect, setShowClubSelect] = useState(false)
-  console.log('clubId', clubId)
+  const [confirmationPopUp, setConfirmationPopUp] = useState({
+    message: "",
+    isLoading: false,
+});
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -37,6 +41,45 @@ function Student() {
     setShowClubSelect(false)
   }
 
+  const deleteStudent = async (studentId) => {
+    const token = localStorage.getItem("token");
+    try {
+        const deleteResponse = await axios.delete(
+            `http://localhost:3000/students/${studentId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        console.log("Student deleted: ", deleteResponse.data);
+        navigate(`/clubs/${clubId}`)
+    } catch (error) {
+        console.error("Error deleting student", error);
+    }
+};
+
+const handleDeleteClick = () => {
+  handleConfirmation("Are you sure you want to delete this Student?  You will permanantly lose all lesson data associated with them.", true);
+};
+
+const handleConfirmation = (message, isLoading) => {
+  setConfirmationPopUp({
+      message,
+      isLoading,
+  });
+};
+
+const sureDelete = async (selection, id) => {
+  console.log("Club ID to delete: ", id);
+  if (selection) {
+      await deleteStudent(student.id);
+      setConfirmationPopUp({ message: "", isLoading: false });
+  } else {
+      setConfirmationPopUp({ message: "", isLoading: false });
+  }
+};
+
   return (
     <>
       <Back to={`/clubs/${clubId}`} />
@@ -46,17 +89,23 @@ function Student() {
             <div>
               <div className='bg-gray-900 text-white font-bold py-2 px-4 border flex justify-between items-center'>
                 <h2>{student.student_name}</h2>
-                <div>
+                <div className='flex space-x-2'>
                   <Link to={`/updatestudent/${id}`} state={{ student: student }}>
-                    <button className='bg-slate-50 hover:bg-white text-black font-bold py-2 px-4 border rounded mr-2'>
+                    <button className='bg-slate-50 hover:bg-white text-black font-bold py-2 px-4 border rounded'>
                       Edit Student
                     </button>
                   </Link>
                   <button
-                    onClick={() => setShowClubSelect(true)}
+                    onClick={() => setShowTransfer(true)}
                     className='bg-slate-50 hover:bg-white text-black font-bold py-2 px-4 border rounded'
                   >
                     Transfer Student
+                  </button>
+                  <button
+                    onClick={() => handleDeleteClick(student.id)}
+                    className='bg-slate-50 hover:bg-white text-black font-bold py-2 px-4 border rounded'
+                  >
+                    Delete Student
                   </button>
                 </div>
               </div>
@@ -127,6 +176,12 @@ function Student() {
                 {showClubSelect && (
                   <TransferStudentSelect hideClubSelect={hideClubSelect} student={student} />
                 )}
+                {confirmationPopUp.isLoading && (
+                            <ConfirmationPopUp
+                                onDialogue={sureDelete}
+                                message={confirmationPopUp.message}
+                            />
+                        )}
               </div>
             </div>
           ) : (
