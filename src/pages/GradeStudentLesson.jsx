@@ -42,10 +42,18 @@ export default function GradeStudentLesson() {
   }, []);
 
   const handleScoreChange = (studentId, score) => {
+    if(!score){
+      setStudentScores((prevScores) => ({
+        ...prevScores,
+        [studentId]: ''
+    }))
+  }
+    else if(parseInt(score)<=lesson.number_of_questions){
     setStudentScores((prevScores) => ({
       ...prevScores,
       [studentId]: score
     }));
+  }
   };
 
   const handleNoteChange = (studentId, note) => {

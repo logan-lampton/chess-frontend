@@ -44,10 +44,18 @@ function UpdateGrade() {
   }, []);
 
   const handleScoreChange = (studentId, score) => {
+    if(!score){
+      setStudentScores((prevScores) => ({
+        ...prevScores,
+        [studentId]: ''
+    }))
+  }
+    else if(parseInt(score)<=lesson.number_of_questions){
     setStudentScores((prevScores) => ({
       ...prevScores,
       [studentId]: score
     }));
+  }
   };
 
   const handleNoteChange = (studentId, note) => {
@@ -61,7 +69,7 @@ function UpdateGrade() {
     e.preventDefault();
     
     const studentArray = students.map(student => {
-      if (studentScores[student.id] !== '') {
+      if (studentScores[student.id] !== student.score || studentNotes[student.id] !== student.notes) {
         return {
           id: student.id,
           score: studentScores[student.id],
