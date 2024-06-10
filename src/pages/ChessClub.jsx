@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
 import axios from "../axiosConfig";
 import ConfirmationPopUp from "../components/ConfirmationPopUp";
 import { useUserContext } from "../App";
@@ -7,10 +7,11 @@ import Back from "../components/Back"
 import LoadingSpinner from "../components/LoadingSpinner";
 
 
-function ChessClub() {
+function ChessClub({handleClubDeleted}) {
     const { updateClubId, clubId, loading, setLoading } = useUserContext();
     const {id} = useParams()
     const [club, setClub] = useState([]);
+    const navigate = useNavigate()
 
     const [confirmationPopUp, setConfirmationPopUp] = useState({
         message: "",
@@ -38,6 +39,45 @@ function ChessClub() {
       } finally {setLoading(false)}
     }
 
+    const deleteClub = async () => {
+        const token = localStorage.getItem("token");
+        try {
+          const deleteResponse = await axios.delete(
+            `http://localhost:3000/clubs/${club.id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          console.log("Club deleted:", deleteResponse.data);
+          handleClubDeleted(club.id)
+          navigate('/home')
+        } catch (error) {
+          console.error("Error deleting club:", error);
+        }
+      };
+
+    const handleConfirmation = (message, isLoading) => {
+        setConfirmationPopUp({
+          message,
+          isLoading,
+        });
+      };
+    
+      const handleDeleteClick = () => {
+        handleConfirmation("Are you sure you want to permanantly delete this club? All students and their records will be deleted.", true);
+      };
+
+      const sureDelete = async (selection) => {
+        if (selection) {
+          await deleteClub();
+          setConfirmationPopUp({ message: "", isLoading: false });
+        } else {
+          setConfirmationPopUp({ message: "", isLoading: false });
+        }
+      };
+
     return (
         <>
         <Back  to = {`/home`} />
@@ -52,18 +92,24 @@ function ChessClub() {
                                 <h1 className='mb-5'>{club.club_name}</h1>
                                 <h3>School: {club.school}</h3>
                                 <h3>
-                                    Meet Time:{" "}
-                                    {club.formatted_time}
+                                    Meet Time: {club.formatted_time}
                                 </h3>
-                                <button className='bg-slate-50 hover:bg-white text-black font-bold py-2 px-4 border bg-white rounded mt-5 mb-5'>
-                                    <Link
-                                        to={`/updateclub/${clubId}`}
-                                        state={{ club: club }}
-                                    >
-                                        Edit Club Details
+                                <div className='flex space-x-4'>
+                                    <Link to={`/addstudent/${clubId}`}>
+                                    <button className='h-12 bg-slate-50 hover:bg-white text-black font-bold py-2 px-4 border rounded'>
+                                        Add Student
+                                    </button>
                                     </Link>
-                                </button>
-                            </div>
+                                    <Link to={`/updateclub/${clubId}`} state={{ club: club }}>
+                                    <button className='h-12 bg-slate-50 hover:bg-white text-black font-bold py-2 px-4 border rounded'>
+                                        Edit Club Details
+                                    </button>
+                                    </Link>
+                                    <button onClick={handleDeleteClick} className='h-12 bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-4 border rounded'>
+                                    Delete Club
+                                    </button>
+                                </div>
+                                </div>
                             {club.students ? (
                                 <ul className='ml-5'>
                                     {club.students.map((student) => (
@@ -164,14 +210,12 @@ function ChessClub() {
                             </ul>
                         </div>
                         </div>
-
-
-                        {/* {confirmationPopUp.isLoading && (
+                        {confirmationPopUp.isLoading && (
                             <ConfirmationPopUp
                                 onDialogue={sureDelete}
                                 message={confirmationPopUp.message}
                             />
-                        )} */}
+                        )}
                     </>
                 )}
             </div>

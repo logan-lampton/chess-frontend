@@ -182,6 +182,9 @@ function App() {
                                         element={
                                             <ChessClub
                                                 instructorId={instructorId}
+                                                handleClubDeleted={
+                                                    handleClubDeleted
+                                                }
                                             />
                                         }
                                     />

@@ -1,14 +1,12 @@
-import React, { useState, useRef, useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "../axiosConfig";
-import ConfirmationPopUp from "../components/ConfirmationPopUp";
 import { useUserContext } from "../App";
 import LoadingSpinner from "../components/LoadingSpinner";
 
-function Home({ handleClubDeleted }) {
-  const { clubs, instructorId, loading, setLoading, clubId } = useUserContext();
+function Home() {
+  const { clubs, instructorId, loading, setLoading } = useUserContext();
 
-  // Simulate a delay before setting loading to false
+  // Remove clubId from local storage
   useEffect(() => {
     localStorage.removeItem('clubId')
     console.log('clubId cleared!')
@@ -23,54 +21,6 @@ function Home({ handleClubDeleted }) {
     // Clean up the timer to prevent memory leaks
     return () => clearTimeout(timer);
 }, []);
-
-  const [confirmationPopUp, setConfirmationPopUp] = useState({
-    message: "",
-    isLoading: false,
-  });
-
-  const deleteClub = async (clubId) => {
-    const token = localStorage.getItem("token");
-    try {
-      const deleteResponse = await axios.delete(
-        `http://localhost:3000/clubs/${clubId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log("Club deleted:", deleteResponse.data);
-
-      handleClubDeleted(clubId);
-    } catch (error) {
-      console.error("Error deleting club:", error);
-    }
-  };
-
-  const clubRef = useRef();
-
-  const handleConfirmation = (message, isLoading) => {
-    setConfirmationPopUp({
-      message,
-      isLoading,
-    });
-  };
-
-  const handleDeleteClick = (id) => {
-    handleConfirmation("Are you sure you want to delete?", true);
-    clubRef.current = id;
-  };
-
-  const sureDelete = async (selection, id) => {
-    console.log("Club ID to delete: ", id);
-    if (selection) {
-      await deleteClub(clubRef.current);
-      setConfirmationPopUp({ message: "", isLoading: false });
-    } else {
-      setConfirmationPopUp({ message: "", isLoading: false });
-    }
-  };
 
   return (
     <div className='h-screen bg-gray-100'>
@@ -91,12 +41,6 @@ function Home({ handleClubDeleted }) {
                 <h2>{club.club_name}</h2>
               </div>
             </Link>
-            <button
-              onClick={() => handleDeleteClick(club.id)}
-              className='w-1/4 bg-red-600 hover:bg-red-400 text-white font-bold py-2 px-4 border bg-gray-900 rounded mr-4'
-            >
-              Delete Club
-            </button>
           </div>
         ))}
       </div>
@@ -108,12 +52,6 @@ function Home({ handleClubDeleted }) {
           </button>
         </Link>
       </div>
-      {confirmationPopUp.isLoading && (
-        <ConfirmationPopUp
-          onDialogue={sureDelete}
-          message={confirmationPopUp.message}
-        />
-      )}
     </div>
   );
 }
