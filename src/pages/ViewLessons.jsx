@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import axios from "../axiosConfig";
 import Back from "../components/Back";
 import StudentLessonEntry from "../components/StudentLessonEntry";
+import GradeStudentLesson from './GradeStudentLesson';
 
 function ViewLessons() {
   const location = useLocation();
@@ -39,6 +40,21 @@ function ViewLessons() {
     return acc;
   }, {});
 
+  const handleGradeUpdate = (id, score, note) => {
+    let newArray = lessons.map((lesson) => {
+      if (lesson.student_lesson_id === id) {
+        return {
+          ...lesson,
+          grade: score,
+          note: note,
+        };
+      }
+      return lesson;
+    });
+  
+    setLessons(newArray);
+    console.log(newArray);
+  };
   return (
     <>
       <Back to={`/students/${student.id}`} />
@@ -55,7 +71,7 @@ function ViewLessons() {
               <h2 className="text-lg font-bold mb-4">{source}</h2>
               <ul>
                 {lessons.map((lesson) => (
-                  <StudentLessonEntry key={`${source}-${lesson.id}`} lesson={lesson} />
+                  <StudentLessonEntry key={`${source}-${lesson.id}`} lesson={lesson} handleGradeUpdate = {handleGradeUpdate} />
                 ))}
               </ul>
             </div>

@@ -96,7 +96,7 @@ const sureDelete = async (selection, id) => {
                     </button>
                   </Link>
                   <button
-                    onClick={() => setShowTransfer(true)}
+                    onClick={() => setShowClubSelect(true)}
                     className='bg-slate-50 hover:bg-white text-black font-bold py-2 px-4 border rounded'
                   >
                     Transfer Student

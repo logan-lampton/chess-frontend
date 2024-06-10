@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import axios from "../axiosConfig";
 
-export default function StudentLessonEntry({lesson}) {
+export default function StudentLessonEntry({lesson, handleGradeUpdate}) {
   const [editing, setEditing] = useState(false);
   const [gradeInput, setGradeInput] = useState(lesson.grade);
   const [noteInput, setNoteInput] = useState(lesson.note);
@@ -32,6 +32,7 @@ export default function StudentLessonEntry({lesson}) {
       );
       console.log(response);
       setEditing(false);
+      handleGradeUpdate(lesson.student_lesson_id, gradeInput, noteInput)
     } catch (error) {
       console.error("Error updating lesson score:", error);
     }
@@ -73,12 +74,12 @@ export default function StudentLessonEntry({lesson}) {
         ) : (
           <>
           <span className="text-gray-600 mr-4">
-            {gradeInput} / {lesson.number_of_questions}
+            {lesson.grade} / {lesson.number_of_questions}
           </span>
           <span className="text-gray-600 ml-4">
-            {Math.floor((gradeInput / lesson.number_of_questions) * 100)}%
+            {Math.floor((lesson.grade / lesson.number_of_questions) * 100)}%
           </span>
-          <p className="text-gray-600">{noteInput}</p>
+          <p className="text-gray-600">{lesson.note}</p>
           
           <button
           onClick={() => setEditing(!editing)}
