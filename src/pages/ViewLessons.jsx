@@ -1,14 +1,14 @@
-import React, {useState, useEffect} from 'react'
-import {Link, useLocation} from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import axios from "../axiosConfig";
 import Back from "../components/Back";
+import StudentLessonEntry from "../components/StudentLessonEntry";
 
 function ViewLessons() {
+  const location = useLocation();
+  const { student } = location.state;
 
-  const location = useLocation()
-  const { student } = location.state
-
-  const [lessons, setLessons] = useState([])
+  const [lessons, setLessons] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -25,7 +25,7 @@ function ViewLessons() {
       .catch((error) => {
         console.error("Error fetching student data:", error);
       });
-  }, []);
+  }, [student.id]);
 
   const lessonsBySource = lessons.reduce((acc, lesson) => {
     const source = lesson.lesson_source;
@@ -39,40 +39,31 @@ function ViewLessons() {
     return acc;
   }, {});
 
-  console.log(lessons)
-
   return (
     <>
-    <Back to = {`/students/${student.id}`} />
-    <div className="flex">
-      {lessons.length === 0 ? (
-        <div className='w-full text-center py-4'>
-          <div className="border p-4 bg-gray-100 text-gray-700"> Student has completed no lessons.</div>
-        </div>
-      ) : (
-      Object.entries(lessonsBySource).map(([source, lessons]) => (
-        <div key={source} className="flex-none mr-8 border-r pr-8">
-          <h2 className="text-lg font-bold mb-4">{source}</h2>
-          <ul>
-            {lessons.map((lesson) => (
-            <li key={lesson.id} className="mb-5">
-            <span className="font-semibold">{lesson.lesson_name}</span> -{' '}
-            <span className="text-gray-600 mr-4">
-            {lesson.grade} / {lesson.number_of_questions}
-            </span>
-            <span className="text-gray-600 ml-4">
-            {Math.floor((lesson.grade / lesson.number_of_questions) * 100)}%
-            </span>
-            <p className="text-gray-600">{lesson.note}</p>
-            </li>
-))}
-          </ul>
-        </div>
-      ))
-    )}
-    </div>
+      <Back to={`/students/${student.id}`} />
+      <div className="flex">
+        {lessons.length === 0 ? (
+          <div className="w-full text-center py-4">
+            <div className="border p-4 bg-gray-100 text-gray-700">
+              Student has completed no lessons.
+            </div>
+          </div>
+        ) : (
+          Object.entries(lessonsBySource).map(([source, lessons]) => (
+            <div key={source} className="flex-none mr-8 border-r pr-8">
+              <h2 className="text-lg font-bold mb-4">{source}</h2>
+              <ul>
+                {lessons.map((lesson) => (
+                  <StudentLessonEntry key={`${source}-${lesson.id}`} lesson={lesson} />
+                ))}
+              </ul>
+            </div>
+          ))
+        )}
+      </div>
     </>
-  )
+  );
 }
 
-export default ViewLessons
+export default ViewLessons;
