@@ -13,7 +13,7 @@ export default function Header({ isLoggedIn, handleLogout }) {
     navigate("/");
   };
   return (
-    <div className='bg-gray-900 text-white font-bold py-2 px-4 border w-screen flex justify-between items-center'>
+    <div className='bg-gray-900 text-white font-bold py-2 px-4 border w-screen flex justify-between items-center pl-5 pr-5'>
       {isLoggedIn ? (
         <Link to='/home'>
           <h1 className='text-white'>8 by 8 Club Manager</h1>

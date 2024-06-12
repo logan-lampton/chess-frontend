@@ -150,6 +150,7 @@ function App() {
                                 handleLogout={handleLogout}
                             />
                         </header>
+                        {/* <div className="content-container"> */}
                         <Routes>
                             <Route
                                 path='/'
@@ -282,6 +283,7 @@ function App() {
                                 "hidden"
                             )}
                         </Routes>
+                        {/* </div> */}
                     </div>
                 </UserContext.Provider>
             </ErrorBoundary>

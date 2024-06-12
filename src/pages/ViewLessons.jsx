@@ -67,8 +67,8 @@ function ViewLessons() {
           </div>
         ) : (
           Object.entries(lessonsBySource).map(([source, lessons]) => (
-            <div key={source} className="flex-none mr-8 border-r pr-8">
-              <h2 className="text-lg font-bold mb-4">{source}</h2>
+            <div key={source} className="flex-none mr-8 border mt-6">
+              {/* <h2 className="text-lg font-bold">{source}</h2> */}
               <ul>
                 {lessons.map((lesson) => (
                   <StudentLessonEntry key={`${source}-${lesson.id}`} lesson={lesson} handleGradeUpdate = {handleGradeUpdate} />

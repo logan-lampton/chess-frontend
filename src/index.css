@@ -45,6 +45,17 @@ h2 {
     line-height: 1.1;
 }
 
+.content-container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 60px; /* Optional, for additional padding inside the container */
+  padding-right: 60px; /* Optional, for additional padding inside the container */
+  padding-top: 30px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
 button {
     border-radius: 8px;
     border: 1px solid transparent;
@@ -75,4 +86,48 @@ button:focus-visible {
     button {
         background-color: #f9f9f9;
     }
+}
+
+.lesson-entry {
+  width: 100%;
+  min-height: 150px; /* Set a fixed minimum height to keep container size consistent */
+  border: 1px solid #ddd;
+  padding: 16px;
+  box-sizing: border-box; /* Ensures padding is included in the total width and height */
+}
+
+.lesson-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.score-container {
+  display: flex;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.score-display {
+  display: flex;
+  align-items: center;
+}
+
+.score-input-field {
+  margin-left: 5px;
+  width: 36px; 
+  border: 2px solid black;
+}
+
+.lesson-note {
+  margin-bottom: 12px;
+  margin-top: 10px;
+}
+
+.lesson-actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.lesson-actions button {
+  margin-left: 8px;
 }
