@@ -71,7 +71,7 @@ export default function StudentLessonEntry({lesson, handleGradeUpdate}) {
             <textarea
               value={noteInput}
               onChange={handleNoteChange}
-              style={{ width: '15rem', border: '2px solid black', resize: 'vertical', overflowY: 'hidden'}}
+              style={{ width: '14rem', border: '2px solid black', resize: 'vertical', overflowY: 'hidden'}}
               className="input-field"
             />
           </>

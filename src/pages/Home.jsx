@@ -23,7 +23,7 @@ function Home() {
 }, []);
 
   return (
-    <div className='h-screen bg-gray-100'>
+    <div className='homescreen'>
       {loading && <LoadingSpinner />}
       {!loading && (
       <div className='grid grid-cols-2 gap-20 content-around w-screen flex items-center px-10 mt-20'>

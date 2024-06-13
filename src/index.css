@@ -46,14 +46,19 @@ h2 {
 }
 
 .content-container {
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 60px; /* Optional, for additional padding inside the container */
-  padding-right: 60px; /* Optional, for additional padding inside the container */
-  padding-top: 30px;
+  max-width: 2000px; /* Set the maximum width */
+  width: 100%; /* Ensure it takes up full width up to the max-width */
+  margin: 0 auto; /* Center it horizontally */
+  padding: 50px 80px; /* Optional: Add horizontal padding */
+  box-sizing: border-box; /* Ensure padding is included in the width */
+  display: flex;
+  flex-direction: column;
   box-sizing: border-box;
   overflow-x: hidden;
+  align-items: center;
+  overflow-y: scroll; /* Enable vertical scrolling */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none
 }
 
 button {
@@ -86,6 +91,11 @@ button:focus-visible {
     button {
         background-color: #f9f9f9;
     }
+}
+
+.homescreen {
+  min-height: 100vh;
+  background: gray-100;
 }
 
 .lesson-entry {

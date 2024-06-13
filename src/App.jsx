@@ -150,140 +150,140 @@ function App() {
                                 handleLogout={handleLogout}
                             />
                         </header>
-                        {/* <div className="content-container"> */}
-                        <Routes>
-                            <Route
-                                path='/'
-                                element={<Login handleLogin={handleLogin} />}
-                            />
-                            <Route
-                                path='/register'
-                                element={<Register handleLogin={handleLogin} />}
-                            />
-                            {isLoggedIn ? (
-                                <>
-                                    <Route
-                                        path='/home'
-                                        element={
-                                            <Home
-                                                clubs={clubs}
-                                                setClubs={setClubs}
-                                                handleClubDeleted={
-                                                    handleClubDeleted
-                                                }
-                                                handleClubUpdated={
-                                                    handleClubUpdated
-                                                }
-                                                instructorId={instructorId}
-                                            />
-                                        }
-                                    />
-                                    <Route
-                                        path='/clubs/:id'
-                                        element={
-                                            <ChessClub
-                                                instructorId={instructorId}
-                                                handleClubDeleted={
-                                                    handleClubDeleted
-                                                }
-                                            />
-                                        }
-                                    />
-                                    <Route
-                                        path='/addclub'
-                                        element={
-                                            <AddClub
-                                                instructorId={instructorId}
-                                                handleClubAdded={
-                                                    handleClubAdded
-                                                }
-                                            />
-                                        }
-                                    />
-                                    <Route
-                                        path='/addstudent/:clubId'
-                                        element={<AddStudent />}
-                                    />
-                                    <Route
-                                        path='/updateclub/:id'
-                                        element={
-                                            <UpdateClub
-                                                handleClubUpdated={
-                                                    handleClubUpdated
-                                                }
-                                            />
-                                        }
-                                    />
-                                    <Route
-                                        path='/clublessons'
-                                        element={<ViewClubLessons />}
-                                    />
-                                    <Route
-                                        path='/addlesson'
-                                        element={<AddLesson />}
-                                    />
-                                    <Route
-                                        path='/editlesson/:id'
-                                        element={<UpdateLesson />}
-                                    />
-                                    <Route
-                                        path='/lesson/:id'
-                                        element={<Lesson />}
-                                    />
-                                    <Route
-                                        path='/gradelesson/:id'
-                                        element={<GradeStudentLesson />}
-                                    />
-                                    <Route
-                                        path='/updategrade/:id'
-                                        element={<UpdateGrade />}
-                                    />
-                                    <Route
-                                        path='/updatestudent/:id'
-                                        element={<UpdateStudent />}
-                                    />
-                                    <Route
-                                        path='/studentpairselect'
-                                        element={<StudentPairSelect />}
-                                    />
-                                    <Route
-                                        path='/studentpairings'
-                                        element={<StudentPairings />}
-                                    />
-                                    <Route
-                                        path='games/in_progress/:id'
-                                        element={<ViewClubGames />}
-                                    />
-                                    <Route
-                                        path='/games/completed/:id'
-                                        element={<ViewCompletedGames />}
-                                    />
-                                    <Route
-                                        path='/students/:id'
-                                        element={<Student />}
-                                    />
-                                    <Route
-                                        path='/viewlessons/:id'
-                                        element={<ViewLessons />}
-                                    />
-                                    <Route
-                                        path='/viewgamehistory/:id'
-                                        element={<ViewGameHistory />}
-                                    />
-                                    <Route
-                                        path='/addnotes'
-                                        element={<AddNotes />}
-                                    />
-                                    <Route
-                                        path='/confirmation_popup'
-                                        element={<ConfirmationPopUp />}
-                                    />
-                                </>
-                            ) : (
-                                "hidden"
-                            )}
-                        </Routes>
-                        {/* </div> */}
+                        <div className="content-container">
+                          <Routes>
+                              <Route
+                                  path='/'
+                                  element={<Login handleLogin={handleLogin} />}
+                              />
+                              <Route
+                                  path='/register'
+                                  element={<Register handleLogin={handleLogin} />}
+                              />
+                              {isLoggedIn ? (
+                                  <>
+                                      <Route
+                                          path='/home'
+                                          element={
+                                              <Home
+                                                  clubs={clubs}
+                                                  setClubs={setClubs}
+                                                  handleClubDeleted={
+                                                      handleClubDeleted
+                                                  }
+                                                  handleClubUpdated={
+                                                      handleClubUpdated
+                                                  }
+                                                  instructorId={instructorId}
+                                              />
+                                          }
+                                      />
+                                      <Route
+                                          path='/clubs/:id'
+                                          element={
+                                              <ChessClub
+                                                  instructorId={instructorId}
+                                                  handleClubDeleted={
+                                                      handleClubDeleted
+                                                  }
+                                              />
+                                          }
+                                      />
+                                      <Route
+                                          path='/addclub'
+                                          element={
+                                              <AddClub
+                                                  instructorId={instructorId}
+                                                  handleClubAdded={
+                                                      handleClubAdded
+                                                  }
+                                              />
+                                          }
+                                      />
+                                      <Route
+                                          path='/addstudent/:clubId'
+                                          element={<AddStudent />}
+                                      />
+                                      <Route
+                                          path='/updateclub/:id'
+                                          element={
+                                              <UpdateClub
+                                                  handleClubUpdated={
+                                                      handleClubUpdated
+                                                  }
+                                              />
+                                          }
+                                      />
+                                      <Route
+                                          path='/clublessons'
+                                          element={<ViewClubLessons />}
+                                      />
+                                      <Route
+                                          path='/addlesson'
+                                          element={<AddLesson />}
+                                      />
+                                      <Route
+                                          path='/editlesson/:id'
+                                          element={<UpdateLesson />}
+                                      />
+                                      <Route
+                                          path='/lesson/:id'
+                                          element={<Lesson />}
+                                      />
+                                      <Route
+                                          path='/gradelesson/:id'
+                                          element={<GradeStudentLesson />}
+                                      />
+                                      <Route
+                                          path='/updategrade/:id'
+                                          element={<UpdateGrade />}
+                                      />
+                                      <Route
+                                          path='/updatestudent/:id'
+                                          element={<UpdateStudent />}
+                                      />
+                                      <Route
+                                          path='/studentpairselect'
+                                          element={<StudentPairSelect />}
+                                      />
+                                      <Route
+                                          path='/studentpairings'
+                                          element={<StudentPairings />}
+                                      />
+                                      <Route
+                                          path='games/in_progress/:id'
+                                          element={<ViewClubGames />}
+                                      />
+                                      <Route
+                                          path='/games/completed/:id'
+                                          element={<ViewCompletedGames />}
+                                      />
+                                      <Route
+                                          path='/students/:id'
+                                          element={<Student />}
+                                      />
+                                      <Route
+                                          path='/viewlessons/:id'
+                                          element={<ViewLessons />}
+                                      />
+                                      <Route
+                                          path='/viewgamehistory/:id'
+                                          element={<ViewGameHistory />}
+                                      />
+                                      <Route
+                                          path='/addnotes'
+                                          element={<AddNotes />}
+                                      />
+                                      <Route
+                                          path='/confirmation_popup'
+                                          element={<ConfirmationPopUp />}
+                                      />
+                                  </>
+                              ) : (
+                                  "hidden"
+                              )}
+                          </Routes>
+                        </div>
                     </div>
                 </UserContext.Provider>
             </ErrorBoundary>
