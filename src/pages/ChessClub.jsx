@@ -81,7 +81,7 @@ function ChessClub({handleClubDeleted}) {
     return (
         <>
         <Back  to = {`/home`} />
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-screen'>
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-100vw'>
           {loading ? (<LoadingSpinner/>) : (
             <>
             <div className='col-span-2 md:col-span-2 mr-5 ml-5'>

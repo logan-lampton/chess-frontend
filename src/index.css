@@ -45,6 +45,22 @@ h2 {
     line-height: 1.1;
 }
 
+.content-container {
+  max-width: 2000px; /* Set the maximum width */
+  width: 100%; /* Ensure it takes up full width up to the max-width */
+  margin: 0 auto; /* Center it horizontally */
+  padding: 50px 80px; /* Optional: Add horizontal padding */
+  box-sizing: border-box; /* Ensure padding is included in the width */
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  align-items: center;
+  overflow-y: scroll; /* Enable vertical scrolling */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none
+}
+
 button {
     border-radius: 8px;
     border: 1px solid transparent;
@@ -75,4 +91,53 @@ button:focus-visible {
     button {
         background-color: #f9f9f9;
     }
+}
+
+.homescreen {
+  min-height: 100vh;
+  background: gray-100;
+}
+
+.lesson-entry {
+  width: 100%;
+  min-height: 150px; /* Set a fixed minimum height to keep container size consistent */
+  border: 1px solid #ddd;
+  padding: 16px;
+  box-sizing: border-box; /* Ensures padding is included in the total width and height */
+}
+
+.lesson-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.score-container {
+  display: flex;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.score-display {
+  display: flex;
+  align-items: center;
+}
+
+.score-input-field {
+  margin-left: 5px;
+  width: 36px; 
+  border: 2px solid black;
+}
+
+.lesson-note {
+  margin-bottom: 12px;
+  margin-top: 10px;
+}
+
+.lesson-actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.lesson-actions button {
+  margin-left: 8px;
 }
