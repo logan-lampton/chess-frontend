@@ -13,7 +13,9 @@ import Back from "../components/Back";
 function ViewCompletedGames() {
   const { id } = useParams();
   const [searchQuery, setSearchQuery] = useState("");
+  const [allGames, setAllGames] = useState({})
   const [gamesDisplayed, setGamesDisplayed] = useState([]);
+  const [currentlyDisplaying, setCurrentlyDisplaying] = useState('')
   const [editingGameResult, setEditingGameResult] = useState(null);
   const [confirmationPopUp, setConfirmationPopUp] = useState({
     message: "",
@@ -23,18 +25,60 @@ function ViewCompletedGames() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     axios
-      .get(`/games/completed/${id}`, {
+      .get(`/games/club_games/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
-        setGamesDisplayed(response.data);
+        setAllGames(response.data)
+        if(response.data.gamesInProgress.length > 0){
+        setGamesDisplayed(response.data.gamesInProgress)
+        setCurrentlyDisplaying("inProgress")
+        }
+        else{
+        setGamesDisplayed(response.data.completedGames);
+        setCurrentlyDisplaying("completed")
+        }
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
+
+  const handleUpdateResult = (id, dropdownResult) => {
+    if(currentlyDisplaying === 'inProgress'){
+      const updatedGamesInProgress = allGames.gamesInProgress.filter((game)=> game.id !== id);
+      const updatedGame = allGames.gamesInProgress.find((game)=>game.id === id);
+      updatedGame.result = dropdownResult;
+      const updatedCompletedGames = [...allGames.completedGames, updatedGame]
+      setAllGames({
+        gamesInProgress: updatedGamesInProgress,
+        completedGames: updatedCompletedGames
+      });
+      setGamesDisplayed(updatedGamesInProgress)
+    }
+    else{
+      const updatedGames = allGames.completedGames.map((game) =>
+        game.id === id ? { ...game, result: dropdownResult } : game
+      );
+      setAllGames({...allGames, completedGames:updatedGames});
+      setGamesDisplayed(updatedGames);
+    }
+  }
+
+  const handleDeletedGame = (id) =>{
+    if (currentlyDisplaying === 'inProgress'){
+      const filteredGames = allGames.gamesInProgress.filter((game) => game.id !== id);
+      setAllGames({...allGames, gamesInProgress: filteredGames});
+      setGamesDisplayed(filteredGames)
+    }
+    else{
+      const filteredGames = allGames.completedGames.filter((game) => game.id !== id);
+      setAllGames({...allGames, completedGames: filteredGames});
+      setGamesDisplayed(filteredGames)
+    }
+  }
 
   function handleSearchChange(event) {
     setSearchQuery(event.target.value);
@@ -67,12 +111,21 @@ function ViewCompletedGames() {
         }
       );
       console.log("Game deleted: ", deleteResponse.data);
-      const filteredGames = gamesDisplayed.filter((game) => game.id !== gameId);
-      setGamesDisplayed(filteredGames);
+      handleDeletedGame(gameId)
     } catch (error) {
       console.log("Error deleting game: ", error);
     }
   };
+
+  const showCompletedGames = () => {
+    setGamesDisplayed(allGames.completedGames)
+    setCurrentlyDisplaying('completed')
+  }
+
+  const showInProgressGames = ()  => {
+    setGamesDisplayed(allGames.gamesInProgress)
+    setCurrentlyDisplaying('inProgress')
+  }
 
   const patchGame = async (gameId, dropdownResult) => {
     const token = localStorage.getItem("token");
@@ -89,10 +142,7 @@ function ViewCompletedGames() {
         }
       );
       console.log("Game patched successfully: ", patchResponse.data);
-      const updatedGames = gamesDisplayed.map((game) =>
-        game.id === gameId ? { ...game, result: dropdownResult } : game
-      );
-      setGamesDisplayed(updatedGames);
+      handleUpdateResult(gameId, dropdownResult)
       setEditingGameResult(null);
     } catch (error) {
       console.log("Error patching game: ", error);
@@ -129,13 +179,14 @@ function ViewCompletedGames() {
     <div>
       <div className='flex justify-between mt-10'>
         <div className='mt-5'>
-          <h1>Completed Games</h1>
+          <h1>{currentlyDisplaying==='completed'?'Completed Games':'In-Progress Games'}</h1>
         </div>
-        <button className='mt-7 mr-8 h-15 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
-          <Link to={`/games/in_progress/${id}`} className='text-white'>
-            View In-Progress Games
-          </Link>
-        </button>
+        {currentlyDisplaying==='inProgress'?<button onClick = {showCompletedGames} className='mt-7 mr-8 h-15 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
+            Show Completed Club Games
+        </button>:
+        <button onClick = {showInProgressGames} className='mt-7 mr-8 h-15 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
+            Show In-Progress Club Games
+        </button>}
       </div>
       <div className='mt-5 ml-3 mb-12'>
         <h2>Search Games</h2>
