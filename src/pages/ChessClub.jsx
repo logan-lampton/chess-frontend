@@ -129,13 +129,6 @@ function ChessClub({handleClubDeleted}) {
                             ) : (
                                 <p>No students available</p>
                             )}
-                            <div className='flex justify-beginning ml-5 my-2'>
-                                <Link to={ `/addstudent/${clubId}`} >
-                                    <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
-                                        Add Student
-                                    </button>
-                                </Link>
-                            </div>
                         </>
                     ) : (
                         "Loading club data..."

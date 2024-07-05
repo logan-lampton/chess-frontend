@@ -143,7 +143,7 @@ function ViewCompletedGames() {
       );
       console.log("Game patched successfully: ", patchResponse.data);
       handleUpdateResult(gameId, dropdownResult)
-      setEditingGameResult(null);
+      clearEditingGameResult();
     } catch (error) {
       console.log("Error patching game: ", error);
     }
@@ -173,6 +173,10 @@ function ViewCompletedGames() {
     }
   };
 
+  const clearEditingGameResult = () => {
+    setEditingGameResult(null)
+  }
+
   return (
     <>
     <Back to = {`/clubs/${id}`}/>
@@ -196,12 +200,13 @@ function ViewCompletedGames() {
           placeholder='Search by player name...'
           value={searchQuery}
           onChange={handleSearchChange}
+          className='border p-2 rounded'
         />
       </div>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-8 my-5 mx-auto text-lg'>
         {searchFilteredGames.map((game) => (
           <div key={game.id} className='mb-5 p-8'>
-            <div className='border-2 border-gray-900'>
+            <div className='border-2 border-gray-900 relative'>
               <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-2 flex justify-between'>
                 <h3>
                   {game.player_name_white} / {game.player_name_black}
@@ -223,11 +228,13 @@ function ViewCompletedGames() {
                       ? `${game.player_name_white} Won`
                       : game.result === "Black"
                       ? `${game.player_name_black} Won`
-                      : "Draw"}
+                      : game.result === "Draw"
+                      ?"Draw"
+                      :"Pending"}
                   </p>
                   <div className='ml-auto mr-3'>
                     {editingGameResult === game.id ? (
-                      <Dropdown patchGame={patchGame} gameId={game.id} />
+                      <Dropdown patchGame={patchGame} gameId={game.id} clearEditingGameResult = {clearEditingGameResult} />
                     ) : (
                       <button
                         onClick={() => setEditingGameResult(game.id)}
