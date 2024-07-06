@@ -180,7 +180,7 @@ function StudentPairings() {
         }
       );
       console.log(response.data);
-      navigate(`/clubs/${clubId}`);
+      navigate(`/games/completed/${clubId}`);
     } catch (error) {
       if (error.response && error.response.status === 422) {
         const validationErrors = error.response.data.errors;
@@ -209,7 +209,7 @@ function StudentPairings() {
         onClick={handleCreateGames}
         className='h-30 w-50 bg-green-600 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mt-10 mb-10'
       >
-        <h2>Make Games</h2>
+        <h2>Confirm Matchups</h2>
       </button>
       <DragDropContext onDragEnd={onDragEnd}>
         <div className='grid grid-cols-4 gap-16 mt-8'>

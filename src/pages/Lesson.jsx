@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import axios from "../axiosConfig";
 import { useUserContext } from "../App";
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -78,67 +78,104 @@ export default function Lesson() {
 
     return (
         <>
-            <Back to={`/clublessons`} />
-            <div className='mt-10 p-4 '>
-                {loading && <LoadingSpinner />}
-                {!loading && (
-                    <>
-                        <h1 className='text-2xl font-bold mb-4'>
-                            Lesson: {lesson.lesson_name}
-                        </h1>
-                        <h3 className='text-lg font-semibold mb-4'>
-                            Source: {lesson.source}
-                        </h3>
-                        <div>
-                            <button 
-                                onClick={() =>
-                                    navigate(`/editlesson/${lesson.id}`, {
-                                        state: { clubId: clubId, lesson: lesson },
-                                    })}
-                                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded">
-                                Edit
-                            </button>
-                            <button 
-                                onClick={handleDeleteClick}
-                                className="ml-4 bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded">
-                                Delete
-                            </button>
-                        </div>
-                        <h3 className="mt-10 font-bold">Student Scores:</h3>
-                        <ul>
-                        {students.map((student) => (
-                            <li key={student.id} className='mb-4 grid grid-cols-[1fr_auto_auto] gap-4'>
-                            <span className='font-semibold'>{student.name}</span>
-                            <span className='text-gray-600'>{student.score}/{lesson.number_of_questions}</span>
-                            <span className='text-gray-600'>{Math.floor(student.score / lesson.number_of_questions * 100)}%</span>
-                            </li>
-                        ))}
-                        </ul>
-                        <button
-                            onClick={() =>
-                                navigate(`/gradelesson/${lesson.id}`, {
-                                    state: { clubId: clubId, lesson: lesson },
-                                })}
-                            className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4' // Adding Tailwind classes for styling
-                        >
-                            Add Student Grades
-                        </button>
-                        {students.length > 0 && (
-                          <button 
-                            onClick={() => navigate(`/updategrade/${lesson.id}`, {
-                              state: {clubId: clubId, lesson: lesson},
-                            })}
-                            className="ml-4 bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 mt-4">Update Student Grades</button>
-                        )}
-                    </>
-                )}
-            </div>
-            {confirmationPopUp.isLoading && (
-                <ConfirmationPopUp
-                    onDialogue={sureDelete}
-                    message={confirmationPopUp.message}
-                />
+          <Back to={`/clublessons`} />
+          <div className="mt-10 p-4">
+            {loading && <LoadingSpinner />}
+            {!loading && (
+              <>
+                {/* Lesson Details Section */}
+                <div className="mb-10">
+                  <h1 className="text-2xl font-bold mb-2">Lesson: {lesson.lesson_name}</h1>
+                  <h3 className="text-lg font-semibold mb-4">Source: {lesson.source}</h3>
+                  <div className="flex space-x-4">
+                    <button
+                      onClick={() =>
+                        navigate(`/editlesson/${lesson.id}`, {
+                          state: { clubId: clubId, lesson: lesson },
+                        })
+                      }
+                      className="bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                      Edit Lesson Info
+                    </button>
+                    <button
+                      onClick={handleDeleteClick}
+                      className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+      
+                {/* Student Scores Section */}
+                <div className="border-2 border-gray-900 rounded-lg shadow-lg p-4 mb-6 bg-white">
+                  <div className="bg-gray-900 text-white font-bold py-2 px-4 rounded-t-lg mb-4">
+                    <h3 className="text-xl">Student Scores</h3>
+                  </div>
+                  <table className="w-full table-auto mb-4">
+                    <thead>
+                      <tr className="bg-gray-200">
+                        <th className="px-4 py-2">Student</th>
+                        <th className="px-4 py-2">Score</th>
+                        <th className="px-4 py-2">Percentage</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {students.map((student) => (
+                        <tr key={student.id} className="border-t hover:bg-gray-100 transition duration-200 ease-in-out">
+                          <td className="px-4 py-2 font-semibold">
+                            <Link to={`/students/${student.id}`} className="text-blue-500 hover:underline font-semibold">
+                              {student.name}
+                            </Link>
+                          </td>
+                          <td className="px-4 py-2 text-gray-600">
+                            {student.score}/{lesson.number_of_questions}
+                          </td>
+                          <td className="px-4 py-2 text-gray-600">
+                            {Math.floor(student.score / lesson.number_of_questions * 100)}%
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <div className="flex space-x-4">
+                    <button
+                      onClick={() =>
+                        navigate(`/gradelesson/${lesson.id}`, {
+                          state: { clubId: clubId, lesson: lesson },
+                        })
+                      }
+                      className="bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                      Add Student Grades
+                    </button>
+                    {students.length > 0 && (
+                      <button
+                        onClick={() =>
+                          navigate(`/updategrade/${lesson.id}`, {
+                            state: { clubId: clubId, lesson: lesson },
+                          })
+                        }
+                        className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"
+                      >
+                        Edit Student Grades
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </>
             )}
+          </div>
+          {confirmationPopUp.isLoading && (
+            <ConfirmationPopUp
+              onDialogue={sureDelete}
+              message={confirmationPopUp.message}
+            />
+          )}
         </>
-    );
+      );
+      
+      
+      
+      
 }
