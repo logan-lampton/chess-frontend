@@ -46,6 +46,18 @@ function ViewCompletedGames() {
       });
   }, []);
 
+  const groupGamesByDate = (games) => {
+    return games.reduce((acc, game) => {
+      const date = game.formatted_date;
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+      acc[date].push(game);
+      return acc;
+    }, {});
+  };
+  
+
   const handleUpdateResult = (id, dropdownResult) => {
     if(currentlyDisplaying === 'inProgress'){
       const updatedGamesInProgress = allGames.gamesInProgress.filter((game)=> game.id !== id);
@@ -177,76 +189,89 @@ function ViewCompletedGames() {
     setEditingGameResult(null)
   }
 
+  const groupedGames = groupGamesByDate(searchFilteredGames);
+
+  // Get the sorted dates in descending order
+  const sortedDates = Object.keys(groupedGames).sort((a, b) => new Date(b) - new Date(a));
+  
   return (
     <>
-    <Back to = {`/clubs/${id}`}/>
-    <div>
-      <div className='flex justify-between mt-10'>
-        <div className='mt-5'>
-          <h1>{currentlyDisplaying==='completed'?'Completed Games':'In-Progress Games'}</h1>
+      <Back to={`/clubs/${id}`} />
+      <div>
+        <div className='flex justify-between mt-10'>
+          <div className='mt-5'>
+            <h1>{currentlyDisplaying === 'completed' ? 'Completed Games' : 'In-Progress Games'}</h1>
+          </div>
+          {currentlyDisplaying === 'inProgress' ? (
+            <button onClick={showCompletedGames} className='mt-7 mr-8 h-15 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
+              Show Completed Club Games
+            </button>
+          ) : (
+            <button onClick={showInProgressGames} className='mt-7 mr-8 h-15 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
+              Show In-Progress Club Games
+            </button>
+          )}
         </div>
-        {currentlyDisplaying==='inProgress'?<button onClick = {showCompletedGames} className='mt-7 mr-8 h-15 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
-            Show Completed Club Games
-        </button>:
-        <button onClick = {showInProgressGames} className='mt-7 mr-8 h-15 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded'>
-            Show In-Progress Club Games
-        </button>}
-      </div>
-      <div className='mt-5 ml-3 mb-12'>
-        <h2>Search Games</h2>
-        {/* Searchbar */}
-        <input
-          type='text'
-          placeholder='Search by player name...'
-          value={searchQuery}
-          onChange={handleSearchChange}
-          className='border p-2 rounded'
-        />
-      </div>
-      <div className='grid grid-cols-1 md:grid-cols-3 gap-8 my-5 mx-auto text-lg'>
-        {searchFilteredGames.map((game) => (
-          <div key={game.id} className='mb-5 p-8'>
-            <div className='border-2 border-gray-900 relative'>
-              <div className='bg-gray-900 text-white font-bold py-2 px-4 border mb-2 flex justify-between'>
-                <h3>
-                  {game.player_name_white} / {game.player_name_black}
-                </h3>
-                <button
-                  onClick={() => handleDeleteClick(game.id)}
-                  className='bg-red-600 hover:bg-red-400 text-white text-sm font-bold border bg-gray-900 rounded'
-                >
-                  Delete
-                </button>
-              </div>
-              <div className='ml-5 p-1'>
-                <p className='mb-1'>White Player: {game.player_name_white}</p>
-                <p>Black Player: {game.player_name_black}</p>
-                <div className='flex mt-3 mb-2'>
-                  <p className='mt-3'>
-                    Result:{" "}
-                    {game.result === "White"
-                      ? `${game.player_name_white} Won`
-                      : game.result === "Black"
-                      ? `${game.player_name_black} Won`
-                      : game.result === "Draw"
-                      ?"Draw"
-                      :"Pending"}
-                  </p>
-                  <div className='ml-auto mr-3'>
-                    {editingGameResult === game.id ? (
-                      <Dropdown patchGame={patchGame} gameId={game.id} clearEditingGameResult = {clearEditingGameResult} />
-                    ) : (
-                      <button
-                        onClick={() => setEditingGameResult(game.id)}
-                        className='bg-slate-50 hover:bg-white text-black text-sm font-bold py-2 px-4 border bg-gray-400 rounded mr-1'
-                      >
-                        Edit Result
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div className='mt-5 ml-3 mb-12'>
+          <h2>Search Games</h2>
+          <input
+            type='text'
+            placeholder='Search by player name...'
+            value={searchQuery}
+            onChange={handleSearchChange}
+            className='border p-2 rounded'
+          />
+        </div>
+        {sortedDates.map((date) => (
+          <div key={date} className='mb-8'>
+            <h2 className='text-xl font-bold mb-4'>{date}</h2>
+            <table className='w-full table-auto'>
+              <thead>
+                <tr className='bg-gray-200'>
+                  <th className='px-4 py-2'>Players</th>
+                  <th className='px-4 py-2'>Result</th>
+                  <th className='px-4 py-2'>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {groupedGames[date].map((game) => (
+                  <tr key={game.id} className='border-t'>
+                    <td className='px-4 py-2'>
+                      {game.player_name_white} / {game.player_name_black}
+                    </td>
+                    <td className='px-4 py-2'>
+                      {game.result === "White"
+                        ? `${game.player_name_white} Won`
+                        : game.result === "Black"
+                        ? `${game.player_name_black} Won`
+                        : game.result === "Draw"
+                        ? "Draw"
+                        : "Pending"}
+                    </td>
+                    <td className='px-4 py-2'>
+                      <div className='flex items-center'>
+                        <button
+                          onClick={() => handleDeleteClick(game.id)}
+                          className='bg-red-600 hover:bg-red-400 text-white text-sm font-bold border bg-gray-900 rounded px-2 py-1 mr-2'
+                        >
+                          Delete
+                        </button>
+                        {editingGameResult === game.id ? (
+                          <Dropdown patchGame={patchGame} gameId={game.id} clearEditingGameResult={clearEditingGameResult} />
+                        ) : (
+                          <button
+                            onClick={() => setEditingGameResult(game.id)}
+                            className='bg-slate-50 hover:bg-white text-black text-sm font-bold py-2 px-4 border bg-gray-400 rounded mr-1'
+                          >
+                            Edit Result
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
             {confirmationPopUp.isLoading && (
               <ConfirmationPopUp
                 onDialogue={sureDelete}
@@ -256,7 +281,6 @@ function ViewCompletedGames() {
           </div>
         ))}
       </div>
-    </div>
     </>
   );
 }
