@@ -119,7 +119,7 @@ function ChessClub({handleClubDeleted}) {
                                         >
                                             <Link
                                                 to={`/students/${student.id}`}
-                                                className='flex-grow'
+                                                className="text-blue-500 hover:underline font-semibold"
                                             >
                                                 {student.student_name}
                                             </Link>
@@ -136,82 +136,109 @@ function ChessClub({handleClubDeleted}) {
                 </div>
             </div>
 
-            <div className='col-span-1 md:col-span-1 mr-5'>
-                <div>
-                    <Link to='/clublessons'>
-                        <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
-                            View Lessons
-                        </button>
-                    </Link>
-                </div>
-                <div>
-                    <Link to='/studentpairselect' state={{ students: club.students }}>
-                        <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
-                            Pair Students
-                        </button>
-                    </Link>
-                </div>
-                {club && (
-                    <>
-                        <div>
-                            <Link to={`/games/completed/${clubId}`}>
-                                <button className='h-20 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded mb-4'>
-                                    View Club Games
-                                </button>
-                            </Link>
-                        </div>
-                        <div className="border-2 border-gray-900 rounded-lg shadow-lg p-4 mb-6 bg-white">
-                        <div className="bg-gray-900 text-white font-bold py-2 px-4 rounded-t-lg mb-4">
-                            <h2>Club Stats</h2>
-                        </div>
-                        <div className="ml-5">
-                            <h2 className="text-lg font-semibold text-gray-700 mb-3">Game Leaders:</h2>
-                            <ul className="ml-7 list-disc list-inside">
-                            {club.top_3_games &&
-                                club.top_3_games.map((student) => (
-                                <li
-                                    className="mb-3 hover:bg-gray-100 p-2 rounded transition duration-200 ease-in-out flex justify-between items-center"
-                                    key={student.id}
-                                >
-                                    <Link to={`/students/${student.id}`} className="text-blue-500 hover:underline font-semibold">
-                                    {student.student}
-                                    </Link>
-                                    <span className="text-gray-600">
-                                    Wins: {student.wins} | Win Rate: {Math.floor(student.win_rate * 100)}%
-                                    </span>
-                                </li>
-                                ))}
-                            </ul>
-                        </div>
-                        <div className="ml-5 mt-4">
-                            <h2 className="text-lg font-semibold text-gray-700 mb-3">Lesson Leaders:</h2>
-                            <ul className="ml-7 list-disc list-inside">
-                            {club.top_3_lessons &&
-                                club.top_3_lessons.map((student) => (
-                                <li
-                                    className="mb-3 hover:bg-gray-100 p-2 rounded transition duration-200 ease-in-out flex justify-between items-center"
-                                    key={student.id}
-                                >
-                                    <Link to={`/students/${student.id}`} className="text-blue-500 hover:underline font-semibold">
-                                    {student.student}
-                                    </Link>
-                                    <span className="text-gray-600">
-                                    Lessons Completed: {student.number_of_lessons} | Average Score: {Math.floor(student.average_grade)}%
-                                    </span>
-                                </li>
-                                ))}
-                            </ul>
-                        </div>
-                        </div>
-                        {confirmationPopUp.isLoading && (
-                            <ConfirmationPopUp
-                                onDialogue={sureDelete}
-                                message={confirmationPopUp.message}
-                            />
-                        )}
-                    </>
-                )}
-            </div>
+            <div className="col-span-1 md:col-span-1 mr-5">
+  <div className="flex justify-between mb-4">
+    <Link to="/clublessons">
+      <button className="h-12 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded">
+        View Lessons
+      </button>
+    </Link>
+    <Link to="/studentpairselect" state={{ students: club.students }}>
+      <button className="h-12 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded">
+        Pair Students
+      </button>
+    </Link>
+    {club && (
+      <Link to={`/games/completed/${clubId}`}>
+        <button className="h-12 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded">
+          View Club Games
+        </button>
+      </Link>
+    )}
+  </div>
+
+  <div className="border-2 border-gray-900 rounded-lg shadow-lg p-4 mb-6 bg-white">
+    <div className="bg-gray-900 text-white font-bold py-2 px-4 rounded-t-lg mb-4">
+      <h2>Club Stats</h2>
+    </div>
+
+    <div className="ml-5">
+      <h2 className="text-lg font-semibold text-gray-700 mb-3">Game Leaders:</h2>
+      <table className="w-full table-auto">
+        <thead>
+          <tr className="bg-gray-200">
+            <th className="px-4 py-2">Student</th>
+            <th className="px-4 py-2">Total Wins</th>
+            <th className="px-4 py-2">Win Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          {club.top_3_games &&
+            club.top_3_games.map((student) => (
+              <tr
+                className="border-t hover:bg-gray-100 transition duration-200 ease-in-out"
+                key={student.id}
+              >
+                <td className="px-4 py-2">
+                  <Link to={`/students/${student.id}`} className="text-blue-500 hover:underline font-semibold">
+                    {student.student}
+                  </Link>
+                </td>
+                <td className="px-4 py-2 text-gray-600">
+                  {student.wins}
+                </td>
+                <td className="px-4 py-2 text-gray-600">
+                  {Math.floor(student.win_rate * 100)}%
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div className="ml-5 mt-4">
+      <h2 className="text-lg font-semibold text-gray-700 mb-3">Lesson Leaders:</h2>
+      <table className="w-full table-auto">
+        <thead>
+          <tr className="bg-gray-200">
+            <th className="px-4 py-2">Student</th>
+            <th className="px-4 py-2">Lessons Completed</th>
+            <th className="px-4 py-2">Average Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          {club.top_3_lessons &&
+            club.top_3_lessons.map((student) => (
+              <tr
+                className="border-t hover:bg-gray-100 transition duration-200 ease-in-out"
+                key={student.id}
+              >
+                <td className="px-4 py-2">
+                  <Link to={`/students/${student.id}`} className="text-blue-500 hover:underline font-semibold">
+                    {student.student}
+                  </Link>
+                </td>
+                <td className="px-4 py-2 text-gray-600">
+                  {student.number_of_lessons}
+                </td>
+                <td className="px-4 py-2 text-gray-600">
+                  {Math.floor(student.average_grade)}%
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  {confirmationPopUp.isLoading && (
+    <ConfirmationPopUp
+      onDialogue={sureDelete}
+      message={confirmationPopUp.message}
+    />
+  )}
+</div>
+
             </>
           )}
         </div>
