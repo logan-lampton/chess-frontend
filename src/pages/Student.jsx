@@ -119,10 +119,10 @@ const sureDelete = async (selection, id) => {
                       Game Stats
                     </h2>
                     <div className="ml-5 text-gray-700">
-                      {student.games.length > 0 ? (
+                      {student.number_of_games_played > 0 ? (
                         <>
                           <p className="mb-2">
-                            <span className="font-semibold">Number of Games Played:</span> {student.games.length}
+                            <span className="font-semibold">Number of Games Played:</span> {student.number_of_games_played}
                           </p>
                           <p className="mb-2">
                             <span className="font-semibold">Total Wins:</span> {student.total_wins}
