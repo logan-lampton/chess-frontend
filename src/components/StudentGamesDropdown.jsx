@@ -28,7 +28,7 @@ function Dropdown({ games, student, filterGames }) {
   };
 
   return (
-    <div>
+    <div className="relative inline-block">
       <button
         onClick={() => setIsOpen((prevState) => !prevState)}
         className=' relative flex flex-column bg-green-100 p-2 flex items-center text-lg border-4'
@@ -37,7 +37,7 @@ function Dropdown({ games, student, filterGames }) {
         {!isOpen ? <AiOutlineCaretUp /> : <AiOutlineCaretDown />}
       </button>
       {isOpen && (
-        <div className='bg-green-100 absolute mt-2 rounded-lg p-2 text-lg border-2 border-black cursor-pointer'>
+        <div className="absolute left-0 mt-2 w-48 bg-green-100 rounded-lg p-2 text-lg border-2 border-black z-10">
           {[
             "Showing all games",
             "Wins",
