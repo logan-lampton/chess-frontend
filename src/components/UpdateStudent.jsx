@@ -13,6 +13,7 @@ function UpdateStudent() {
   const [formData, setFormData] = useState({
     student_name: student.student_name,
     grade: student.grade,
+    station: student.station
   });
 
   const handleInputChange = (e) => {
@@ -56,7 +57,7 @@ function UpdateStudent() {
           <form className='ml-5'>
             <div className='flex flex-col mb-4 mt-4'>
               <label htmlFor='student_name' className='mb-2'>
-                Name of Student: (Currently: {student.student_name}):
+                Name: (Currently: {student.student_name}):
               </label>
               <div className='flex justify-end flex-grow mr-5'>
                 <input
@@ -64,7 +65,7 @@ function UpdateStudent() {
                   type='text'
                   id='student_name'
                   name='student_name'
-                  placeholder='Insert student name'
+                  placeholder='Enter student name'
                   value={formData.student_name}
                   onChange={handleInputChange}
                 />
@@ -72,7 +73,7 @@ function UpdateStudent() {
             </div>
             <div className='flex flex-col mb-4 mt-4'>
               <label htmlFor='grade' className='mb-2'>
-                Grade of student: (Currently: {student.grade}):
+                Grade: (Currently: {student.grade}):
               </label>
               <div className='flex justify-end flex-grow mr-5'>
                 <input
@@ -80,8 +81,24 @@ function UpdateStudent() {
                   type='text'
                   id='grade'
                   name='grade'
-                  placeholder='Insert student grade'
+                  placeholder='Enter student grade'
                   value={formData.grade}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+            <div className='flex flex-col mb-4 mt-4'>
+              <label htmlFor='student_name' className='mb-2'>
+                Station: (Currently: {student.station}):
+              </label>
+              <div className='flex justify-end flex-grow mr-5'>
+                <input
+                  className='border border-gray-300 rounded p-2 w-full'
+                  type='text'
+                  id='station'
+                  name='station'
+                  placeholder='Enter new station'
+                  value={formData.station}
                   onChange={handleInputChange}
                 />
               </div>
