@@ -112,6 +112,7 @@ const sureDelete = async (selection, id) => {
               <div className='ml-5 mt-4'>
                 <div className='mb-3'>
                   <p>Grade: {student.grade}</p>
+                  <p>Station: {student.station}</p>
                 </div>
                 <div className="border-2 border-gray-900 rounded-lg shadow-lg p-4 mb-6 bg-white">
                   <div className="mb-4">

@@ -11,6 +11,7 @@ function ChessClub({handleClubDeleted}) {
     const { updateClubId, clubId, loading, setLoading } = useUserContext();
     const {id} = useParams()
     const [club, setClub] = useState([]);
+    const [studentsByStation, setStudentsByStation] = useState({});
     const navigate = useNavigate()
 
     const [confirmationPopUp, setConfirmationPopUp] = useState({
@@ -33,7 +34,22 @@ function ChessClub({handleClubDeleted}) {
         });
         setClub(response.data);
         updateClubId(id)
-        localStorage.setItem('clubId', JSON.stringify(id))
+        localStorage.setItem('clubId', JSON.stringify(id));
+        if (response.data.students) {
+          const groupedStudents = response.data.students.reduce((acc, student) => {
+            const station = student.station;
+
+            if (!acc[station]) {
+              acc[station] = [];
+            }
+
+            acc[station].push(student);
+
+            return acc;
+          }, {});
+          
+          setStudentsByStation(groupedStudents);  
+        }
       } catch(error) {
         console.error("Error fetching club data: ", error);
       } finally {setLoading(false)}
@@ -57,6 +73,7 @@ function ChessClub({handleClubDeleted}) {
           console.error("Error deleting club:", error);
         }
       };
+
 
     const handleConfirmation = (message, isLoading) => {
         setConfirmationPopUp({
@@ -112,18 +129,26 @@ function ChessClub({handleClubDeleted}) {
                                 </div>
                             {club.students ? (
                                 <ul className='ml-5'>
-                                    {club.students.map((student) => (
-                                        <li
-                                            key={student.id}
-                                            className='mb-3 flex items-center'
-                                        >
-                                            <Link
-                                                to={`/students/${student.id}`}
-                                                className="text-blue-500 hover:underline font-semibold"
-                                            >
-                                                {student.student_name}
-                                            </Link>
-                                        </li>
+                                    {Object.entries(studentsByStation).map(([station, students]) => (
+                                      <div key = {station} className = 'mb-8'>
+                                        <h2 className='text-lg font-bold mb-4'>Station {station}</h2>
+                                        <ul>
+                                          {students.map((student)=>
+                                          <li
+                                          key={student.id}
+                                          className='mb-3 flex items-center'
+                                      >
+                                          <Link
+                                              to={`/students/${student.id}`}
+                                              className="text-blue-500 hover:underline font-semibold"
+                                          >
+                                              {student.student_name}
+                                          </Link>
+                                      </li>
+                                          )}
+                                          
+                                        </ul>
+                                      </div>
                                     ))}
                                 </ul>
                             ) : (
