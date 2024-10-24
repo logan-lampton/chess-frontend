@@ -139,18 +139,18 @@ function ChessClub({handleClubDeleted}) {
             <div className="col-span-1 md:col-span-1 mr-5">
   <div className="flex justify-between mb-4">
     <Link to="/clublessons">
-      <button className="h-12 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded">
+      <button className="h-15 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded">
         View Lessons
       </button>
     </Link>
     <Link to="/studentpairselect" state={{ students: club.students }}>
-      <button className="h-12 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded">
+      <button className="h-15 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded">
         Pair Students
       </button>
     </Link>
     {club && (
       <Link to={`/games/completed/${clubId}`}>
-        <button className="h-12 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded">
+        <button className="h-15 w-50 bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 border bg-gray-900 rounded">
           View Club Games
         </button>
       </Link>
